@@ -1,6 +1,6 @@
 {
-  "rewrites": [
-    { "source": "/company/:ticker", "destination": "/company.html" },
-    { "source": "/((?!company).*)", "destination": "/index.html" }
+  "routes": [
+    { "src": "/company/(.*)", "dest": "/company.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
