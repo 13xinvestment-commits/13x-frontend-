@@ -226,7 +226,6 @@ function renderNav() {
   const area = document.getElementById('nav-user-area');
   if (!currentUser) { area.innerHTML = ''; return; }
   const planLabel = isPaid ? (currentSub?.plan === 'yearly' ? 'Pro Yearly' : currentSub?.plan === 'trial' ? 'Trial' : 'Pro') : 'Free';
-  const badgeCls  = isPaid ? 'nav-badge' : 'nav-badge' + ' ' + 'nav-badge';
   area.innerHTML = `<span class="nav-user-name">${esc(currentUser.name.split(' ')[0])}</span><span class="nav-badge ${isPaid?'':'free'}">${esc(planLabel)}</span>`;
 }
 
