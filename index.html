@@ -1448,8 +1448,11 @@ function renderDashScreener(data) {
   tbody.innerHTML = data.map(function(r) {
     var tags = r.catalyst_tags || [];
     var inWatch = WATCHLIST_IDS.has(r.id);
+    var nameLink = r.ticker
+      ? '<a href="/company/' + r.ticker + '" style="font-weight:700;color:var(--text);text-decoration:none;border-bottom:1px solid var(--border)">' + escHtml(r.name||'') + '</a>'
+      : '<strong>' + escHtml(r.name||'') + '</strong>';
     return '<tr>' +
-      '<td><strong>' + escHtml(r.name||'') + '</strong></td>' +
+      '<td>' + nameLink + '</td>' +
       '<td style="color:var(--text2)">' + escHtml(r.industry||'') + '</td>' +
       '<td style="max-width:220px;font-size:12px">' + escHtml(r.top_trigger||'') + '</td>' +
       '<td>' + tags.map(function(t){ return '<span class="badge ' + t + '">' + t.replace('new-prod','New Product').replace('geo','Geo').replace('acq','Acq').replace('margin','Margin').replace('capex','Capex') + '</span> '; }).join('') + '</td>' +

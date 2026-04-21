@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Company — 13X Investments</title>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#F5F0E8;--bg2:#EDEBE3;--text:#1a1a1a;--text2:#555;--text3:#888;
+  --border:#d4cfc5;--green:#2d6a4f;--card:#fff;--radius:10px;--red:#c0392b;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:15px}
+a{color:inherit;text-decoration:none}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:-0.5px;cursor:pointer}
+.logo-mark{font-size:22px;font-weight:900;letter-spacing:-1px}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text2);cursor:pointer;padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:var(--card);transition:all .15s}
+.nav-back:hover{border-color:var(--text);color:var(--text)}
+.nav-user{display:flex;align-items:center;gap:10px}
+.nav-user-name{font-size:13px;color:var(--text2);font-weight:500}
+.nav-badge{background:#d4edda;color:#155724;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px}
+
+/* LAYOUT */
+.container{max-width:960px;margin:0 auto;padding:40px 24px 80px}
+
+/* HERO */
+.co-hero{margin-bottom:32px}
+.co-breadcrumb{font-size:12px;color:var(--text3);margin-bottom:12px}
+.co-breadcrumb a{cursor:pointer;color:var(--text3)}
+.co-breadcrumb a:hover{color:var(--text)}
+.co-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.co-title h1{font-size:clamp(24px,4vw,36px);font-weight:800;letter-spacing:-1px;margin-bottom:4px}
+.co-meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:8px}
+.co-industry{font-size:13px;color:var(--text2);background:var(--bg2);padding:3px 10px;border-radius:20px;border:1px solid var(--border)}
+.co-stage{font-size:12px;font-weight:600;padding:3px 10px;border-radius:20px}
+.co-stage.early_growth{background:#e8f5e9;color:#2e7d32}
+.co-stage.acceleration{background:#e3f2fd;color:#1565c0}
+.co-stage.maturity{background:#fff3e0;color:#e65100}
+.co-stage.decline{background:#fde2e4;color:#721c24}
+.co-market-cap{font-size:12px;color:var(--text3);background:var(--bg2);padding:3px 10px;border-radius:20px;border:1px solid var(--border)}
+.co-actions{display:flex;gap:8px;align-items:center}
+.btn-watch-lg{padding:9px 18px;border-radius:6px;border:1.5px solid var(--border);background:var(--card);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.btn-watch-lg:hover,.btn-watch-lg.active{background:var(--text);color:#fff;border-color:var(--text)}
+.btn-primary{background:var(--text);color:#fff;border:none;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s}
+.btn-primary:hover{opacity:.85}
+
+/* SCORE BAR */
+.co-score-wrap{display:flex;align-items:center;gap:10px;margin-top:14px}
+.co-score-bars{display:flex;gap:4px}
+.bar{width:10px;height:24px;border-radius:3px;background:var(--bg2)}
+.bar.fill{background:var(--text)}
+.co-score-label{font-size:13px;color:var(--text2)}
+
+/* TAGS */
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:12px;font-weight:500}
+.badge.capex{background:#e3f2fd;color:#1565c0}
+.badge.margin{background:#e8f5e9;color:#2e7d32}
+.badge.geo{background:#fff3e0;color:#e65100}
+.badge.new-prod{background:#f3e5f5;color:#6a1b9a}
+.badge.acq{background:#fce4ec;color:#880e4f}
+
+/* TABS */
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:32px}
+.tab{background:none;border:none;padding:12px 20px;font-size:14px;font-weight:500;cursor:pointer;color:var(--text2);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+.tab.active{color:var(--text);border-bottom-color:var(--text);font-weight:700}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* CONCALL SNAPSHOT */
+.snapshot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+.snapshot-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}
+.snapshot-label{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.snapshot-value{font-size:18px;font-weight:800;letter-spacing:-0.5px}
+.snapshot-value.up{color:var(--green)}
+.snapshot-value.down{color:var(--red)}
+.snapshot-value.stable{color:#b8860b}
+.tone-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:600}
+.tone-badge.positive{background:#d4edda;color:#155724}
+.tone-badge.neutral{background:#fff3cd;color:#856404}
+.tone-badge.cautious{background:#fde2e4;color:#721c24}
+
+/* QUOTES */
+.quotes-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px}
+.quotes-section h3{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.quote-item{padding:12px 0;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:flex-start}
+.quote-item:last-child{border-bottom:none;padding-bottom:0}
+.quote-dot{width:6px;height:6px;border-radius:50%;background:var(--green);margin-top:7px;flex-shrink:0}
+.quote-text{font-size:13px;color:var(--text);line-height:1.6;font-style:italic}
+.quote-meta{font-size:11px;color:var(--text3);margin-top:4px}
+
+/* SIGNALS */
+.signal-row{padding:16px 0;border-bottom:1px solid var(--border)}
+.signal-row:last-child{border-bottom:none}
+.signal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.signal-type{display:inline-block;padding:2px 10px;border-radius:4px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.signal-type.guidance{background:#e3f2fd;color:#1565c0}
+.signal-type.capex{background:#e8f5e9;color:#2e7d32}
+.signal-type.margin{background:#fff3e0;color:#e65100}
+.signal-type.expansion{background:#f3e5f5;color:#6a1b9a}
+.signal-type.acquisition{background:#fce4ec;color:#880e4f}
+.signal-type.risk{background:#fde2e4;color:#721c24}
+.signal-confidence{font-size:12px;color:var(--text3)}
+.signal-content{font-size:14px;color:var(--text);line-height:1.6}
+.signal-source{font-size:11px;color:var(--text3);margin-top:4px}
+.signal-quarter{font-size:11px;color:var(--text3);background:var(--bg2);padding:2px 8px;border-radius:4px}
+
+/* TRIGGERS */
+.trigger-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:12px}
+.trigger-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.trigger-score{display:flex;align-items:center;gap:6px}
+.trigger-score-dots{display:flex;gap:3px}
+.score-dot{width:8px;height:8px;border-radius:50%;background:var(--bg2)}
+.score-dot.fill{background:var(--text)}
+.trigger-text{font-size:14px;color:var(--text);line-height:1.6;margin-bottom:8px}
+.trigger-quote{font-size:12px;color:var(--text2);font-style:italic;border-left:3px solid var(--border);padding-left:12px;margin-top:8px}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:48px 24px;color:var(--text3)}
+.empty-state div{font-size:36px;margin-bottom:12px}
+.empty-state p{font-size:14px}
+
+/* PAYWALL */
+.paywall{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:48px 24px;text-align:center;margin:32px 0}
+.paywall h3{font-size:20px;font-weight:800;margin-bottom:8px}
+.paywall p{font-size:14px;color:var(--text2);margin-bottom:20px}
+
+/* LOADING */
+.loading{text-align:center;padding:48px;color:var(--text3)}
+.spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--text);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:12px 20px;border-radius:8px;font-size:13px;font-weight:500;z-index:2000;transform:translateY(100px);opacity:0;transition:all .3s}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{background:#2d6a4f}
+.toast.error{background:var(--red)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" onclick="goHome()">
+    <span class="logo-mark">13X</span>
+    <span>Investments</span>
+  </div>
+  <button class="nav-back" onclick="history.back()">← Back to Screener</button>
+  <div class="nav-user" id="nav-user-area"></div>
+</nav>
+
+<div class="container" id="main-container">
+  <div class="loading"><div class="spinner"></div></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API_BASE = 'https://one3x-backend.onrender.com/api/v1';
+
+// ── Auth helpers ──────────────────────────────────────────────
+const getToken        = () => localStorage.getItem('13x_token');
+const getRefreshToken = () => localStorage.getItem('13x_refresh_token');
+const setToken        = t  => localStorage.setItem('13x_token', t);
+const setRefreshToken = t  => localStorage.setItem('13x_refresh_token', t);
+const removeToken     = () => localStorage.removeItem('13x_token');
+const removeRefreshToken = () => localStorage.removeItem('13x_refresh_token');
+
+let currentUser = null;
+let currentSub  = null;
+let isPaid      = false;
+let companyData = null;
+let watchlisted = false;
+
+let _refreshing = false;
+async function tryRefreshToken() {
+  if (_refreshing) return false;
+  const rt = getRefreshToken();
+  if (!rt) return false;
+  _refreshing = true;
+  try {
+    const res  = await fetch(API_BASE + '/auth/refresh', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ refreshToken: rt }) });
+    const data = await res.json();
+    if (!res.ok) throw new Error();
+    setToken(data.accessToken);
+    if (data.refreshToken) setRefreshToken(data.refreshToken);
+    return true;
+  } catch { return false; }
+  finally { _refreshing = false; }
+}
+
+async function apiFetch(path, options = {}, _retry = true) {
+  const token   = getToken();
+  const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+  const res = await fetch(API_BASE + path, { ...options, headers });
+  if (res.status === 401 && _retry) {
+    const ok = await tryRefreshToken();
+    if (ok) return apiFetch(path, options, false);
+    removeToken(); removeRefreshToken();
+    window.location.href = '/';
+    throw new Error('Session expired');
+  }
+  let data; try { data = await res.json(); } catch { data = {}; }
+  if (!res.ok) throw new Error(data.error || data.message || 'Request failed');
+  return data;
+}
+
+// ── Toast ─────────────────────────────────────────────────────
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast show' + (type ? ' ' + type : '');
+  setTimeout(() => t.className = 'toast', 3000);
+}
+
+// ── Escape HTML ───────────────────────────────────────────────
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── Nav ───────────────────────────────────────────────────────
+function goHome() { window.location.href = '/'; }
+
+function renderNav() {
+  const area = document.getElementById('nav-user-area');
+  if (!currentUser) { area.innerHTML = ''; return; }
+  const planLabel = isPaid ? (currentSub?.plan === 'yearly' ? 'Pro Yearly' : currentSub?.plan === 'trial' ? 'Trial' : 'Pro') : 'Free';
+  const badgeCls  = isPaid ? 'nav-badge' : 'nav-badge' + ' ' + 'nav-badge';
+  area.innerHTML = `<span class="nav-user-name">${esc(currentUser.name.split(' ')[0])}</span><span class="nav-badge ${isPaid?'':'free'}">${esc(planLabel)}</span>`;
+}
+
+// ── Router: get ticker from URL ───────────────────────────────
+function getTickerFromURL() {
+  const parts = window.location.pathname.split('/');
+  return parts[parts.length - 1] || null;
+}
+
+// ── Tab switching ─────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector('.tab[data-tab="' + tab + '"]').classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+// ── Watchlist toggle ──────────────────────────────────────────
+async function toggleWatchlist() {
+  if (!companyData) return;
+  const btn = document.getElementById('btn-watch');
+  try {
+    if (watchlisted) {
+      await apiFetch('/data/watchlist/' + companyData.id, { method: 'DELETE' });
+      watchlisted = false;
+      btn.textContent = '☆ Add to Watchlist';
+      btn.classList.remove('active');
+      showToast('Removed from watchlist');
+    } else {
+      await apiFetch('/data/watchlist/' + companyData.id, { method: 'POST' });
+      watchlisted = true;
+      btn.textContent = '⭐ Watchlisted';
+      btn.classList.add('active');
+      showToast('Added to watchlist ⭐', 'success');
+    }
+  } catch (err) { showToast(err.message || 'Failed', 'error'); }
+}
+
+// ── Render trend arrow ────────────────────────────────────────
+function trendArrow(v) {
+  if (!v) return '—';
+  const u = v.toLowerCase();
+  if (u === 'up' || u === 'improving' || u === 'growing')   return '<span class="snapshot-value up">↑ ' + esc(v) + '</span>';
+  if (u === 'down' || u === 'declining' || u === 'falling') return '<span class="snapshot-value down">↓ ' + esc(v) + '</span>';
+  return '<span class="snapshot-value stable">→ ' + esc(v) + '</span>';
+}
+
+// ── Render confidence dots ────────────────────────────────────
+function confDots(n) {
+  let html = '';
+  for (let i = 1; i <= 5; i++) html += '<span class="score-dot ' + (i <= n ? 'fill' : '') + '"></span>';
+  return '<div class="trigger-score-dots">' + html + '</div>';
+}
+
+// ── Render full company page ───────────────────────────────────
+function renderCompanyPage(co, triggers, signals, snapshot) {
+  const stageLabelMap = { early_growth:'Early Growth', acceleration:'Acceleration', maturity:'Maturity', decline:'Decline' };
+  const tags = (co.catalyst_tags || []).map(t => `<span class="badge ${t}">${t.replace('new-prod','New Product').replace('geo','Geo Expansion').replace('acq','Acquisition').replace('margin','Margin Exp.').replace('capex','Capex')}</span>`).join('');
+  const bars = [1,2,3,4,5].map(i => `<div class="bar ${i<=(co.score||0)?'fill':''}"></div>`).join('');
+  const inWatch = watchlisted;
+
+  // ── Snapshot tab content ──
+  let snapshotHTML = '';
+  if (snapshot) {
+    const toneClass = snapshot.tone ? snapshot.tone.toLowerCase() : 'neutral';
+    snapshotHTML = `
+      <div class="snapshot-grid">
+        <div class="snapshot-card">
+          <div class="snapshot-label">Revenue Trend</div>
+          ${trendArrow(snapshot.revenue_trend)}
+        </div>
+        <div class="snapshot-card">
+          <div class="snapshot-label">Margin Trend</div>
+          ${trendArrow(snapshot.margin_trend)}
+        </div>
+        <div class="snapshot-card">
+          <div class="snapshot-label">Commentary Tone</div>
+          <span class="tone-badge ${toneClass}">${esc(snapshot.tone || '—')}</span>
+        </div>
+        <div class="snapshot-card">
+          <div class="snapshot-label">Quarter</div>
+          <div class="snapshot-value" style="font-size:15px">${esc(snapshot.quarter || '—')}</div>
+        </div>
+      </div>`;
+
+    if (snapshot.guidance_summary) {
+      snapshotHTML += `<div class="quotes-section"><h3>🎯 Guidance</h3><p style="font-size:14px;color:var(--text);line-height:1.7">${esc(snapshot.guidance_summary)}</p></div>`;
+    }
+    if (snapshot.capex_commentary) {
+      snapshotHTML += `<div class="quotes-section"><h3>🏗 Capex Commentary</h3><p style="font-size:14px;color:var(--text);line-height:1.7">${esc(snapshot.capex_commentary)}</p></div>`;
+    }
+    if (snapshot.risks) {
+      snapshotHTML += `<div class="quotes-section"><h3>⚠️ Risks Highlighted</h3><p style="font-size:14px;color:var(--text);line-height:1.7">${esc(snapshot.risks)}</p></div>`;
+    }
+    if (snapshot.key_quotes && snapshot.key_quotes.length) {
+      const quotesHTML = snapshot.key_quotes.map(q => `
+        <div class="quote-item">
+          <div class="quote-dot"></div>
+          <div><div class="quote-text">"${esc(q.text)}"</div><div class="quote-meta">${esc(q.speaker||'')} · ${esc(q.quarter||'')}</div></div>
+        </div>`).join('');
+      snapshotHTML += `<div class="quotes-section"><h3>📞 Key Management Quotes</h3>${quotesHTML}</div>`;
+    }
+  } else {
+    snapshotHTML = `<div class="empty-state"><div>📋</div><p>No concall snapshot available yet for this company.</p></div>`;
+  }
+
+  // ── Signals tab content ──
+  let signalsHTML = '';
+  if (signals && signals.length) {
+    signalsHTML = signals.map(s => {
+      let conf = '';
+      for (let i=1;i<=5;i++) conf += i<=s.confidence ? '●' : '○';
+      return `<div class="signal-row">
+        <div class="signal-header">
+          <span class="signal-type ${esc(s.signal_type)}">${esc(s.signal_type)}</span>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span class="signal-confidence">${conf}</span>
+            <span class="signal-quarter">${esc(s.quarter||'')}</span>
+          </div>
+        </div>
+        <div class="signal-content">${esc(s.content)}</div>
+        ${s.source ? `<div class="signal-source">Source: ${esc(s.source)}</div>` : ''}
+      </div>`;
+    }).join('');
+  } else {
+    signalsHTML = `<div class="empty-state"><div>📡</div><p>No management signals added yet.</p></div>`;
+  }
+
+  // ── Triggers tab content ──
+  let triggersHTML = '';
+  if (triggers && triggers.length) {
+    triggersHTML = triggers.map(t => `
+      <div class="trigger-item">
+        <div class="trigger-item-header">
+          <div class="trigger-score">
+            ${confDots(t.conviction_score)}
+            <span style="font-size:12px;color:var(--text3)">${t.conviction_score}/5</span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span class="badge ${esc(t.catalyst_type||'')}">${esc(t.catalyst_type||'')}</span>
+            <span style="font-size:11px;color:var(--text3);background:var(--bg2);padding:2px 8px;border-radius:4px">${esc(t.quarter||'')}</span>
+          </div>
+        </div>
+        <div class="trigger-text">${esc(t.trigger_text)}</div>
+        ${t.source_quote ? `<div class="trigger-quote">"${esc(t.source_quote)}"</div>` : ''}
+      </div>`).join('');
+  } else {
+    triggersHTML = `<div class="empty-state"><div>⚡</div><p>No triggers available for this company.</p></div>`;
+  }
+
+  document.getElementById('main-container').innerHTML = `
+    <div class="co-hero">
+      <div class="co-breadcrumb">
+        <a onclick="goHome()">Home</a> / <a onclick="history.back()">Screener</a> / ${esc(co.name)}
+      </div>
+      <div class="co-header">
+        <div class="co-title">
+          <h1>${esc(co.name)}</h1>
+          ${co.ticker ? `<div style="font-size:14px;color:var(--text3);font-weight:600;margin-top:2px">${esc(co.ticker)}</div>` : ''}
+          <div class="co-meta">
+            <span class="co-industry">${esc(co.industry)}</span>
+            ${co.stage ? `<span class="co-stage ${co.stage}">${stageLabelMap[co.stage]||co.stage}</span>` : ''}
+            ${co.market_cap ? `<span class="co-market-cap">${esc(co.market_cap)} Cap</span>` : ''}
+          </div>
+          <div class="co-score-wrap">
+            <div class="co-score-bars">${bars}</div>
+            <span class="co-score-label">Score: ${co.score||0}/5</span>
+          </div>
+          <div class="tag-row">${tags}</div>
+        </div>
+        <div class="co-actions">
+          <button id="btn-watch" class="btn-watch-lg ${inWatch?'active':''}" onclick="toggleWatchlist()">
+            ${inWatch ? '⭐ Watchlisted' : '☆ Add to Watchlist'}
+          </button>
+        </div>
+      </div>
+      ${co.top_trigger ? `<div style="margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px"><div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Top Trigger</div><div style="font-size:14px;color:var(--text);line-height:1.6">${esc(co.top_trigger)}</div></div>` : ''}
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="snapshot" onclick="switchTab('snapshot')">📊 Concall Snapshot</button>
+      <button class="tab" data-tab="signals" onclick="switchTab('signals')">📡 Management Signals</button>
+      <button class="tab" data-tab="triggers" onclick="switchTab('triggers')">⚡ Growth Triggers</button>
+    </div>
+
+    <div id="tab-snapshot" class="tab-content active">${snapshotHTML}</div>
+    <div id="tab-signals" class="tab-content">${signalsHTML}</div>
+    <div id="tab-triggers" class="tab-content">${triggersHTML}</div>
+  `;
+}
+
+function renderPaywall() {
+  document.getElementById('main-container').innerHTML = `
+    <div class="paywall">
+      <div style="font-size:48px;margin-bottom:16px">🔒</div>
+      <h3>Subscribe to View Company Details</h3>
+      <p>Get full access to concall snapshots, management signals, and growth triggers for 2000+ companies.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn-primary" onclick="window.location.href='/'">See Plans →</button>
+        <button style="padding:9px 18px;border-radius:6px;border:1.5px solid var(--border);background:var(--card);font-size:13px;cursor:pointer" onclick="window.location.href='/'">Sign In</button>
+      </div>
+    </div>`;
+}
+
+function renderError(msg) {
+  document.getElementById('main-container').innerHTML = `
+    <div class="empty-state"><div>⚠️</div><p>${esc(msg)}</p><br><button class="btn-primary" onclick="history.back()">Go Back</button></div>`;
+}
+
+// ── MAIN INIT ─────────────────────────────────────────────────
+async function init() {
+  const ticker = getTickerFromURL();
+  if (!ticker || ticker === 'company') { renderError('Company not found.'); return; }
+
+  // Load user state
+  const token = getToken();
+  if (token) {
+    try {
+      const me = await apiFetch('/auth/me');
+      currentUser = me.user;
+      currentSub  = me.subscription;
+      isPaid      = me.isPaid;
+    } catch { /* not logged in */ }
+  }
+
+  renderNav();
+
+  if (!isPaid) { renderPaywall(); return; }
+
+  // Load company by ticker
+  try {
+    const [coRes, triggersRes, signalsRes, snapshotRes, watchlistRes] = await Promise.allSettled([
+      apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker)),
+      apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker) + '/triggers'),
+      apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker) + '/signals'),
+      apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker) + '/snapshot'),
+      apiFetch('/data/watchlist'),
+    ]);
+
+    if (coRes.status === 'rejected') { renderError('Company not found: ' + ticker); return; }
+
+    companyData = coRes.value.data;
+    document.title = companyData.name + ' — 13X Investments';
+
+    const triggers = triggersRes.status === 'fulfilled' ? (triggersRes.value.data || []) : [];
+    const signals  = signalsRes.status  === 'fulfilled' ? (signalsRes.value.data  || []) : [];
+    const snapshot = snapshotRes.status === 'fulfilled' ? snapshotRes.value.data  : null;
+
+    // Check watchlist
+    if (watchlistRes.status === 'fulfilled') {
+      const wids = new Set((watchlistRes.value.data || []).map(c => c.id));
+      watchlisted = wids.has(companyData.id);
+    }
+
+    renderCompanyPage(companyData, triggers, signals, snapshot);
+  } catch (err) {
+    renderError(err.message || 'Failed to load company.');
+  }
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/company/:ticker", "destination": "/company.html" },
+    { "source": "/((?!company).*)", "destination": "/index.html" }
+  ]
+}
