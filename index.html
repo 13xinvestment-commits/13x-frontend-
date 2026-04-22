@@ -1440,6 +1440,38 @@ function filterDashTable() {
 }
 
 // ══════════════════════════════════════════════════════════════
+// TAG NORMALISER — handles both old short codes & new full names
+// ══════════════════════════════════════════════════════════════
+var TAG_LABELS = {
+  'capex':                 'Capex',
+  'margin_expansion':      'Margin',
+  'margin':                'Margin',
+  'geographic_expansion':  'Geo Expansion',
+  'geo':                   'Geo Expansion',
+  'new_products':          'New Products',
+  'new-prod':              'New Products',
+  'acquisitions':          'Acquisition',
+  'acq':                   'Acquisition',
+  'operating_leverage':    'Op Leverage',
+};
+
+function normTags(tags) {
+  // Handle case where tags come as a JSON string instead of array
+  if (typeof tags === 'string') {
+    try { tags = JSON.parse(tags); } catch { tags = tags.split(','); }
+  }
+  if (!Array.isArray(tags)) return [];
+  return tags
+    .map(function(t) {
+      var raw = (t || '').toString().trim().toLowerCase()
+        .replace(/^"|"$/g,'')   // strip stray quotes
+        .replace(/\[|\]/g,'');  // strip stray brackets
+      return { key: raw, label: TAG_LABELS[raw] || raw };
+    })
+    .filter(function(t){ return t.key.length > 0; });
+}
+
+// ══════════════════════════════════════════════════════════════
 // SCREENER / TABLE RENDERERS
 // ══════════════════════════════════════════════════════════════
 function renderDashScreener(data) {
@@ -1459,7 +1491,7 @@ function renderDashScreener(data) {
       '<td>' + nameLink + '</td>' +
       '<td style="color:var(--text2)">' + escHtml(r.industry||'') + '</td>' +
       '<td style="max-width:220px;font-size:12px">' + escHtml(r.top_trigger||'') + '</td>' +
-      '<td>' + tags.map(function(t){ return '<span class="badge ' + t + '">' + t.replace('new-prod','New Product').replace('geo','Geo').replace('acq','Acq').replace('margin','Margin').replace('capex','Capex') + '</span> '; }).join('') + '</td>' +
+      '<td>' + normTags(tags).map(function(t){ return '<span class="badge ' + t.key + '">' + t.label + '</span> '; }).join('') + '</td>' +
       '<td><div class="score-bar">' + [1,2,3,4,5].map(function(i){ return '<div class="bar ' + (i<=(r.score||0)?'fill':'') + '"></div>'; }).join('') + '</div></td>' +
       '<td><button class="btn-watch" onclick="toggleWatchlist(\'' + r.id + '\',\'' + escHtml(r.name) + '\',this)" title="' + (inWatch?'Remove from watchlist':'Add to watchlist') + '">' + (inWatch?'⭐':'☆') + '</button></td>' +
       '<td><button class="btn-sm" onclick="openSignals(\'' + r.id + '\',\'' + escHtml(r.name) + '\')">Signals</button></td>' +
@@ -1485,7 +1517,7 @@ function renderTableInto(tbodyId, data) {
       '<td>' + nameCell + '</td>' +
       '<td style="color:var(--text2)">' + escHtml(r.ind || r.industry || '') + '</td>' +
       '<td style="max-width:260px;font-size:12px">' + escHtml(r.trigger || r.top_trigger || '') + '</td>' +
-      '<td>' + tags.map(function(t){ return '<span class="badge ' + t + '">' + t.replace('new-prod','New Product').replace('geo','Geo Expansion').replace('acq','Acquisition').replace('margin','Margin').replace('capex','Capex') + '</span> '; }).join('') + '</td>' +
+      '<td>' + normTags(tags).map(function(t){ return '<span class="badge ' + t.key + '">' + t.label + '</span> '; }).join('') + '</td>' +
       '<td><div class="score-bar">' + [1,2,3,4,5].map(function(i){ return '<div class="bar ' + (i<=r.score?'fill':'') + '"></div>'; }).join('') + '</div></td>' +
     '</tr>';
   }).join('');
@@ -1535,7 +1567,7 @@ async function loadWatchlist() {
         '<td>' + nameCell + '</td>' +
         '<td style="color:var(--text2)">' + escHtml(r.industry||'') + '</td>' +
         '<td style="max-width:220px;font-size:12px">' + escHtml(r.top_trigger||'') + '</td>' +
-        '<td>' + tags.map(function(t){ return '<span class="badge ' + t + '">' + t + '</span> '; }).join('') + '</td>' +
+        '<td>' + normTags(tags).map(function(t){ return '<span class="badge ' + t.key + '">' + t.label + '</span> '; }).join('') + '</td>' +
         '<td><div class="score-bar">' + [1,2,3,4,5].map(function(i){ return '<div class="bar ' + (i<=(r.score||0)?'fill':'') + '"></div>'; }).join('') + '</div></td>' +
         '<td><button class="btn-watch" onclick="toggleWatchlist(\'' + r.id + '\',\'' + escHtml(r.name) + '\',this)">⭐</button></td>' +
         '<td><button class="btn-sm" onclick="openSignals(\'' + r.id + '\',\'' + escHtml(r.name) + '\')">Signals</button></td>' +
