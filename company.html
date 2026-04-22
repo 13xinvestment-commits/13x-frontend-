@@ -84,10 +84,11 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,244,238,.92);backdrop-
 /* CATALYST TAGS */
 .cat-badge{display:inline-block;padding:3px 9px;border-radius:4px;font-size:11px;font-weight:600}
 .cat-badge.capex{background:var(--blue-bg);color:var(--blue)}
-.cat-badge.margin{background:var(--green-bg);color:var(--green)}
-.cat-badge.geo{background:var(--amber-bg);color:var(--amber)}
-.cat-badge.new-prod{background:var(--purple-bg);color:var(--purple)}
-.cat-badge.acq{background:var(--red-bg);color:var(--red)}
+.cat-badge.margin,.cat-badge.margin_expansion{background:var(--green-bg);color:var(--green)}
+.cat-badge.geo,.cat-badge.geographic_expansion{background:var(--amber-bg);color:var(--amber)}
+.cat-badge.new-prod,.cat-badge.new_products{background:var(--purple-bg);color:var(--purple)}
+.cat-badge.acq,.cat-badge.acquisitions{background:var(--red-bg);color:var(--red)}
+.cat-badge.operating_leverage{background:var(--amber-bg);color:var(--amber)}
 
 /* TOP TRIGGER BANNER */
 .top-trigger-bar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:24px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow)}
@@ -369,7 +370,23 @@ function confDotsHTML(n,total=5){
   return `<div class="conf-dots">${h}</div>`;
 }
 function catLabel(t){
-  return t.replace('new-prod','New Product').replace('geo','Geo Expansion').replace('acq','Acquisition').replace('margin','Margin Exp.').replace('capex','Capex');
+  const map = {
+    'capex':               'Capex',
+    'margin_expansion':    'Margin Exp.',
+    'margin':              'Margin Exp.',
+    'geographic_expansion':'Geo Expansion',
+    'geo':                 'Geo Expansion',
+    'new_products':        'New Products',
+    'new-prod':            'New Products',
+    'acquisitions':        'Acquisition',
+    'acq':                 'Acquisition',
+    'operating_leverage':  'Op Leverage',
+    'risk':                'Risk',
+    'expansion':           'Expansion',
+    'guidance':            'Guidance',
+  };
+  const key = (t||'').toLowerCase().trim().replace(/["\[\]]/g,'');
+  return map[key] || key.replace(/_/g,' ').replace(/\w/g, c => c.toUpperCase());
 }
 function stageLabel(s){
   return {early_growth:'Early Growth',acceleration:'Acceleration',maturity:'Maturity',decline:'Decline'}[s]||s;
