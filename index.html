@@ -113,10 +113,14 @@ td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle
 tr:hover td{background:var(--bg2)}
 .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500}
 .badge.capex{background:#e3f2fd;color:#1565c0}
-.badge.margin{background:#e8f5e9;color:#2e7d32}
-.badge.geo{background:#fff3e0;color:#e65100}
-.badge.new-prod{background:#f3e5f5;color:#6a1b9a}
-.badge.acq{background:#fce4ec;color:#880e4f}
+.badge.margin,.badge.margin_expansion{background:#e8f5e9;color:#2e7d32}
+.badge.geo,.badge.geographic_expansion{background:#fff3e0;color:#e65100}
+.badge.new-prod,.badge.new_products{background:#f3e5f5;color:#6a1b9a}
+.badge.acq,.badge.acquisitions{background:#fce4ec;color:#880e4f}
+.badge.operating_leverage{background:#fff3e0;color:#e65100}
+.badge.risk{background:#fce4ec;color:#880e4f}
+.badge.guidance{background:#e3f2fd;color:#1565c0}
+.badge.expansion{background:#e8f5e9;color:#2e7d32}
 .score-bar{display:flex;gap:3px;align-items:center}
 .bar{width:8px;height:20px;border-radius:2px;background:var(--bg2)}
 .bar.fill{background:var(--text)}
@@ -529,10 +533,11 @@ footer{background:var(--text);color:#ccc;padding:48px 24px 28px;margin-top:60px}
       <select id="filterCatalyst" onchange="filterTable()" style="padding:8px 14px;border:1px solid var(--border);border-radius:6px;background:var(--card);font-size:13px;color:var(--text)">
         <option value="">All Catalysts</option>
         <option value="capex">Capex</option>
-        <option value="margin">Margin Expansion</option>
-        <option value="geo">Geographic Expansion</option>
-        <option value="new-prod">New Products</option>
-        <option value="acq">Acquisitions</option>
+        <option value="margin_expansion">Margin Expansion</option>
+        <option value="geographic_expansion">Geographic Expansion</option>
+        <option value="new_products">New Products</option>
+        <option value="acquisitions">Acquisitions</option>
+        <option value="operating_leverage">Op Leverage</option>
       </select>
       <select id="filterIndustry2" onchange="filterTable()" style="padding:8px 14px;border:1px solid var(--border);border-radius:6px;background:var(--card);font-size:13px;color:var(--text)">
         <option value="">All Industries</option>
@@ -667,10 +672,11 @@ footer{background:var(--text);color:#ccc;padding:48px 24px 28px;margin-top:60px}
           <select id="dashFilterCatalyst" onchange="filterDashTable()" style="padding:8px 14px;border:1px solid var(--border);border-radius:6px;background:var(--card);font-size:13px;color:var(--text)">
             <option value="">All Catalysts</option>
             <option value="capex">Capex</option>
-            <option value="margin">Margin Expansion</option>
-            <option value="geo">Geographic Expansion</option>
-            <option value="new-prod">New Products</option>
-            <option value="acq">Acquisitions</option>
+            <option value="margin_expansion">Margin Expansion</option>
+            <option value="geographic_expansion">Geographic Expansion</option>
+            <option value="new_products">New Products</option>
+            <option value="acquisitions">Acquisitions</option>
+            <option value="operating_leverage">Op Leverage</option>
           </select>
         </div>
         <div>
@@ -1453,6 +1459,9 @@ var TAG_LABELS = {
   'acquisitions':          'Acquisition',
   'acq':                   'Acquisition',
   'operating_leverage':    'Op Leverage',
+  'risk':                  'Risk',
+  'guidance':              'Guidance',
+  'expansion':             'Expansion',
 };
 
 function normTags(tags) {
