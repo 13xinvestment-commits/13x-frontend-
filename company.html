@@ -5,228 +5,596 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Company — 13X Investments</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#F7F4EE;
-  --bg2:#EFECE5;
-  --bg3:#E8E4DA;
-  --text:#0F0F0F;
-  --text2:#4A4A4A;
-  --text3:#9A9A9A;
-  --border:#DDD9CF;
-  --border2:#C8C4BA;
-  --green:#1A7A4A;
-  --green-bg:#E8F5EE;
-  --red:#C0392B;
-  --red-bg:#FDE8E6;
-  --blue:#1A4FA0;
-  --blue-bg:#E8EEFA;
-  --amber:#8B6914;
-  --amber-bg:#FEF3D7;
-  --purple:#6B21A8;
-  --purple-bg:#F3E8FF;
+  --green:#0D4A2F;
+  --green-mid:#155C3A;
+  --green-light:#1A7A4A;
+  --green-pale:#E8F5EE;
+  --green-mist:#F0F9F4;
+  --sage:#4A7C5F;
+  --white:#FFFFFF;
+  --off:#FAFAF8;
+  --bg:#F6F6F3;
+  --text:#0A0A0A;
+  --text2:#3D3D3D;
+  --text3:#7A7A7A;
+  --text4:#B0B0B0;
+  --border:#E2E2DE;
+  --border2:#D0D0CA;
+  --gold:#B8860B;
+  --gold-bg:#FEF3D7;
+  --red:#B91C1C;
+  --red-bg:#FEE2E2;
+  --blue:#1D4ED8;
+  --blue-bg:#EFF6FF;
+  --purple:#7C3AED;
+  --purple-bg:#F5F3FF;
   --card:#FFFFFF;
-  --radius:8px;
+  --radius:6px;
+  --radius-lg:10px;
   --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
-  --shadow-md:0 4px 12px rgba(0,0,0,.08),0 2px 4px rgba(0,0,0,.05);
+  --shadow-md:0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.12);
 }
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:14px;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Sora',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  font-size:14px;
+  -webkit-font-smoothing:antialiased;
+}
 a{color:inherit;text-decoration:none}
-button{font-family:'DM Sans',sans-serif}
+button{font-family:'Sora',sans-serif;cursor:pointer}
 
-/* NAV */
-nav{position:sticky;top:0;z-index:200;background:rgba(247,244,238,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px;gap:12px}
-.nav-left{display:flex;align-items:center;gap:14px;min-width:0}
-.nav-logo{font-family:'Instrument Serif',serif;font-size:19px;cursor:pointer;white-space:nowrap;flex-shrink:0;letter-spacing:-0.3px}
-.nav-logo em{font-style:italic;color:var(--text3)}
-.nav-back{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--text2);cursor:pointer;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--card);transition:all .15s;white-space:nowrap;flex-shrink:0}
-.nav-back:hover{color:var(--text);border-color:var(--border2);background:var(--bg2)}
-.nav-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.nav-user-name{font-size:12px;color:var(--text2);font-weight:500}
-.nav-badge{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--green-bg);color:var(--green)}
-.nav-badge.free{background:var(--amber-bg);color:var(--amber)}
+/* ══════════ NAV ══════════ */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  height:56px;
+  display:flex;align-items:center;
+  padding:0 24px;gap:14px;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:9px;
+  cursor:pointer;flex-shrink:0;
+  text-decoration:none;
+}
+.nav-logo-mark{
+  width:30px;height:30px;
+  background:var(--green);border-radius:5px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;
+  font-size:14px;font-weight:700;color:#fff;
+}
+.nav-logo-text{
+  font-family:'Playfair Display',serif;
+  font-size:16px;font-weight:600;color:var(--text);
+  letter-spacing:-0.3px;
+}
+.nav-logo-text em{font-style:italic;color:var(--green);font-weight:400}
+.nav-sep{
+  width:1px;height:20px;background:var(--border);flex-shrink:0;
+}
+.nav-back{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:12px;font-weight:500;color:var(--text3);
+  background:none;border:1px solid var(--border);
+  padding:5px 12px;border-radius:5px;
+  transition:all .15s;white-space:nowrap;
+}
+.nav-back:hover{color:var(--green);border-color:var(--green)}
+.nav-breadcrumb{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;color:var(--text3);
+  overflow:hidden;min-width:0;
+}
+.nav-breadcrumb span{
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  max-width:200px;
+}
+.nav-breadcrumb .sep{color:var(--text4);flex-shrink:0}
+.nav-right{
+  display:flex;align-items:center;gap:8px;
+  margin-left:auto;flex-shrink:0;
+}
+.nav-badge{
+  font-size:11px;font-weight:600;padding:2px 9px;
+  border-radius:20px;background:var(--green-pale);color:var(--green);
+}
+.nav-badge.free{background:var(--gold-bg);color:var(--gold)}
+.nav-user{font-size:12px;font-weight:500;color:var(--text2)}
 
-/* LAYOUT */
-.page-wrap{max-width:900px;margin:0 auto;padding:28px 20px 80px}
+/* ══════════ LAYOUT ══════════ */
+.page-wrap{
+  max-width:960px;margin:0 auto;
+  padding:28px 20px 80px;
+}
 
-/* COMPANY HEADER */
-.co-breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);margin-bottom:18px}
-.co-breadcrumb a{cursor:pointer;transition:color .15s}
-.co-breadcrumb a:hover{color:var(--text)}
-.co-breadcrumb .sep{color:var(--border2)}
-
-.co-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
-.co-name{font-family:'Instrument Serif',serif;font-size:clamp(26px,5vw,40px);font-weight:400;letter-spacing:-0.5px;line-height:1.1;margin-bottom:5px}
-.co-ticker{font-family:'Geist Mono',monospace;font-size:11px;color:var(--text3);letter-spacing:0.8px;margin-bottom:10px}
-.co-pills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
-.pill{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px;border:1px solid var(--border)}
-.pill.industry{background:var(--bg2);color:var(--text2)}
-.pill.stage-early_growth{background:var(--green-bg);color:var(--green);border-color:transparent}
+/* ══════════ COMPANY HEADER ══════════ */
+.co-header{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:28px 28px 24px;
+  margin-bottom:20px;
+  box-shadow:var(--shadow);
+}
+.co-header-top{
+  display:flex;align-items:flex-start;
+  justify-content:space-between;gap:16px;
+  flex-wrap:wrap;margin-bottom:20px;
+}
+.co-meta{}
+.co-industry-chip{
+  display:inline-block;
+  font-size:10px;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  color:var(--green);background:var(--green-pale);
+  border-radius:4px;padding:3px 9px;margin-bottom:10px;
+}
+.co-name{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(26px,5vw,42px);
+  font-weight:700;line-height:1.08;
+  letter-spacing:-0.8px;
+  color:var(--text);margin-bottom:8px;
+}
+.co-ticker{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;color:var(--text3);
+  letter-spacing:1px;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.co-ticker-val{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:4px;padding:2px 8px;
+}
+.co-pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{
+  display:inline-flex;align-items:center;
+  font-size:11px;font-weight:500;
+  padding:3px 10px;border-radius:20px;
+  border:1px solid var(--border);
+  background:var(--bg);color:var(--text2);
+}
+.pill.stage-early_growth{background:var(--green-pale);color:var(--green);border-color:transparent}
 .pill.stage-acceleration{background:var(--blue-bg);color:var(--blue);border-color:transparent}
-.pill.stage-maturity{background:var(--amber-bg);color:var(--amber);border-color:transparent}
+.pill.stage-maturity{background:var(--gold-bg);color:var(--gold);border-color:transparent}
 .pill.stage-decline{background:var(--red-bg);color:var(--red);border-color:transparent}
-.pill.cap{background:var(--bg2);color:var(--text3)}
 
-.co-score-row{display:flex;align-items:center;gap:7px;margin-bottom:10px}
-.score-pips{display:flex;gap:3px}
-.pip{width:9px;height:9px;border-radius:50%;background:var(--bg3);border:1px solid var(--border)}
-.pip.on{background:var(--text);border-color:var(--text)}
-.score-text{font-size:11px;color:var(--text3);font-family:'Geist Mono',monospace}
+/* SCORE DISPLAY */
+.co-score-block{
+  display:flex;flex-direction:column;align-items:flex-end;gap:8px;
+  flex-shrink:0;
+}
+.score-num{
+  font-family:'Playfair Display',serif;
+  font-size:52px;font-weight:700;
+  color:var(--green);line-height:1;
+  letter-spacing:-2px;
+}
+.score-denom{
+  font-size:18px;color:var(--text3);
+  font-family:'Sora',sans-serif;font-weight:400;
+}
+.score-label{
+  font-size:10px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;color:var(--text3);
+  text-align:right;
+}
+.score-pips{display:flex;gap:4px;justify-content:flex-end}
+.pip{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--border);border:1px solid var(--border2);
+}
+.pip.on{background:var(--green);border-color:var(--green)}
 
-.co-actions{display:flex;gap:8px;align-items:flex-start;flex-shrink:0;padding-top:4px}
-.btn-watch{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:7px;border:1.5px solid var(--border);background:var(--card);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;box-shadow:var(--shadow)}
-.btn-watch:hover{border-color:var(--text);background:var(--bg2)}
-.btn-watch.active{background:var(--text);color:#fff;border-color:var(--text);box-shadow:none}
+/* WATCHLIST BTN */
+.btn-watch{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 18px;border-radius:6px;
+  border:1.5px solid var(--border2);
+  background:#fff;color:var(--text2);
+  font-size:13px;font-weight:600;
+  transition:all .2s;box-shadow:var(--shadow);
+}
+.btn-watch:hover{border-color:var(--green);color:var(--green)}
+.btn-watch.active{background:var(--green);color:#fff;border-color:var(--green)}
 .btn-watch:disabled{opacity:.5;cursor:not-allowed}
 
-/* CATALYST TAGS */
-.cat-badge{display:inline-block;padding:3px 9px;border-radius:4px;font-size:11px;font-weight:600}
-.cat-badge.capex{background:var(--blue-bg);color:var(--blue)}
-.cat-badge.margin,.cat-badge.margin_expansion{background:var(--green-bg);color:var(--green)}
-.cat-badge.geo,.cat-badge.geographic_expansion{background:var(--amber-bg);color:var(--amber)}
-.cat-badge.new-prod,.cat-badge.new_products{background:var(--purple-bg);color:var(--purple)}
-.cat-badge.acq,.cat-badge.acquisitions{background:var(--red-bg);color:var(--red)}
-.cat-badge.operating_leverage{background:var(--amber-bg);color:var(--amber)}
+/* ══════════ TOP TRIGGER BANNER ══════════ */
+.top-trigger-banner{
+  background:var(--green);
+  border-radius:var(--radius-lg);
+  padding:16px 20px;
+  margin-bottom:20px;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.tt-eyebrow{
+  font-size:9px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:rgba(255,255,255,.55);
+  white-space:nowrap;margin-top:3px;flex-shrink:0;
+}
+.tt-text{
+  font-size:14px;color:#fff;line-height:1.6;font-weight:500;
+}
 
-/* TOP TRIGGER BANNER */
-.top-trigger-bar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:24px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow)}
-.tt-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);white-space:nowrap;margin-top:3px;flex-shrink:0}
-.tt-text{font-size:14px;color:var(--text);line-height:1.6}
+/* ══════════ STATS ROW ══════════ */
+.stats-row{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;margin-bottom:20px;
+}
+.stat-card{
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:14px 16px;
+  box-shadow:var(--shadow);
+}
+.stat-label{
+  font-size:10px;font-weight:700;letter-spacing:.8px;
+  text-transform:uppercase;color:var(--text3);margin-bottom:6px;
+}
+.stat-value{
+  font-family:'Playfair Display',serif;
+  font-size:20px;font-weight:700;
+  color:var(--text);line-height:1.1;
+}
+.stat-value.text-sm{
+  font-size:13px;font-family:'Sora',sans-serif;
+  font-weight:600;
+}
 
-/* TABS */
-.tabs-wrap{border-bottom:1px solid var(--border);margin-bottom:24px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
-.tabs-wrap::-webkit-scrollbar{display:none}
-.tab-btn{background:none;border:none;padding:10px 16px;font-size:13px;font-weight:500;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;white-space:nowrap}
+/* ══════════ CATALYST SECTION ══════════ */
+.catalyst-section{
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:16px 18px;
+  margin-bottom:20px;box-shadow:var(--shadow);
+  display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;
+}
+.catalyst-label{
+  font-size:10px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;color:var(--text3);
+  white-space:nowrap;padding-top:4px;flex-shrink:0;
+}
+.catalyst-tags{display:flex;flex-wrap:wrap;gap:5px}
+.cat{
+  display:inline-block;padding:4px 10px;border-radius:5px;
+  font-size:11px;font-weight:600;
+}
+.cat.capex{background:var(--blue-bg);color:var(--blue)}
+.cat.margin,.cat.margin_expansion{background:var(--green-pale);color:var(--green)}
+.cat.geo,.cat.geographic_expansion{background:var(--gold-bg);color:var(--gold)}
+.cat.new-prod,.cat.new_products{background:var(--purple-bg);color:var(--purple)}
+.cat.acq,.cat.acquisitions{background:var(--red-bg);color:var(--red)}
+.cat.operating_leverage{background:var(--gold-bg);color:var(--gold)}
+.cat.risk{background:var(--red-bg);color:var(--red)}
+.cat.expansion{background:var(--purple-bg);color:var(--purple)}
+.cat.guidance{background:var(--blue-bg);color:var(--blue)}
+
+/* ══════════ TABS ══════════ */
+.tabs-bar{
+  display:flex;gap:0;
+  border-bottom:2px solid var(--border);
+  margin-bottom:20px;
+  overflow-x:auto;scrollbar-width:none;
+}
+.tabs-bar::-webkit-scrollbar{display:none}
+.tab-btn{
+  background:none;border:none;
+  padding:10px 18px;font-size:13px;font-weight:600;
+  color:var(--text3);cursor:pointer;
+  border-bottom:2px solid transparent;
+  margin-bottom:-2px;transition:all .15s;white-space:nowrap;
+}
 .tab-btn:hover{color:var(--text2)}
-.tab-btn.active{color:var(--text);border-bottom-color:var(--text);font-weight:700}
-.tab-count{font-size:10px;color:var(--text3);background:var(--bg2);padding:1px 6px;border-radius:10px;margin-left:4px;font-family:'Geist Mono',monospace}
+.tab-btn.active{color:var(--green);border-bottom-color:var(--green)}
+.tab-count{
+  font-size:10px;color:var(--text3);
+  background:var(--bg);border:1px solid var(--border);
+  padding:1px 6px;border-radius:10px;
+  margin-left:5px;
+  font-family:'JetBrains Mono',monospace;
+}
+.tab-btn.active .tab-count{background:var(--green-pale);color:var(--green);border-color:transparent}
 
-/* SECTION HEADER */
-.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.section-title{font-size:13px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:7px}
-.section-count{font-size:11px;color:var(--text3);background:var(--bg2);padding:2px 8px;border-radius:10px;font-family:'Geist Mono',monospace}
+/* ══════════ OVERVIEW TAB ══════════ */
+.overview-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.overview-card{
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:20px;
+  box-shadow:var(--shadow);
+}
+.card-title{
+  font-size:11px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;color:var(--text3);
+  margin-bottom:12px;display:flex;align-items:center;gap:7px;
+}
+.card-title-icon{
+  width:22px;height:22px;border-radius:4px;
+  background:var(--green-pale);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;
+}
+.overview-text{
+  font-size:14px;color:var(--text);line-height:1.7;
+}
+.overview-cta-row{
+  display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;
+}
+.btn-tab-link{
+  display:inline-flex;align-items:center;gap:5px;
+  background:none;border:1.5px solid var(--border);
+  padding:7px 14px;border-radius:5px;
+  font-size:12px;font-weight:600;color:var(--text2);
+  transition:all .15s;
+}
+.btn-tab-link:hover{border-color:var(--green);color:var(--green)}
 
-/* OVERVIEW */
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
-.stat-label{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
-.stat-value{font-size:19px;font-weight:700;letter-spacing:-0.3px;font-family:'Instrument Serif',serif;line-height:1.2}
-.stat-value.sm{font-size:14px;font-family:'DM Sans';font-weight:600;letter-spacing:0}
-.catalyst-row{display:flex;flex-wrap:wrap;gap:5px}
-
-/* TRIGGER CARDS */
-.trigger-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow);transition:border-color .15s}
-.trigger-card:hover{border-color:var(--border2)}
-.trigger-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px;flex-wrap:wrap}
-.trigger-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-.conviction{display:flex;gap:3px}
-.c-dot{width:7px;height:7px;border-radius:50%;background:var(--bg3);border:1px solid var(--border)}
-.c-dot.on{background:var(--text);border-color:var(--text)}
-.conv-text{font-size:11px;color:var(--text3);font-family:'Geist Mono',monospace}
-.q-chip{font-size:10px;color:var(--text3);background:var(--bg2);padding:2px 7px;border-radius:4px;font-family:'Geist Mono',monospace;border:1px solid var(--border)}
+/* ══════════ TRIGGER CARDS ══════════ */
+.trigger-card{
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:18px 20px;
+  margin-bottom:10px;
+  box-shadow:var(--shadow);
+  transition:border-color .15s,box-shadow .15s;
+}
+.trigger-card:hover{border-color:var(--border2);box-shadow:var(--shadow-md)}
+.trigger-top{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:12px;gap:10px;flex-wrap:wrap;
+}
+.trigger-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.conv-row{display:flex;gap:3px;align-items:center}
+.conv-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--border);border:1px solid var(--border2);
+}
+.conv-dot.on{background:var(--green);border-color:var(--green)}
+.conv-text{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--text3);margin-left:4px;
+}
+.q-chip{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--text3);
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:4px;padding:2px 7px;
+}
 .trigger-body{font-size:14px;color:var(--text);line-height:1.7}
-.trigger-quote-block{margin-top:12px;padding:10px 14px;background:var(--bg);border-radius:6px;border-left:3px solid var(--border2)}
-.trigger-quote-block p{font-size:12px;color:var(--text2);line-height:1.6;font-style:italic}
+.trigger-quote{
+  margin-top:12px;padding:12px 16px;
+  background:var(--green-mist);border-radius:6px;
+  border-left:3px solid var(--green);
+}
+.trigger-quote p{
+  font-size:12px;color:var(--text2);
+  line-height:1.65;font-style:italic;
+}
+.triggers-section-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;
+}
+.triggers-count{
+  font-size:12px;color:var(--text3);
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:10px;padding:2px 10px;
+  font-family:'JetBrains Mono',monospace;
+}
 
-/* SIGNAL CARDS */
-.signal-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow);transition:border-color .15s}
+/* ══════════ SIGNAL CARDS ══════════ */
+.signal-card{
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:18px 20px;
+  margin-bottom:10px;box-shadow:var(--shadow);
+  transition:border-color .15s;
+}
 .signal-card:hover{border-color:var(--border2)}
-.signal-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px;flex-wrap:wrap}
-.sig-type{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 9px;border-radius:4px}
-.sig-type.guidance{background:var(--blue-bg);color:var(--blue)}
-.sig-type.capex{background:var(--green-bg);color:var(--green)}
-.sig-type.margin{background:var(--amber-bg);color:var(--amber)}
-.sig-type.expansion{background:var(--purple-bg);color:var(--purple)}
-.sig-type.acquisition{background:var(--red-bg);color:var(--red)}
-.sig-type.risk{background:var(--red-bg);color:var(--red)}
-.sig-right{display:flex;align-items:center;gap:7px}
-.conf-dots{display:flex;gap:2px}
-.conf-dot{font-size:9px;color:var(--border2)}
-.conf-dot.on{color:var(--text)}
+.signal-top{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:11px;gap:8px;flex-wrap:wrap;
+}
+.sig-type-chip{
+  font-size:10px;font-weight:700;letter-spacing:.8px;
+  text-transform:uppercase;padding:3px 9px;border-radius:4px;
+}
+.sig-type-chip.guidance{background:var(--blue-bg);color:var(--blue)}
+.sig-type-chip.capex{background:var(--green-pale);color:var(--green)}
+.sig-type-chip.margin{background:var(--gold-bg);color:var(--gold)}
+.sig-type-chip.expansion{background:var(--purple-bg);color:var(--purple)}
+.sig-type-chip.acquisition{background:var(--red-bg);color:var(--red)}
+.sig-type-chip.risk{background:var(--red-bg);color:var(--red)}
+.signal-right{display:flex;align-items:center;gap:7px}
+.conf-dots{
+  display:flex;gap:2px;align-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+}
+.conf-dot.on{color:var(--green)}
+.conf-dot.off{color:var(--border2)}
 .signal-body{font-size:14px;color:var(--text);line-height:1.7}
-.signal-src{font-size:11px;color:var(--text3);margin-top:7px;padding-top:7px;border-top:1px solid var(--border)}
+.signal-source{
+  font-size:11px;color:var(--text3);
+  margin-top:8px;padding-top:8px;
+  border-top:1px solid var(--border);
+}
 
-/* CONCALL */
-.snapshot-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-.metric-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);text-align:center}
-.metric-label{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
-.metric-val{font-size:20px;font-family:'Instrument Serif',serif}
-.metric-val.up{color:var(--green)}
+/* ══════════ CONCALL SNAPSHOT ══════════ */
+.snapshot-metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:10px;margin-bottom:18px;
+}
+.metric-card{
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:16px;
+  box-shadow:var(--shadow);text-align:center;
+}
+.metric-label{
+  font-size:10px;font-weight:700;letter-spacing:.8px;
+  text-transform:uppercase;color:var(--text3);margin-bottom:8px;
+}
+.metric-val{
+  font-family:'Playfair Display',serif;
+  font-size:20px;font-weight:700;color:var(--text);
+}
+.metric-val.up{color:var(--green-light)}
 .metric-val.down{color:var(--red)}
-.metric-val.stable{color:var(--amber)}
-.tone-chip{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600}
-.tone-chip.positive{background:var(--green-bg);color:var(--green)}
-.tone-chip.neutral{background:var(--amber-bg);color:var(--amber)}
+.metric-val.stable{color:var(--gold)}
+.tone-chip{
+  display:inline-block;padding:4px 12px;border-radius:20px;
+  font-size:12px;font-weight:600;
+}
+.tone-chip.positive{background:var(--green-pale);color:var(--green)}
+.tone-chip.neutral{background:var(--gold-bg);color:var(--gold)}
 .tone-chip.cautious{background:var(--red-bg);color:var(--red)}
 
-.concall-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:12px;box-shadow:var(--shadow)}
-.cb-title{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.concall-block{
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:20px 22px;
+  margin-bottom:12px;box-shadow:var(--shadow);
+}
+.cb-header{
+  font-size:11px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;color:var(--text3);
+  margin-bottom:13px;display:flex;align-items:center;gap:7px;
+}
 .cb-body{font-size:14px;color:var(--text);line-height:1.75}
 
-.key-quotes{display:flex;flex-direction:column}
-.quote-row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.key-quotes-wrap{}
+.quote-row{
+  display:flex;gap:14px;
+  padding:14px 0;border-bottom:1px solid var(--border);
+}
 .quote-row:last-child{border-bottom:none;padding-bottom:0}
-.quote-accent{width:3px;min-height:30px;border-radius:2px;background:var(--border2);flex-shrink:0}
-.quote-text{font-size:13px;color:var(--text);line-height:1.65;font-style:italic;margin-bottom:4px}
+.quote-accent{
+  width:3px;min-height:32px;
+  border-radius:2px;background:var(--green);flex-shrink:0;
+}
+.quote-text{
+  font-family:'Playfair Display',serif;
+  font-size:14px;color:var(--text);
+  line-height:1.65;font-style:italic;margin-bottom:5px;
+}
 .quote-attr{font-size:11px;color:var(--text3)}
 
-/* EMPTY / LOADING / PAYWALL */
-.empty{text-align:center;padding:56px 20px}
-.empty-icon{font-size:32px;margin-bottom:12px;opacity:.4}
-.empty p{font-size:14px;color:var(--text3);line-height:1.6}
-.loading-wrap{text-align:center;padding:80px 20px}
-.spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--text);border-radius:50%;animation:spin .7s linear infinite}
+/* ══════════ EMPTY / LOADING / PAYWALL ══════════ */
+.empty-state{
+  text-align:center;padding:60px 20px;
+}
+.empty-state .icon{font-size:32px;opacity:.3;margin-bottom:12px;display:block}
+.empty-state p{font-size:14px;color:var(--text3)}
+.loading-wrap{
+  display:flex;align-items:center;justify-content:center;
+  padding:80px 20px;
+}
+.spinner{
+  width:22px;height:22px;
+  border:2.5px solid var(--border);
+  border-top-color:var(--green);
+  border-radius:50%;
+  animation:spin .65s linear infinite;
+}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.paywall-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:52px 32px;text-align:center;margin:40px 0;box-shadow:var(--shadow-md)}
-.paywall-icon{font-size:40px;margin-bottom:16px}
-.paywall-wrap h3{font-family:'Instrument Serif',serif;font-size:28px;font-weight:400;margin-bottom:8px;letter-spacing:-0.3px}
-.paywall-wrap p{font-size:14px;color:var(--text2);margin-bottom:24px;max-width:360px;margin-left:auto;margin-right:auto;line-height:1.65}
+.paywall-wrap{
+  background:#fff;border:1px solid var(--border);
+  border-radius:12px;padding:56px 32px;
+  text-align:center;margin:32px 0;
+  box-shadow:var(--shadow-md);
+}
+.paywall-icon{font-size:40px;margin-bottom:16px;display:block}
+.paywall-title{
+  font-family:'Playfair Display',serif;
+  font-size:28px;font-weight:700;
+  margin-bottom:8px;letter-spacing:-0.3px;
+}
+.paywall-desc{
+  font-size:14px;color:var(--text3);
+  margin-bottom:24px;max-width:360px;
+  margin-left:auto;margin-right:auto;line-height:1.65;
+}
 .paywall-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.btn-primary{background:var(--text);color:#fff;border:none;padding:10px 22px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s}
-.btn-primary:hover{opacity:.85}
-.btn-outline{background:none;border:1.5px solid var(--border);color:var(--text);padding:9px 20px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
-.btn-outline:hover{border-color:var(--text)}
+.btn-primary{
+  background:var(--green);color:#fff;border:none;
+  padding:10px 24px;border-radius:6px;
+  font-size:13px;font-weight:600;
+  font-family:'Sora',sans-serif;cursor:pointer;
+  transition:opacity .15s;
+}
+.btn-primary:hover{opacity:.88}
+.btn-outline{
+  background:none;border:1.5px solid var(--border2);
+  padding:9px 20px;border-radius:6px;
+  font-size:13px;font-weight:500;color:var(--text2);
+  font-family:'Sora',sans-serif;cursor:pointer;
+  transition:all .15s;
+}
+.btn-outline:hover{border-color:var(--green);color:var(--green)}
 
 /* TOAST */
-.toast{position:fixed;bottom:24px;right:20px;background:var(--text);color:#fff;padding:11px 18px;border-radius:8px;font-size:13px;font-weight:500;z-index:9999;transform:translateY(20px);opacity:0;transition:all .25s;pointer-events:none;max-width:calc(100vw - 40px)}
+.toast{
+  position:fixed;bottom:24px;right:20px;
+  background:var(--text);color:#fff;
+  padding:11px 18px;border-radius:7px;
+  font-size:13px;font-weight:500;z-index:9999;
+  transform:translateY(16px);opacity:0;
+  transition:all .25s;pointer-events:none;
+  box-shadow:var(--shadow-md);
+  max-width:calc(100vw - 40px);
+}
 .toast.show{transform:translateY(0);opacity:1}
 .toast.success{background:var(--green)}
 .toast.error{background:var(--red)}
 
-/* RESPONSIVE */
+/* ══════════ RESPONSIVE ══════════ */
 @media(max-width:700px){
-  .stats-grid{grid-template-columns:1fr 1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
   .snapshot-metrics{grid-template-columns:1fr 1fr}
-  .co-top{flex-direction:column}
-  .co-actions{padding-top:0}
+  .overview-grid{grid-template-columns:1fr}
+  .co-header-top{flex-direction:column}
+  .co-score-block{align-items:flex-start;flex-direction:row;gap:14px}
+  .score-label{text-align:left}
+  .score-pips{justify-content:flex-start}
+  nav{padding:0 14px}
+  .page-wrap{padding:16px 14px 60px}
+  .tab-btn{padding:8px 12px;font-size:12px}
 }
 @media(max-width:480px){
-  .page-wrap{padding:16px 14px 70px}
-  .stats-grid{grid-template-columns:1fr 1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
   .snapshot-metrics{grid-template-columns:1fr 1fr}
-  .nav-user-name{display:none}
-  .tab-btn{padding:8px 12px;font-size:12px}
   .co-name{font-size:26px}
-}
-@media(max-width:360px){
-  .stats-grid{grid-template-columns:1fr}
-  .snapshot-metrics{grid-template-columns:1fr}
+  .nav-breadcrumb{display:none}
 }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <div class="nav-left">
-    <div class="nav-logo" onclick="goHome()">13X <em>Investments</em></div>
-    <button class="nav-back" onclick="goBack()">← Screener</button>
+  <a class="nav-logo" onclick="goHome()" href="javascript:void(0)">
+    <div class="nav-logo-mark">13</div>
+    <div class="nav-logo-text">13X <em>Investments</em></div>
+  </a>
+  <div class="nav-sep"></div>
+  <button class="nav-back" onclick="goBack()">← Screener</button>
+  <div class="nav-breadcrumb" id="nav-breadcrumb">
+    <span>Home</span><span class="sep">/</span>
+    <span>Screener</span><span class="sep">/</span>
+    <span id="breadcrumb-name" style="color:var(--text);font-weight:500">Loading...</span>
   </div>
   <div class="nav-right" id="nav-user-area"></div>
 </nav>
 
+<!-- MAIN -->
 <div class="page-wrap">
   <div id="main-content">
     <div class="loading-wrap"><div class="spinner"></div></div>
@@ -238,11 +606,11 @@ nav{position:sticky;top:0;z-index:200;background:rgba(247,244,238,.92);backdrop-
 <script>
 const API_BASE = 'https://one3x-backend.onrender.com/api/v1';
 
-// State
+// ── State ──
 let currentUser = null, currentSub = null, isPaid = false;
 let companyData = null, watchlisted = false;
 
-// Auth
+// ── Auth ──
 const getToken        = () => localStorage.getItem('13x_token');
 const getRefreshToken = () => localStorage.getItem('13x_refresh_token');
 const setToken        = t  => localStorage.setItem('13x_token', t);
@@ -284,9 +652,10 @@ async function apiFetch(path, options={}, _retry=true) {
   return data;
 }
 
-// Utils
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function goHome(){window.location.href='/';}
+// ── Utils ──
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function goHome(){ window.location.href = '/'; }
 function goBack(){
   if (document.referrer && document.referrer.includes(location.hostname)) history.back();
   else window.location.href = '/';
@@ -295,38 +664,42 @@ function getTickerFromURL(){
   const p = window.location.pathname.split('/').filter(Boolean);
   return p[p.length-1] || null;
 }
-function showToast(msg, type){
+
+var _toastTimer;
+function showToast(msg, type=''){
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast show' + (type?' '+type:'');
-  clearTimeout(t._t);
-  t._t = setTimeout(()=>t.className='toast', 3000);
+  t.textContent = msg; t.className = `toast show ${type}`;
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => t.className='toast', 3000);
 }
 
-// Nav
+// ── Nav render ──
 function renderNav(){
   const area = document.getElementById('nav-user-area');
-  if (!currentUser){area.innerHTML='';return;}
+  if (!area) return;
+  if (!currentUser){ area.innerHTML=''; return; }
   const pl = isPaid ? (currentSub?.plan==='yearly'?'Pro Yearly':currentSub?.plan==='trial'?'Trial':'Pro') : 'Free';
-  area.innerHTML = `<span class="nav-user-name">${esc(currentUser.name.split(' ')[0])}</span><span class="nav-badge ${isPaid?'':'free'}">${esc(pl)}</span>`;
+  area.innerHTML = `<span class="nav-user">${esc(currentUser.name.split(' ')[0])}</span><span class="nav-badge ${isPaid?'':'free'}">${esc(pl)}</span>`;
 }
 
-// Tab switching
+// ── Tab switching ──
 function switchTab(tab){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
-  document.querySelectorAll('.tab-panel').forEach(p=>p.style.display = p.id==='panel-'+tab ? '' : 'none');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab===tab));
+  document.querySelectorAll('.tab-panel').forEach(p => p.style.display = p.id==='panel-'+tab ? '' : 'none');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// Watchlist
+// ── Watchlist ──
 async function toggleWatchlist(){
   if (!companyData) return;
   const btn = document.getElementById('btn-watch');
+  if (!btn) return;
   btn.disabled = true;
   try {
     if (watchlisted){
       await apiFetch('/data/watchlist/'+companyData.id,{method:'DELETE'});
       watchlisted = false;
-      btn.innerHTML = '☆ Watchlist';
+      btn.innerHTML = '☆ Add to Watchlist';
       btn.classList.remove('active');
       showToast('Removed from watchlist');
     } else {
@@ -336,156 +709,287 @@ async function toggleWatchlist(){
       btn.classList.add('active');
       showToast('Added to watchlist','success');
     }
-  } catch(err){showToast(err.message||'Failed','error');}
-  finally{btn.disabled=false;}
+  } catch(err){ showToast(err.message||'Failed','error'); }
+  finally { btn.disabled = false; }
 }
 
-// Helpers
-function trendCls(v){
-  if(!v) return '';
-  const u=v.toLowerCase();
-  if(['up','improving','growing'].includes(u)) return 'up';
-  if(['down','declining','falling'].includes(u)) return 'down';
-  return 'stable';
-}
-function trendIcon(v){
-  const c=trendCls(v);
-  if(c==='up') return '↑';
-  if(c==='down') return '↓';
-  return '→';
-}
-function scorePipsHTML(n,total=5){
-  let h='';
-  for(let i=1;i<=total;i++) h+=`<span class="pip${i<=n?' on':''}"></span>`;
-  return `<div class="score-pips">${h}</div>`;
-}
-function convDots(n,total=5){
-  let h='';
-  for(let i=1;i<=total;i++) h+=`<span class="c-dot${i<=n?' on':''}"></span>`;
-  return `<div class="conviction">${h}</div>`;
-}
-function confDotsHTML(n,total=5){
-  let h='';
-  for(let i=1;i<=total;i++) h+=`<span class="conf-dot${i<=n?' on':''}">●</span>`;
-  return `<div class="conf-dots">${h}</div>`;
-}
+// ── Helpers ──
+const TAG_LABELS = {
+  'capex':'Capex','margin_expansion':'Margin Expansion','margin':'Margin Expansion',
+  'geographic_expansion':'Geo Expansion','geo':'Geo Expansion',
+  'new_products':'New Products','new-prod':'New Products',
+  'acquisitions':'Acquisition','acq':'Acquisition',
+  'operating_leverage':'Op Leverage',
+  'risk':'Risk','guidance':'Guidance','expansion':'Expansion',
+};
+
 function catLabel(t){
-  const map = {
-    'capex':               'Capex',
-    'margin_expansion':    'Margin Exp.',
-    'margin':              'Margin Exp.',
-    'geographic_expansion':'Geo Expansion',
-    'geo':                 'Geo Expansion',
-    'new_products':        'New Products',
-    'new-prod':            'New Products',
-    'acquisitions':        'Acquisition',
-    'acq':                 'Acquisition',
-    'operating_leverage':  'Op Leverage',
-    'risk':                'Risk',
-    'expansion':           'Expansion',
-    'guidance':            'Guidance',
-  };
-  const key = (t||'').toLowerCase().trim().replace(/["\[\]]/g,'');
-  return map[key] || key.replace(/_/g,' ').replace(/\w/g, c => c.toUpperCase());
+  const key=(t||'').toLowerCase().trim().replace(/["\[\]]/g,'');
+  return TAG_LABELS[key] || key.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
 }
+
+function catKey(t){ return (t||'').toLowerCase().trim().replace(/["\[\]]/g,''); }
+
 function stageLabel(s){
   return {early_growth:'Early Growth',acceleration:'Acceleration',maturity:'Maturity',decline:'Decline'}[s]||s;
 }
 
-// ── Overview tab ──────────────────────────────────────────────
-function buildOverview(co){
-  const cats = (co.catalyst_tags||[]).map(t=>`<span class="cat-badge ${esc(t)}">${catLabel(t)}</span>`).join('');
+function trendCls(v){
+  if(!v) return '';
+  const u=v.toLowerCase();
+  if(['up','improving','growing','expansion'].some(x=>u.includes(x))) return 'up';
+  if(['down','declining','falling','contraction'].some(x=>u.includes(x))) return 'down';
+  return 'stable';
+}
+function trendIcon(v){
+  const c=trendCls(v);
+  return c==='up'?'↑':c==='down'?'↓':'→';
+}
+
+function scorePipsHTML(n, total=5){
+  let h='';
+  for(let i=1;i<=total;i++) h+=`<div class="pip ${i<=n?'on':''}"></div>`;
+  return `<div class="score-pips">${h}</div>`;
+}
+
+function convDotsHTML(n, total=5){
+  let h='';
+  for(let i=1;i<=total;i++) h+=`<div class="conv-dot ${i<=n?'on':''}"></div>`;
+  return `<div class="conv-row">${h}<span class="conv-text">${n}/${total}</span></div>`;
+}
+
+function confDotsHTML(n, total=5){
+  let h='';
+  for(let i=1;i<=total;i++) h+=`<span class="conf-dot ${i<=n?'on':'off'}">●</span>`;
+  return `<div class="conf-dots">${h}</div>`;
+}
+
+function normTags(tags){
+  if(typeof tags==='string'){try{tags=JSON.parse(tags);}catch{tags=tags.split(',');}}
+  if(!Array.isArray(tags)) return [];
+  return tags.map(t=>{
+    const raw=(t||'').toString().trim().toLowerCase().replace(/^"|"$/g,'').replace(/\[|\]/g,'');
+    return raw;
+  }).filter(t=>t.length>0);
+}
+
+// ══════════════════════════════════════════════
+// BUILD: COMPANY HEADER
+// ══════════════════════════════════════════════
+function buildHeader(co, inWatch){
+  const tags = normTags(co.catalyst_tags||[]);
+  const catHTML = tags.map(t=>`<span class="cat ${t}">${catLabel(t)}</span>`).join('');
+
   return `
-    <div class="stats-grid">
+    <div class="co-header">
+      <div class="co-header-top">
+        <div class="co-meta">
+          ${co.industry ? `<div class="co-industry-chip">${esc(co.industry)}</div>` : ''}
+          <h1 class="co-name">${esc(co.name)}</h1>
+          <div class="co-ticker">
+            ${co.ticker ? `<span class="co-ticker-val">${esc(co.ticker)}</span>` : ''}
+            <span style="color:var(--text4)">NSE / BSE</span>
+          </div>
+          <div class="co-pills">
+            ${co.stage ? `<span class="pill stage-${co.stage}">${stageLabel(co.stage)}</span>` : ''}
+            ${co.market_cap ? `<span class="pill">${esc(co.market_cap)} Cap</span>` : ''}
+          </div>
+        </div>
+        <div class="co-score-block">
+          <div>
+            <span class="score-num">${co.score||0}<span class="score-denom">/5</span></span>
+          </div>
+          <div class="score-label">Trigger Score</div>
+          ${scorePipsHTML(co.score||0)}
+          <button id="btn-watch" class="btn-watch ${inWatch?'active':''}" onclick="toggleWatchlist()">
+            ${inWatch?'⭐ Watchlisted':'☆ Add to Watchlist'}
+          </button>
+        </div>
+      </div>
+      ${catHTML ? `
+        <div class="catalyst-section" style="margin-top:4px;border:none;padding:0;background:none;box-shadow:none">
+          <span class="catalyst-label">Catalysts</span>
+          <div class="catalyst-tags">${catHTML}</div>
+        </div>` : ''}
+    </div>
+  `;
+}
+
+// ══════════════════════════════════════════════
+// BUILD: OVERVIEW TAB
+// ══════════════════════════════════════════════
+function buildOverview(co, triggers, signals, snapshot){
+  const tags = normTags(co.catalyst_tags||[]);
+
+  return `
+    <div class="stats-row">
       <div class="stat-card">
         <div class="stat-label">Score</div>
-        <div class="stat-value">${co.score||0}<span style="font-size:13px;color:var(--text3);font-family:'DM Sans'">/5</span></div>
+        <div class="stat-value">${co.score||0}<span style="font-size:14px;color:var(--text3);font-family:'Sora',sans-serif;font-weight:400">/5</span></div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Stage</div>
-        <div class="stat-value sm">${co.stage ? stageLabel(co.stage) : '—'}</div>
+        <div class="stat-value text-sm">${co.stage ? stageLabel(co.stage) : '—'}</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Market Cap</div>
-        <div class="stat-value sm">${co.market_cap ? esc(co.market_cap)+' Cap' : '—'}</div>
+        <div class="stat-value text-sm">${co.market_cap ? esc(co.market_cap)+' Cap' : '—'}</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Industry</div>
-        <div class="stat-value sm" style="font-size:12px">${esc(co.industry||'—')}</div>
+        <div class="stat-label">Triggers</div>
+        <div class="stat-value">${triggers.length}</div>
       </div>
     </div>
-    ${cats ? `<div style="margin-bottom:20px"><div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Catalyst Tags</div><div class="catalyst-row">${cats}</div></div>` : ''}
+
     ${co.top_trigger ? `
-    <div class="concall-block">
-      <div class="cb-title">⚡ Top Growth Trigger</div>
-      <div class="cb-body">${esc(co.top_trigger)}</div>
+    <div class="top-trigger-banner" style="margin-bottom:18px">
+      <div class="tt-eyebrow">⚡ Top Trigger</div>
+      <div class="tt-text">${esc(co.top_trigger)}</div>
     </div>` : ''}
-    <div style="margin-top:4px;display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn-outline" style="font-size:12px" onclick="switchTab('triggers')">All triggers →</button>
-      <button class="btn-outline" style="font-size:12px" onclick="switchTab('signals')">Management signals →</button>
-      <button class="btn-outline" style="font-size:12px" onclick="switchTab('concall')">Concall snapshot →</button>
-    </div>`;
-}
 
-// ── Signals tab ───────────────────────────────────────────────
-function buildSignals(signals){
-  if(!signals||!signals.length) return `<div class="empty"><div class="empty-icon">📡</div><p>No management signals available for this company yet.</p></div>`;
-  let html = `<div class="section-hdr"><span class="section-title">Management Signals <span class="section-count">${signals.length}</span></span></div>`;
-  signals.forEach(s=>{
-    html += `
-    <div class="signal-card">
-      <div class="signal-card-top">
-        <span class="sig-type ${esc(s.signal_type||'guidance')}">${esc(s.signal_type||'guidance')}</span>
-        <div class="sig-right">
-          ${confDotsHTML(s.confidence||0)}
-          ${s.quarter?`<span class="q-chip">${esc(s.quarter)}</span>`:''}
+    <div class="overview-grid">
+      ${triggers.length ? `
+      <div class="overview-card">
+        <div class="card-title">
+          <div class="card-title-icon">⚡</div>
+          Top Growth Triggers
         </div>
-      </div>
-      <div class="signal-body">${esc(s.content)}</div>
-      ${s.source?`<div class="signal-src">${esc(s.source)}</div>`:''}
-    </div>`;
-  });
-  return html;
+        ${triggers.slice(0,3).map(t=>`
+          <div style="padding:10px 0;border-bottom:1px solid var(--border)">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;flex-wrap:wrap">
+              ${convDotsHTML(t.conviction_score||0)}
+              ${t.catalyst_type?`<span class="cat ${catKey(t.catalyst_type)}" style="font-size:10px">${catLabel(t.catalyst_type)}</span>`:''}
+              ${t.quarter?`<span class="q-chip">${esc(t.quarter)}</span>`:''}
+            </div>
+            <div style="font-size:13px;color:var(--text);line-height:1.6">${esc(t.trigger_text||'')}</div>
+          </div>`).join('')}
+        <div class="overview-cta-row">
+          <button class="btn-tab-link" onclick="switchTab('triggers')">All ${triggers.length} triggers →</button>
+        </div>
+      </div>` : `
+      <div class="overview-card">
+        <div class="card-title"><div class="card-title-icon">⚡</div>Triggers</div>
+        <p style="color:var(--text3);font-size:13px">No triggers available yet.</p>
+      </div>`}
+
+      ${snapshot ? `
+      <div class="overview-card">
+        <div class="card-title">
+          <div class="card-title-icon">📋</div>
+          Concall Snapshot · <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">${esc(snapshot.quarter||'')}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+          <div style="background:var(--bg);border-radius:6px;padding:10px;text-align:center">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px">Revenue</div>
+            <div class="metric-val ${trendCls(snapshot.revenue_trend)}" style="font-size:18px">${trendIcon(snapshot.revenue_trend)} ${esc(snapshot.revenue_trend||'—')}</div>
+          </div>
+          <div style="background:var(--bg);border-radius:6px;padding:10px;text-align:center">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:4px">Margins</div>
+            <div class="metric-val ${trendCls(snapshot.margin_trend)}" style="font-size:18px">${trendIcon(snapshot.margin_trend)} ${esc(snapshot.margin_trend||'—')}</div>
+          </div>
+        </div>
+        ${snapshot.guidance_summary ? `<div style="font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:10px">${esc(snapshot.guidance_summary.slice(0,180))}${snapshot.guidance_summary.length>180?'…':''}</div>` : ''}
+        <div class="overview-cta-row">
+          <button class="btn-tab-link" onclick="switchTab('concall')">Full snapshot →</button>
+        </div>
+      </div>` : `
+      <div class="overview-card">
+        <div class="card-title"><div class="card-title-icon">📋</div>Concall Snapshot</div>
+        <p style="color:var(--text3);font-size:13px">No concall snapshot yet.</p>
+        <div class="overview-cta-row" style="margin-top:12px">
+          <button class="btn-tab-link" onclick="switchTab('signals')">View signals →</button>
+        </div>
+      </div>`}
+    </div>
+  `;
 }
 
-// ── Triggers tab ──────────────────────────────────────────────
+// ══════════════════════════════════════════════
+// BUILD: TRIGGERS TAB
+// ══════════════════════════════════════════════
 function buildTriggers(triggers){
-  if(!triggers||!triggers.length) return `<div class="empty"><div class="empty-icon">⚡</div><p>No growth triggers available for this company yet.</p></div>`;
-  let html = `<div class="section-hdr"><span class="section-title">Growth Triggers <span class="section-count">${triggers.length}</span></span></div>`;
-  triggers.forEach(t=>{
-    html += `
-    <div class="trigger-card">
-      <div class="trigger-card-top">
-        <div class="trigger-meta">
-          ${convDots(t.conviction_score||0)}
-          <span class="conv-text">${t.conviction_score||0}/5</span>
-          ${t.catalyst_type?`<span class="cat-badge ${esc(t.catalyst_type)}">${catLabel(t.catalyst_type)}</span>`:''}
-        </div>
-        ${t.quarter?`<span class="q-chip">${esc(t.quarter)}</span>`:''}
-      </div>
-      <div class="trigger-body">${esc(t.trigger_text)}</div>
-      ${t.source_quote?`<div class="trigger-quote-block"><p>"${esc(t.source_quote)}"</p></div>`:''}
+  if(!triggers||!triggers.length) return `
+    <div class="empty-state">
+      <span class="icon">⚡</span>
+      <p>No growth triggers available for this company yet.</p>
     </div>`;
-  });
-  return html;
+
+  return `
+    <div class="triggers-section-header">
+      <span style="font-size:15px;font-weight:700;color:var(--text)">Growth Triggers</span>
+      <span class="triggers-count">${triggers.length} total</span>
+    </div>
+    ${triggers.map(t=>`
+    <div class="trigger-card">
+      <div class="trigger-top">
+        <div class="trigger-left">
+          ${convDotsHTML(t.conviction_score||0)}
+          ${t.catalyst_type ? `<span class="cat ${catKey(t.catalyst_type)}">${catLabel(t.catalyst_type)}</span>` : ''}
+        </div>
+        ${t.quarter ? `<span class="q-chip">${esc(t.quarter)}</span>` : ''}
+      </div>
+      <div class="trigger-body">${esc(t.trigger_text||'')}</div>
+      ${t.source_quote ? `
+      <div class="trigger-quote">
+        <p>"${esc(t.source_quote)}"</p>
+      </div>` : ''}
+    </div>`).join('')}
+  `;
 }
 
-// ── Concall tab ───────────────────────────────────────────────
+// ══════════════════════════════════════════════
+// BUILD: SIGNALS TAB
+// ══════════════════════════════════════════════
+function buildSignals(signals){
+  if(!signals||!signals.length) return `
+    <div class="empty-state">
+      <span class="icon">📡</span>
+      <p>No management signals available for this company yet.</p>
+    </div>`;
+
+  return `
+    <div class="triggers-section-header">
+      <span style="font-size:15px;font-weight:700;color:var(--text)">Management Signals</span>
+      <span class="triggers-count">${signals.length} total</span>
+    </div>
+    ${signals.map(s=>`
+    <div class="signal-card">
+      <div class="signal-top">
+        <span class="sig-type-chip ${esc(s.signal_type||'guidance')}">${esc(s.signal_type||'guidance')}</span>
+        <div class="signal-right">
+          ${confDotsHTML(s.confidence||0)}
+          ${s.quarter ? `<span class="q-chip">${esc(s.quarter)}</span>` : ''}
+        </div>
+      </div>
+      <div class="signal-body">${esc(s.content||'')}</div>
+      ${s.source ? `<div class="signal-source">Source: ${esc(s.source)}</div>` : ''}
+    </div>`).join('')}
+  `;
+}
+
+// ══════════════════════════════════════════════
+// BUILD: CONCALL TAB
+// ══════════════════════════════════════════════
 function buildConcall(snapshot){
-  if(!snapshot) return `<div class="empty"><div class="empty-icon">📋</div><p>No concall snapshot available for this company yet.</p></div>`;
-  const tc = trendCls(snapshot.revenue_trend);
-  const mc = trendCls(snapshot.margin_trend);
+  if(!snapshot) return `
+    <div class="empty-state">
+      <span class="icon">📋</span>
+      <p>No concall snapshot available for this company yet.</p>
+    </div>`;
+
   const toneC = (snapshot.tone||'neutral').toLowerCase();
+  const revCls = trendCls(snapshot.revenue_trend);
+  const marCls = trendCls(snapshot.margin_trend);
 
   let html = `
     <div class="snapshot-metrics">
       <div class="metric-card">
         <div class="metric-label">Revenue</div>
-        <div class="metric-val ${tc}">${trendIcon(snapshot.revenue_trend)} ${esc(snapshot.revenue_trend||'—')}</div>
+        <div class="metric-val ${revCls}">${trendIcon(snapshot.revenue_trend)} ${esc(snapshot.revenue_trend||'—')}</div>
       </div>
       <div class="metric-card">
         <div class="metric-label">Margins</div>
-        <div class="metric-val ${mc}">${trendIcon(snapshot.margin_trend)} ${esc(snapshot.margin_trend||'—')}</div>
+        <div class="metric-val ${marCls}">${trendIcon(snapshot.margin_trend)} ${esc(snapshot.margin_trend||'—')}</div>
       </div>
       <div class="metric-card">
         <div class="metric-label">Mgmt Tone</div>
@@ -493,21 +997,30 @@ function buildConcall(snapshot){
       </div>
       <div class="metric-card">
         <div class="metric-label">Quarter</div>
-        <div class="metric-val" style="font-size:15px;font-family:'Geist Mono',monospace">${esc(snapshot.quarter||'—')}</div>
+        <div class="metric-val" style="font-size:15px;font-family:'JetBrains Mono',monospace">${esc(snapshot.quarter||'—')}</div>
       </div>
     </div>`;
 
   if(snapshot.guidance_summary){
-    html += `<div class="concall-block"><div class="cb-title">🎯 Management Guidance</div><div class="cb-body">${esc(snapshot.guidance_summary)}</div></div>`;
+    html+=`<div class="concall-block">
+      <div class="cb-header">🎯 Management Guidance</div>
+      <div class="cb-body">${esc(snapshot.guidance_summary)}</div>
+    </div>`;
   }
   if(snapshot.capex_commentary){
-    html += `<div class="concall-block"><div class="cb-title">🏗️ Capex Commentary</div><div class="cb-body">${esc(snapshot.capex_commentary)}</div></div>`;
+    html+=`<div class="concall-block">
+      <div class="cb-header">🏗️ Capex Commentary</div>
+      <div class="cb-body">${esc(snapshot.capex_commentary)}</div>
+    </div>`;
   }
   if(snapshot.risks){
-    html += `<div class="concall-block"><div class="cb-title">⚠️ Risks Highlighted</div><div class="cb-body">${esc(snapshot.risks)}</div></div>`;
+    html+=`<div class="concall-block">
+      <div class="cb-header">⚠️ Risks Highlighted</div>
+      <div class="cb-body">${esc(snapshot.risks)}</div>
+    </div>`;
   }
-  if(snapshot.key_quotes && snapshot.key_quotes.length){
-    const qHTML = snapshot.key_quotes.map(q=>`
+  if(snapshot.key_quotes&&snapshot.key_quotes.length){
+    const quotesHTML = snapshot.key_quotes.map(q=>`
       <div class="quote-row">
         <div class="quote-accent"></div>
         <div>
@@ -515,58 +1028,49 @@ function buildConcall(snapshot){
           ${(q.speaker||q.quarter)?`<div class="quote-attr">${[q.speaker,q.quarter].filter(Boolean).map(esc).join(' · ')}</div>`:''}
         </div>
       </div>`).join('');
-    html += `<div class="concall-block"><div class="cb-title">📞 Key Management Quotes</div><div class="key-quotes">${qHTML}</div></div>`;
+    html+=`<div class="concall-block">
+      <div class="cb-header">📞 Key Management Quotes</div>
+      <div class="key-quotes-wrap">${quotesHTML}</div>
+    </div>`;
   }
   return html;
 }
 
-// ── Main render ───────────────────────────────────────────────
-function renderPage(co, triggers, signals, snapshot){
-  const cats = (co.catalyst_tags||[]).map(t=>`<span class="cat-badge ${esc(t)}">${catLabel(t)}</span>`).join('');
+// ══════════════════════════════════════════════
+// MAIN PAGE RENDER
+// ══════════════════════════════════════════════
+function renderPage(co, triggers, signals, snapshot, inWatch){
+  // Update page title & breadcrumb
+  document.title = co.name + ' — 13X Investments';
+  const bc = document.getElementById('breadcrumb-name');
+  if(bc) bc.textContent = co.name;
+
+  const trigCount = triggers.length;
+  const sigCount  = signals.length;
 
   document.getElementById('main-content').innerHTML = `
-    <div class="co-breadcrumb">
-      <a onclick="goHome()">Home</a><span class="sep">/</span>
-      <a onclick="goBack()">Screener</a><span class="sep">/</span>
-      <span>${esc(co.name)}</span>
-    </div>
+    ${buildHeader(co, inWatch)}
 
-    <div class="co-top">
-      <div>
-        <h1 class="co-name">${esc(co.name)}</h1>
-        ${co.ticker?`<div class="co-ticker">${esc(co.ticker)}</div>`:''}
-        <div class="co-pills">
-          ${co.industry?`<span class="pill industry">${esc(co.industry)}</span>`:''}
-          ${co.stage?`<span class="pill stage-${co.stage}">${stageLabel(co.stage)}</span>`:''}
-          ${co.market_cap?`<span class="pill cap">${esc(co.market_cap)} Cap</span>`:''}
-        </div>
-        <div class="co-score-row">
-          ${scorePipsHTML(co.score||0)}
-          <span class="score-text">${co.score||0}/5</span>
-        </div>
-        ${cats?`<div class="catalyst-row" style="margin-top:8px">${cats}</div>`:''}
-      </div>
-      <div class="co-actions">
-        <button id="btn-watch" class="btn-watch ${watchlisted?'active':''}" onclick="toggleWatchlist()">
-          ${watchlisted?'⭐ Watchlisted':'☆ Watchlist'}
-        </button>
-      </div>
-    </div>
+    ${co.top_trigger ? `
+    <div class="top-trigger-banner">
+      <div class="tt-eyebrow">⚡ Top Trigger</div>
+      <div class="tt-text">${esc(co.top_trigger)}</div>
+    </div>` : ''}
 
-    ${co.top_trigger?`
-    <div class="top-trigger-bar">
-      <span class="tt-label">Top Trigger</span>
-      <span class="tt-text">${esc(co.top_trigger)}</span>
-    </div>`:''}
-
-    <div class="tabs-wrap">
+    <div class="tabs-bar">
       <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
-      <button class="tab-btn" data-tab="triggers" onclick="switchTab('triggers')">Triggers<span class="tab-count">${triggers.length}</span></button>
-      <button class="tab-btn" data-tab="signals" onclick="switchTab('signals')">Signals<span class="tab-count">${signals.length}</span></button>
-      <button class="tab-btn" data-tab="concall" onclick="switchTab('concall')">Concall</button>
+      <button class="tab-btn" data-tab="triggers" onclick="switchTab('triggers')">
+        Triggers <span class="tab-count">${trigCount}</span>
+      </button>
+      <button class="tab-btn" data-tab="signals" onclick="switchTab('signals')">
+        Signals <span class="tab-count">${sigCount}</span>
+      </button>
+      <button class="tab-btn" data-tab="concall" onclick="switchTab('concall')">
+        Concall Snapshot
+      </button>
     </div>
 
-    <div id="panel-overview" class="tab-panel">${buildOverview(co)}</div>
+    <div id="panel-overview" class="tab-panel">${buildOverview(co, triggers, signals, snapshot)}</div>
     <div id="panel-triggers" class="tab-panel" style="display:none">${buildTriggers(triggers)}</div>
     <div id="panel-signals"  class="tab-panel" style="display:none">${buildSignals(signals)}</div>
     <div id="panel-concall"  class="tab-panel" style="display:none">${buildConcall(snapshot)}</div>
@@ -576,9 +1080,9 @@ function renderPage(co, triggers, signals, snapshot){
 function renderPaywall(){
   document.getElementById('main-content').innerHTML = `
     <div class="paywall-wrap">
-      <div class="paywall-icon">🔒</div>
-      <h3>Subscribe to View Company Details</h3>
-      <p>Get full access to concall snapshots, management signals, and growth triggers for 2000+ Indian companies.</p>
+      <span class="paywall-icon">🔒</span>
+      <h2 class="paywall-title">Subscribe to View Company Details</h2>
+      <p class="paywall-desc">Get full access to concall snapshots, management signals, and growth triggers for 2000+ Indian companies.</p>
       <div class="paywall-btns">
         <button class="btn-primary" onclick="goHome()">See Plans →</button>
         <button class="btn-outline" onclick="goHome()">Sign In</button>
@@ -588,33 +1092,34 @@ function renderPaywall(){
 
 function renderError(msg){
   document.getElementById('main-content').innerHTML = `
-    <div class="empty" style="padding-top:80px">
-      <div class="empty-icon">⚠️</div>
+    <div class="empty-state" style="padding-top:80px">
+      <span class="icon">⚠️</span>
       <p style="margin-bottom:20px">${esc(msg)}</p>
       <button class="btn-primary" onclick="goBack()">Go Back</button>
     </div>`;
 }
 
-// ── Init ──────────────────────────────────────────────────────
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
 async function init(){
   const ticker = getTickerFromURL();
-  if(!ticker || ticker==='company'){renderError('Company not found.');return;}
+  if(!ticker || ticker==='company'){ renderError('Company not found.'); return; }
 
+  // Load user state
   const token = getToken();
   if(token){
     try{
       const me = await apiFetch('/auth/me');
-      currentUser = me.user;
-      currentSub  = me.subscription;
-      isPaid      = me.isPaid;
-    } catch{}
+      currentUser = me.user; currentSub = me.subscription; isPaid = me.isPaid;
+    } catch {}
   }
-
   renderNav();
-  if(!isPaid){renderPaywall();return;}
+
+  if(!isPaid){ renderPaywall(); return; }
 
   try{
-    const [coRes,triggersRes,signalsRes,snapshotRes,watchlistRes] = await Promise.allSettled([
+    const [coRes, triggersRes, signalsRes, snapshotRes, watchlistRes] = await Promise.allSettled([
       apiFetch('/data/companies/by-ticker/'+encodeURIComponent(ticker)),
       apiFetch('/data/companies/by-ticker/'+encodeURIComponent(ticker)+'/triggers'),
       apiFetch('/data/companies/by-ticker/'+encodeURIComponent(ticker)+'/signals'),
@@ -622,10 +1127,10 @@ async function init(){
       apiFetch('/data/watchlist'),
     ]);
 
-    if(coRes.status==='rejected'){renderError('Company not found: '+ticker);return;}
+    if(coRes.status==='rejected'){ renderError('Company not found: '+ticker); return; }
 
     companyData = coRes.value.data;
-    document.title = companyData.name + ' — 13X Investments';
+    if(!companyData){ renderError('Company not found: '+ticker); return; }
 
     const triggers = triggersRes.status==='fulfilled' ? (triggersRes.value.data||[]) : [];
     const signals  = signalsRes.status ==='fulfilled' ? (signalsRes.value.data ||[]) : [];
@@ -636,7 +1141,7 @@ async function init(){
       watchlisted = wids.has(companyData.id);
     }
 
-    renderPage(companyData, triggers, signals, snapshot);
+    renderPage(companyData, triggers, signals, snapshot, watchlisted);
   } catch(err){
     renderError(err.message||'Failed to load company.');
   }
