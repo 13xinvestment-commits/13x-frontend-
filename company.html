@@ -1609,6 +1609,45 @@ function buildConcall(snapshot, co, triggers){
 }
 
 // ══════════════════════════════════════════════
+// BUILD: SIGNALS TAB
+// ══════════════════════════════════════════════
+function buildSignals(signals){
+  if(!signals||!signals.length) return `
+    <div class="empty-state">
+      <span class="icon">📡</span>
+      <p>No management signals available for this company yet.</p>
+    </div>`;
+
+  return `
+    <div class="triggers-section-header" style="margin-bottom: 20px">
+      <span style="font-size:15px;font-weight:700;color:var(--text)">Management Signals</span>
+      <span class="triggers-count">${signals.length} total</span>
+    </div>
+    <div class="signals-list">
+      ${signals.map(s => {
+        const typeClass = (s.signal_type || '').toLowerCase().trim();
+        const typeLabel = catLabel(s.signal_type);
+        return `
+          <div class="signal-card">
+            <div class="signal-top">
+              <span class="sig-type-chip ${typeClass}">${esc(typeLabel)}</span>
+              <div class="signal-right">
+                ${confDotsHTML(s.confidence || 0)}
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);font-weight:600">${esc(s.quarter || '')}</span>
+              </div>
+            </div>
+            <div class="signal-body">
+              ${esc(s.content || '')}
+            </div>
+            ${s.source ? `<div class="signal-source">${esc(s.source)}</div>` : ''}
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+// ══════════════════════════════════════════════
 // GLOBAL SEARCH LOGIC
 // ══════════════════════════════════════════════
 let globalSearchTimer = null;
