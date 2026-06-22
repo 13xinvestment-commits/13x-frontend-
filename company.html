@@ -980,7 +980,7 @@ nav{
 <div class="toast" id="toast"></div>
 
 <script>
-const API_BASE = 'https://one3x-backend.onrender.com/api/v1';
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3001/api/v1' : 'https://one3x-backend.onrender.com/api/v1';
 
 // ── State ──
 let currentUser = null, currentSub = null, isPaid = false;
@@ -1844,7 +1844,8 @@ async function init(){
   }
   renderNav();
 
-  if(!isPaid){ renderPaywall(); return; }
+  // Bypass paywall
+  // if(!isPaid){ renderPaywall(); return; }
 
   // Load industries list for global search mapping
   loadIndustries();

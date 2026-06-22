@@ -703,40 +703,27 @@ tr:hover td{background:var(--green-mist)}
 
 /* ══════════════════════ SCREENER PAGE ══════════════════════ */
 .screener-page{max-width:1080px;margin:0 auto;padding:40px 28px 80px}
-.filter-bar{
-  display:flex;gap:8px;flex-wrap:wrap;
-  margin-bottom:16px;align-items:flex-end;
-}
-.filter-group{display:flex;flex-direction:column;gap:4px}
-.filter-label{
-  font-size:10px;font-weight:700;
-  letter-spacing:.6px;text-transform:uppercase;color:var(--text3);
-}
-.filter-select,.filter-input{
-  padding:8px 12px;border:1.5px solid var(--border);
-  border-radius:5px;font-size:13px;
-  background:#fff;color:var(--text);
-  outline:none;transition:border-color .15s;
-  appearance:none;
-}
-.filter-select:focus,.filter-input:focus{border-color:var(--green)}
-.filter-input{min-width:160px}
-.result-info{font-size:12px;color:var(--text3);align-self:flex-end;padding-bottom:9px}
+.sector-grid  { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.company-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px; }
 
-/* PAYWALL CARD */
-.paywall-card{
-  background:#fff;border:1px solid var(--border);
-  border-radius:12px;padding:52px 28px;
-  text-align:center;margin:32px 0;
-  box-shadow:var(--shadow);
+@media (max-width: 680px) {
+  .metrics-grid  { grid-template-columns: repeat(2, 1fr); }
+  .sector-grid   { grid-template-columns: 1fr; }
+  .company-grid  { grid-template-columns: repeat(2, 1fr); }
 }
-.paywall-card .lock{font-size:36px;margin-bottom:14px;display:block}
-.paywall-card h3{
-  font-family:'Playfair Display',serif;
-  font-size:24px;font-weight:700;margin-bottom:8px;
+@media (max-width: 380px) {
+  .company-grid  { grid-template-columns: 1fr; }
 }
-.paywall-card p{font-size:14px;color:var(--text3);margin-bottom:20px;max-width:360px;margin-left:auto;margin-right:auto}
-.paywall-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+.hov { transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease; cursor: pointer; }
+.hov:hover { transform: translateY(-3px); }
+
+.nav-back { display:flex; align-items:center; gap:5px; background:none; border:1px solid #E2E8F0; border-radius:8px; padding:6px 12px; font-size:12px; color:#475569; cursor:pointer; font-family:inherit; transition:border-color 0.18s,color 0.18s; }
+.nav-back:hover { border-color:#CBD5E1; color:#0F172A; }
+.nav-get  { font-size:12px; font-weight:700; color:#fff; text-decoration:none; background:#2563EB; padding:7px 14px; border-radius:8px; white-space:nowrap; transition:background 0.18s; }
+.nav-get:hover { background:#1D4ED8; }
+
 
 /* ══════════════════════ DASHBOARD ══════════════════════ */
 .dash-wrap{max-width:1080px;margin:0 auto;padding:32px 28px 80px}
@@ -990,7 +977,7 @@ footer{
   <div class="modal">
     <button class="modal-close" onclick="closeAuth()">✕</button>
     <div class="modal-title" id="auth-title">Welcome back</div>
-    <div class="modal-sub" id="auth-sub">Sign in to access your dashboard</div>
+    <div class="modal-sub" id="auth-sub">Sign in to access Concall Insights</div>
     <div class="auth-error" id="auth-error"></div>
     <div class="form-group" id="name-group" style="display:none">
       <label class="form-label">Full Name</label>
@@ -1069,7 +1056,8 @@ footer{
     <button class="nav-link active" id="nav-home" onclick="showPage('home')">Home</button>
     <button class="nav-link" id="nav-features" onclick="showPage('features')">Features</button>
     <button class="nav-link" id="nav-industries" onclick="showPage('industries')">Industries</button>
-    <button class="nav-link" id="nav-screener" onclick="showPage('screener')">Screener</button>
+    <button class="nav-link" id="nav-screener" onclick="showPage('screener')">Concall Insights</button>
+    <button class="nav-link" id="nav-annual" onclick="showPage('annual')">Annual Reports</button>
     <button class="nav-link" id="nav-pricing" onclick="showPage('pricing')">Pricing</button>
     <button class="nav-link" id="nav-about" onclick="showPage('about')">About</button>
   </div>
@@ -1081,7 +1069,7 @@ footer{
     <div id="nav-logged-in" style="display:none;align-items:center;gap:8px">
       <span id="nav-user-name" style="font-size:13px;font-weight:500;color:var(--text2)"></span>
       <span id="nav-badge" class="nav-badge free">Free</span>
-      <button class="nav-link" id="nav-dashboard" style="display:none" onclick="showPage('dashboard')">Dashboard</button>
+
       <button class="nav-link" id="nav-admin" style="display:none" onclick="showPage('admin')">Admin</button>
       <button class="btn-nav-sign" onclick="logout()">Sign Out</button>
     </div>
@@ -1180,14 +1168,12 @@ footer{
           </table>
         </div>
         <div style="border-top:1px solid var(--border)">
-          <div class="tbl-lock-row">
+          <div class="tbl-lock-row" style="background: none; padding: 24px;">
             <div class="tbl-lock-content">
-              <span class="lock-icon">🔒</span>
-              <h4>Unlock All 2000+ Companies</h4>
-              <p>Subscribe to filter by catalyst, industry, stage, market cap and more.</p>
+              <h4>Explore the Full Database</h4>
+              <p>Filter by catalyst, industry, and explore guides for 2000+ companies.</p>
               <div class="tbl-lock-btns">
-                <button class="btn-primary" onclick="showPage('pricing')">See Plans →</button>
-                <button class="btn-ghost" onclick="openAuth('login')">Sign In</button>
+                <button class="btn-primary" onclick="showPage('screener')">Browse Concall Insights →</button>
               </div>
             </div>
           </div>
@@ -1315,7 +1301,7 @@ footer{
           <h5>Product</h5>
           <a onclick="showPage('features')">Features</a>
           <a onclick="showPage('industries')">Industries</a>
-          <a onclick="showPage('screener')">Screener</a>
+          <a onclick="showPage('screener')">Concall Insights</a>
           <a onclick="showPage('pricing')">Pricing</a>
         </div>
         <div class="footer-col">
@@ -1448,74 +1434,79 @@ footer{
   </div>
 </div>
 
-<!-- ════════════════ SCREENER PAGE ════════════════ -->
+<!-- ════════════════ CONCALL INSIGHTS PAGE ════════════════ -->
 <div id="page-screener" class="page">
   <div class="screener-page">
-    <div class="page-header" style="margin-bottom:24px">
-      <div class="section-eyebrow">Screener</div>
-      <h1 class="section-title">Filter by what drives your thesis.</h1>
-    </div>
-
-    <div id="screener-content">
-      <div class="filter-bar">
-        <div class="filter-group">
-          <div class="filter-label">Catalyst</div>
-          <select class="filter-select" id="filterCatalyst" onchange="filterTable()">
-            <option value="">All Catalysts</option>
-            <option value="capex">Capex</option>
-            <option value="margin_expansion">Margin Expansion</option>
-            <option value="geographic_expansion">Geographic Expansion</option>
-            <option value="new_products">New Products</option>
-            <option value="acquisitions">Acquisitions</option>
-            <option value="operating_leverage">Op Leverage</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <div class="filter-label">Industry</div>
-          <select class="filter-select" id="filterIndustry2" onchange="filterTable()">
-            <option value="">All Industries</option>
-            <option>Aerospace &amp; Defence</option>
-            <option>Auto Ancillaries</option>
-            <option>Banking – Private</option>
-            <option>Pharma – CDMO</option>
-            <option>Renewable Energy</option>
-            <option>Specialty Chemicals</option>
-            <option>IT Services</option>
-            <option>FMCG</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <div class="filter-label">Search</div>
-          <input class="filter-input" type="text" id="filterSearch" oninput="filterTable()" placeholder="Company name..."/>
-        </div>
-        <span class="result-info" id="result-count"></span>
-      </div>
-
-      <div id="screener-paywall" style="display:none">
-        <div class="paywall-card">
-          <span class="lock">🔒</span>
-          <h3>Unlock the Full Screener</h3>
-          <p>Subscribe to filter and explore all 2000+ Indian companies with real growth triggers.</p>
-          <div class="paywall-btns">
-            <button class="btn-primary" onclick="showPage('pricing')">See Plans →</button>
-            <button class="btn-outline" onclick="openAuth('login')">Already subscribed? Sign in</button>
+    
+    <!-- Company List View -->
+    <div id="concall-companies-view">
+      <div style="margin-bottom: 26px;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+          <div>
+            <h1 style="font-size:26px; font-weight:700; color:var(--text); font-family:'Playfair Display',serif; margin:0 0 6px;">Concall Insights</h1>
+            <p style="font-size:13px; color:var(--text3); margin:0;" id="concall-companies-meta">Loading companies...</p>
+          </div>
+          <div style="position:relative; display:flex; align-items:center; margin-top:4px;">
+            <input class="gsearch" type="text" id="concallCompanySearch" oninput="filterConcallCompanies(this.value)" placeholder="Search company…" style="max-width:260px; padding:9px 14px 9px 36px; border:1.5px solid var(--border); border-radius:10px; font-size:13px; font-family:inherit; color:var(--text); background:#fff; outline:none; transition:border-color 0.18s;"/>
+            <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text3); pointer-events:none;">🔍</span>
           </div>
         </div>
       </div>
-
-      <div id="screener-lock-wrap">
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr><th>Company</th><th>Industry</th><th>Top Trigger</th><th>Catalysts</th><th>Score</th></tr></thead>
-            <tbody id="screener-body"></tbody>
-          </table>
-        </div>
-        <div id="screener-upgrade" style="text-align:center;padding:24px;background:#fff;border:1px solid var(--border);border-radius:0 0 10px 10px;border-top:none;display:none">
-          <p style="font-size:13px;color:var(--text3);margin-bottom:12px">Showing 15 sample companies. Subscribe to access all 2000+</p>
-          <button class="btn-primary" onclick="showPage('pricing')">Unlock Full Database →</button>
-        </div>
+      
+      <!-- Companies Card Grid -->
+      <div id="concall-companies-grid" class="company-grid">
+        <!-- Dynamically filled -->
       </div>
     </div>
+
+    <!-- Company Detail View -->
+    <div id="concall-detail-view" style="display:none;">
+      <div style="margin-bottom: 20px;">
+        <button class="nav-back" onclick="goBackToCompanies()" style="background:none; border:1px solid var(--border); border-radius:8px; padding:6px 12px; font-size:12px; color:var(--text3); cursor:pointer; transition:border-color 0.18s,color 0.18s; display:inline-flex; align-items:center; gap:5px;">← Back to Concall Insights</button>
+      </div>
+      <div id="concall-detail-content" style="display:flex; flex-direction:column; gap:12px;">
+        <!-- Dynamically filled -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════ ANNUAL REPORTS PAGE ════════════════ -->
+<div id="page-annual" class="page">
+  <div class="screener-page">
+    
+    <!-- Company List View -->
+    <div id="annual-companies-view">
+      <div style="margin-bottom: 26px;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+          <div>
+            <h1 style="font-size:26px; font-weight:700; color:var(--text); font-family:'Playfair Display',serif; margin:0 0 6px;">Annual Reports</h1>
+            <p style="font-size:13px; color:var(--text3); margin:0;" id="annual-companies-meta">Loading companies...</p>
+          </div>
+          <div style="position:relative; display:flex; align-items:center; margin-top:4px;">
+            <input class="gsearch" type="text" id="annualCompanySearch" oninput="filterAnnualCompanies(this.value)" placeholder="Search company…" style="max-width:260px; padding:9px 14px 9px 36px; border:1.5px solid var(--border); border-radius:10px; font-size:13px; font-family:inherit; color:var(--text); background:#fff; outline:none; transition:border-color 0.18s;"/>
+            <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text3); pointer-events:none;">🔍</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Companies Card Grid -->
+      <div id="annual-companies-grid" class="company-grid">
+        <!-- Dynamically filled -->
+      </div>
+    </div>
+
+    <!-- Company Detail View -->
+    <div id="annual-detail-view" style="display:none;">
+      <div style="margin-bottom: 20px;">
+        <button class="nav-back" onclick="goBackToAnnualCompanies()" style="background:none; border:1px solid var(--border); border-radius:8px; padding:6px 12px; font-size:12px; color:var(--text3); cursor:pointer; transition:border-color 0.18s,color 0.18s; display:inline-flex; align-items:center; gap:5px;">← Back to Annual Reports</button>
+      </div>
+      <div id="annual-detail-content" style="display:flex; flex-direction:column; gap:12px;">
+        <!-- Dynamically filled -->
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1576,116 +1567,6 @@ footer{
   </div>
 </div>
 
-<!-- ════════════════ DASHBOARD ════════════════ -->
-<div id="page-dashboard" class="page">
-  <div class="dash-wrap">
-    <div class="dash-top">
-      <h1 class="dash-greeting">Welcome back, <span id="dash-user-name">Investor</span> 👋</h1>
-      <p style="font-size:14px;color:var(--text3)">Your Growth Trigger Dashboard — Q4 FY26 data live</p>
-      <div class="dash-sub-row">
-        <div id="dash-sub-card" class="sub-card"></div>
-      </div>
-    </div>
-
-    <div class="dash-tabs">
-      <button class="dash-tab active" onclick="switchDashTab('screener',this)">📊 Full Screener</button>
-      <button class="dash-tab" onclick="switchDashTab('watchlist',this)">⭐ Watchlist</button>
-    </div>
-
-    <!-- SCREENER TAB -->
-    <div id="dash-tab-screener">
-      <div class="dash-filter-row">
-        <div class="filter-group">
-          <div class="filter-label">Catalyst</div>
-          <select class="filter-select" id="dashFilterCatalyst" onchange="filterDashTable()" style="font-size:12px">
-            <option value="">All Catalysts</option>
-            <option value="capex">Capex</option>
-            <option value="margin_expansion">Margin Expansion</option>
-            <option value="geographic_expansion">Geographic Expansion</option>
-            <option value="new_products">New Products</option>
-            <option value="acquisitions">Acquisitions</option>
-            <option value="operating_leverage">Op Leverage</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <div class="filter-label">Industry</div>
-          <select class="filter-select" id="dashFilterIndustry" onchange="filterDashTable()" style="font-size:12px">
-            <option value="">All Industries</option>
-            <option>Aerospace &amp; Defence</option>
-            <option>Auto Ancillaries</option>
-            <option>Banking – Private</option>
-            <option>Pharma – CDMO</option>
-            <option>Renewable Energy</option>
-            <option>Specialty Chemicals</option>
-            <option>IT Services</option>
-            <option>FMCG</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <div class="filter-label">Stage</div>
-          <select class="filter-select" id="dashFilterStage" onchange="filterDashTable()" style="font-size:12px">
-            <option value="">All Stages</option>
-            <option value="early_growth">Early Growth</option>
-            <option value="acceleration">Acceleration</option>
-            <option value="maturity">Maturity</option>
-            <option value="decline">Decline</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <div class="filter-label">Market Cap</div>
-          <select class="filter-select" id="dashFilterMarketCap" onchange="filterDashTable()" style="font-size:12px">
-            <option value="">All</option>
-            <option value="large">Large Cap</option>
-            <option value="mid">Mid Cap</option>
-            <option value="small">Small Cap</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <div class="filter-label">Score: <span id="score-min-lbl">0</span>–<span id="score-max-lbl">5</span></div>
-          <div class="range-row">
-            <input type="range" id="dashFilterScoreMin" min="0" max="5" value="0" oninput="updateScoreLabel();filterDashTable()"/>
-            <input type="range" id="dashFilterScoreMax" min="0" max="5" value="5" oninput="updateScoreLabel();filterDashTable()"/>
-          </div>
-        </div>
-        <div class="filter-group">
-          <div class="filter-label">Search</div>
-          <input class="filter-input" type="text" id="dashFilterSearch" oninput="filterDashTable()" placeholder="Company..." style="font-size:12px"/>
-        </div>
-        <span class="result-info" id="dash-result-count"></span>
-      </div>
-
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th>Company</th><th>Industry</th><th>Top Trigger</th><th>Catalysts</th><th>Score</th><th>⭐</th><th>Signals</th></tr></thead>
-          <tbody id="dash-screener-body"><tr><td colspan="7" class="loading-state"><span class="spinner" style="border-top-color:var(--text3)"></span> Loading...</td></tr></tbody>
-        </table>
-      </div>
-      <div class="pagination" id="dash-pagination"></div>
-    </div>
-
-    <!-- WATCHLIST TAB -->
-    <div id="dash-tab-watchlist" style="display:none">
-      <div id="watchlist-cards-grid" class="ind-cards-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px">
-        <div class="loading-state" style="grid-column:1/-1"><span class="spinner" style="border-top-color:var(--text3)"></span> Loading watchlist...</div>
-      </div>
-    </div>
-
-    <!-- REFERRAL PANEL -->
-    <div class="ref-panel">
-      <div class="ref-panel-left">
-        <h4>🎁 Refer a friend — get 30 days free</h4>
-        <p>Share your link. Every friend who subscribes gives you 30 extra days. No limit.</p>
-      </div>
-      <div class="ref-panel-right">
-        <div class="ref-link-row">
-          <input type="text" class="ref-link-input" id="referral-link-display" readonly/>
-          <button class="btn-outline" onclick="copyReferralLink()" style="white-space:nowrap;padding:8px 14px">Copy</button>
-        </div>
-        <p id="referral-stats" style="font-size:12px;color:var(--text3)">Loading...</p>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ════════════════ ABOUT PAGE ════════════════ -->
 <div id="page-about" class="page">
@@ -1746,7 +1627,7 @@ footer{
 // ═══════════════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════════════
-const API_BASE = 'https://one3x-backend.onrender.com/api/v1';
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3001/api/v1' : 'https://one3x-backend.onrender.com/api/v1';
 
 // ═══════════════════════════════════════════════
 // STATE
@@ -1963,7 +1844,7 @@ function setAuthMode(mode) {
   authMode = mode;
   const isLogin = mode === 'login';
   document.getElementById('auth-title').textContent = isLogin ? 'Welcome back' : 'Create your account';
-  document.getElementById('auth-sub').textContent   = isLogin ? 'Sign in to access your dashboard' : 'Join 13X to unlock growth triggers';
+  document.getElementById('auth-sub').textContent   = isLogin ? 'Sign in to access Concall Insights' : 'Join 13X to unlock growth triggers';
   document.getElementById('auth-btn').textContent   = isLogin ? 'Sign In' : 'Create Account';
   document.getElementById('name-group').style.display = isLogin ? 'none' : 'block';
   document.getElementById('auth-switch').innerHTML  = isLogin
@@ -2005,7 +1886,7 @@ async function submitAuth() {
     if (ref && currentUser && !isPaid) {
       try { await apiFetch('/data/referral/apply',{method:'POST',body:JSON.stringify({code:ref})}); sessionStorage.removeItem('13x_ref'); } catch {}
     }
-    if (isPaid) showPage('dashboard'); else showPage('pricing');
+    if (isPaid) showPage('screener'); else showPage('pricing');
   } catch (err) {
     showAuthError(err.message);
   } finally {
@@ -2036,15 +1917,12 @@ function setLoggedIn() {
   li.style.display = 'flex';
   document.getElementById('nav-user-name').textContent = currentUser.name.split(' ')[0];
   const badge = document.getElementById('nav-badge');
-  const dashBtn = document.getElementById('nav-dashboard');
   const adminBtn = document.getElementById('nav-admin');
   if (isPaid) {
     badge.textContent = currentSub.plan==='yearly'?'Pro Yearly':(currentSub.plan==='trial'?'Trial':'Pro');
     badge.className = 'nav-badge';
-    dashBtn.style.display = '';
   } else {
     badge.textContent = 'Free'; badge.className = 'nav-badge free';
-    dashBtn.style.display = 'none';
   }
   const ADMIN_EMAILS = ['admin@13xinvestments.in','hello@13xinvestments.in'];
   if (adminBtn) adminBtn.style.display = ADMIN_EMAILS.includes(currentUser.email) ? '' : 'none';
@@ -2066,252 +1944,501 @@ async function logout() {
   if (rt) fetch(API_BASE+'/auth/logout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({refreshToken:rt})}).catch(()=>{});
 }
 
-// ═══════════════════════════════════════════════
-// SCREENER STATE
-// ═══════════════════════════════════════════════
-function updateScreenerState() {
-  const paywall  = document.getElementById('screener-paywall');
-  const upgrade  = document.getElementById('screener-upgrade');
-  const lockWrap = document.getElementById('screener-lock-wrap');
-  if (!paywall) return;
-  if (!currentUser) {
-    paywall.style.display = ''; lockWrap.style.display = 'none';
-  } else if (!isPaid) {
-    paywall.style.display = 'none'; lockWrap.style.display = '';
-    upgrade.style.display = ''; renderScreener(SCREENER_DATA);
-  } else {
-    paywall.style.display = 'none'; lockWrap.style.display = '';
-    upgrade.style.display = 'none'; loadFullScreener(1);
+const CONCALL_SECTORS_META = {
+  'IT Services': { accent: '#2563EB', light: '#DBEAFE', desc: 'Transitioning from legacy maintenance to AI-first transformation and cloud migration.' },
+  'Aerospace & Defence': { accent: '#7C3AED', light: '#F3E8FF', desc: 'Sustained growth driven by Atmanirbhar Bharat imports substitution and rising exports.' },
+  'Renewable Energy': { accent: '#059669', light: '#D1FAE5', desc: 'Utility-scale hybrid solar and wind installations supported by sovereign green funding.' },
+  'Auto Ancillaries': { accent: '#4F46E5', light: '#E0E7FF', desc: 'Ramping up EV component capacity and lightweight assemblies for domestic majors.' },
+  'Specialty Chemicals': { accent: '#DB2777', light: '#FCE7F3', desc: 'China+1 export lanes opening up with domestic product approvals and capacity expansions.' },
+  'Banking – Private': { accent: '#D97706', light: '#FEF3C7', desc: 'Credit growth recovery coupled with NIM normalization and rising digital penetration.' }
+};
+
+function getSectorMeta(name) {
+  const normalized = Object.keys(CONCALL_SECTORS_META).find(k => name.toLowerCase().includes(k.toLowerCase()) || k.toLowerCase().includes(name.toLowerCase()));
+  if (normalized) return CONCALL_SECTORS_META[normalized];
+
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  const colors = [
+    { accent: '#2563EB', light: '#DBEAFE' },
+    { accent: '#059669', light: '#D1FAE5' },
+    { accent: '#7C3AED', light: '#F3E8FF' },
+    { accent: '#D97706', light: '#FEF3C7' },
+    { accent: '#4F46E5', light: '#E0E7FF' },
+    { accent: '#DB2777', light: '#FCE7F3' }
+  ];
+  const meta = colors[Math.abs(hash) % colors.length];
+  return {
+    accent: meta.accent,
+    light: meta.light,
+    desc: 'Covering forward guidance signals, management guidance revisions, and core tailwinds in the ' + name + ' sector.'
+  };
+}
+
+let allConcallCompanies = [];
+async function updateScreenerState() {
+  const grid = document.getElementById('concall-companies-grid');
+  const meta = document.getElementById('concall-companies-meta');
+  if (!grid) return;
+  
+  grid.innerHTML = `<div class="loading-state" style="grid-column:1/-1"><span class="spinner" style="border-top-color:var(--text3)"></span> Loading companies...</div>`;
+  document.getElementById('concall-companies-view').style.display = 'block';
+  document.getElementById('concall-detail-view').style.display = 'none';
+  document.getElementById('concallCompanySearch').value = '';
+  
+  try {
+    const json = await apiFetch('/data/companies?limit=100');
+    allConcallCompanies = json.data || [];
+    if (meta) meta.textContent = `${allConcallCompanies.length} companies tracked · Q4FY26 concall insights`;
+    renderConcallCompanies(allConcallCompanies);
+  } catch (err) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;color:var(--red)">${esc(err.message)}</div>`;
   }
 }
 
-// ═══════════════════════════════════════════════
-// SCREENER RENDERS
-// ═══════════════════════════════════════════════
-function renderScreener(data) {
-  const tbody = document.getElementById('screener-body');
-  if (!tbody) return;
-  if (!data||!data.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><p>No results</p></td></tr>'; return; }
-  tbody.innerHTML = data.map(r => `
-    <tr>
-      <td><span class="td-company">${esc(r.co||r.name||'')}</span>${r.ticker?`<span class="td-ticker">${esc(r.ticker)}</span>`:''}</td>
-      <td>${esc(r.ind||r.industry||'')}</td>
-      <td style="max-width:240px;font-size:12px">${esc(r.trigger||r.top_trigger||'')}</td>
-      <td>${catBadges(r.tags||r.catalyst_tags||[])}</td>
-      <td>${scoreBars(r.score||0)}</td>
-    </tr>`).join('');
-  const c = document.getElementById('result-count');
-  if (c) c.textContent = data.length + ' companies' + (!isPaid?' (preview)':'');
-}
-
-function renderDashScreener(data) {
-  const tbody = document.getElementById('dash-screener-body');
-  if (!tbody) return;
-  if (!data||!data.length) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><p>No results found</p></td></tr>'; return; }
-  tbody.innerHTML = data.map(r => {
-    const inWatch = WATCHLIST_IDS.has(r.id);
-    const nameCell = r.ticker
-      ? `<a href="/company/${esc(r.ticker)}" style="font-weight:700;color:var(--text);border-bottom:1px dotted var(--border2)">${esc(r.name||'')}</a>`
-      : `<strong>${esc(r.name||'')}</strong>`;
-    return `<tr>
-      <td>${nameCell}<span class="td-ticker">${esc(r.ticker||'')}</span></td>
-      <td style="font-size:12px">${esc(r.industry||'')}</td>
-      <td style="max-width:200px;font-size:12px">${esc(r.top_trigger||'')}</td>
-      <td>${catBadges(r.catalyst_tags||[])}</td>
-      <td>${scoreBars(r.score||0)}</td>
-      <td><button class="btn-star" onclick="toggleWatchlist('${r.id}','${esc(r.name)}',this)" title="${inWatch?'Remove':'Add to watchlist'}">${inWatch?'⭐':'☆'}</button></td>
-      <td><button class="btn-signals" onclick="openSignals('${r.id}','${esc(r.name)}')">Signals</button></td>
-    </tr>`;
+function renderConcallCompanies(companies) {
+  const grid = document.getElementById('concall-companies-grid');
+  if (!grid) return;
+  
+  if (!companies.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><p>No companies found.</p></div>`;
+    return;
+  }
+  
+  grid.innerHTML = companies.map(c => {
+    const sMeta = getSectorMeta(c.industry || 'IT Services');
+    return `
+      <div class="hov" onclick="showConcallCompany('${esc(c.ticker)}', '${esc(c.industry || 'IT Services')}')"
+           style="background:#fff; border:1.5px solid var(--border); border-radius:14px; overflow:hidden; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.05); transform:translateY(0); transition:all 0.2s ease;"
+           onmouseenter="this.style.boxShadow='0 12px 32px ${sMeta.accent}28'; this.style.borderColor='${sMeta.accent}'; this.style.transform='translateY(-4px)';"
+           onmouseleave="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.05)'; this.style.borderColor='var(--border)'; this.style.transform='translateY(0)';">
+        
+        <div style="background:linear-gradient(140deg, ${sMeta.accent}1A 0%, ${sMeta.accent}08 100%); padding:18px 20px 16px; border-bottom:1px solid ${sMeta.accent}1A;">
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px;">
+            <div style="width:7px; height:7px; border-radius:50%; background:${sMeta.accent}; flex-shrink:0;"></div>
+            <span style="font-size:10px; font-weight:700; color:${sMeta.accent}; text-transform:uppercase; letter-spacing:0.8px;">${esc(c.industry || 'Sector')}</span>
+          </div>
+          <div style="font-size:15px; font-weight:700; color:var(--text); line-height:1.4;">${esc(c.name)}</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text3); margin-top:2px;">${esc(c.ticker)}</div>
+        </div>
+        
+        <div style="padding:12px 20px; display:flex; justify-content:space-between; align-items:center;">
+          <div style="background:#059669; color:#fff; font-size:10px; font-weight:700; padding:3px 10px; border-radius:20px; letter-spacing:0.4px;">Q4FY26 ✓</div>
+          <div style="width:30px; height:30px; border-radius:50%; background:${sMeta.light}; display:flex; align-items:center; justify-content:center;">
+            <span style="color:${sMeta.accent}; font-weight:700;">→</span>
+          </div>
+        </div>
+        
+      </div>
+    `;
   }).join('');
 }
 
-function filterTable() {
-  screenerFilters.catalyst = document.getElementById('filterCatalyst').value;
-  screenerFilters.industry  = document.getElementById('filterIndustry2').value;
-  screenerFilters.search    = document.getElementById('filterSearch').value.trim();
-  if (isPaid) { loadFullScreener(1); return; }
-  const q = screenerFilters.search.toLowerCase();
-  const res = SCREENER_DATA.filter(r =>
-    (!screenerFilters.catalyst || (r.tags||[]).includes(screenerFilters.catalyst)) &&
-    (!screenerFilters.industry || (r.ind||r.industry||'')=== screenerFilters.industry) &&
-    (!q || (r.co||r.name||'').toLowerCase().includes(q))
+function filterConcallCompanies(query) {
+  const filtered = allConcallCompanies.filter(c => 
+    c.name.toLowerCase().includes(query.toLowerCase()) || 
+    c.ticker.toLowerCase().includes(query.toLowerCase()) ||
+    (c.industry || '').toLowerCase().includes(query.toLowerCase())
   );
-  renderScreener(res);
+  renderConcallCompanies(filtered);
 }
 
-function filterDashTable() {
-  screenerFilters.catalyst   = document.getElementById('dashFilterCatalyst').value;
-  screenerFilters.industry   = document.getElementById('dashFilterIndustry').value;
-  screenerFilters.search     = document.getElementById('dashFilterSearch').value.trim();
-  screenerFilters.stage      = document.getElementById('dashFilterStage').value;
-  screenerFilters.market_cap = document.getElementById('dashFilterMarketCap').value;
-  screenerFilters.score_min  = parseInt(document.getElementById('dashFilterScoreMin').value)||0;
-  screenerFilters.score_max  = parseInt(document.getElementById('dashFilterScoreMax').value)||5;
-  loadFullScreener(1);
+function goBackToCompanies() {
+  document.getElementById('concall-companies-view').style.display = 'block';
+  document.getElementById('concall-detail-view').style.display = 'none';
 }
 
-function updateScoreLabel() {
-  const mn = document.getElementById('dashFilterScoreMin');
-  const mx = document.getElementById('dashFilterScoreMax');
-  if (mn) document.getElementById('score-min-lbl').textContent = mn.value;
-  if (mx) document.getElementById('score-max-lbl').textContent = mx.value;
-}
-
-// ═══════════════════════════════════════════════
-// DASHBOARD
-// ═══════════════════════════════════════════════
-function renderDashboard() {
-  if (!currentUser || !isPaid) { showPage('pricing'); return; }
-  document.getElementById('dash-user-name').textContent = currentUser.name.split(' ')[0];
-  const plan = currentSub?.plan||'quarterly';
-  const planLabel = plan==='yearly'?'Yearly Plan':plan==='trial'?'2-Day Trial':'Monthly Plan';
-  const expiresAt = currentSub?.expires_at ? new Date(currentSub.expires_at) : null;
-  const isExpired = expiresAt ? expiresAt < new Date() : false;
-  const expiry = expiresAt ? expiresAt.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '';
-  const subCard = document.getElementById('dash-sub-card');
-  if (subCard) {
-    subCard.innerHTML = `
-      <div class="sub-dot ${isExpired?'inactive':''}"></div>
-      <div class="sub-info">
-        <div class="sub-plan">${planLabel}</div>
-        <div class="sub-expiry ${isExpired?'exp':''}">${isExpired?'Expired':'Active'} · until ${expiry}</div>
-      </div>
-      ${isExpired ? `<button class="btn-primary" style="font-size:12px;padding:7px 14px" onclick="showPage('pricing')">Renew</button>` : ''}
-    `;
-  }
-  filterDashTable();
-  loadReferralSection();
-  loadWatchlistIds();
-}
-
-function switchDashTab(tab, btn) {
-  currentDashTab = tab;
-  document.querySelectorAll('.dash-tab').forEach(b => b.classList.toggle('active', b===btn));
-  document.getElementById('dash-tab-screener').style.display  = tab==='screener'  ? '' : 'none';
-  document.getElementById('dash-tab-watchlist').style.display = tab==='watchlist' ? '' : 'none';
-  if (tab === 'watchlist') loadWatchlist();
-}
-
-// ═══════════════════════════════════════════════
-// WATCHLIST
-// ═══════════════════════════════════════════════
-async function loadWatchlistIds() {
-  if (!isPaid) return;
-  try { const data = await apiFetch('/data/watchlist'); WATCHLIST_IDS = new Set((data.data||[]).map(c=>c.id)); } catch {}
-}
-
-async function loadWatchlist() {
-  const container = document.getElementById('watchlist-cards-grid');
-  if (!container) return;
-  container.innerHTML = `<div class="loading-state" style="grid-column:1/-1"><span class="spinner" style="border-top-color:var(--text3)"></span> Loading...</div>`;
+async function showConcallCompany(ticker, industry) {
+  if (industry) selectedSector = industry;
+  else selectedSector = 'IT Services';
+  
+  const companiesView = document.getElementById('concall-companies-view');
+  const detailView = document.getElementById('concall-detail-view');
+  const content = document.getElementById('concall-detail-content');
+  
+  if (!companiesView || !detailView || !content) return;
+  
+  companiesView.style.display = 'none';
+  detailView.style.display = 'block';
+  content.innerHTML = `<div class="loading-state"><span class="spinner" style="border-top-color:var(--text3)"></span> Loading details...</div>`;
+  
+  const sMeta = getSectorMeta(selectedSector);
   
   try {
-    const data = await apiFetch('/data/watchlist');
-    const list = data.data || [];
-    if (!list.length) {
-      container.innerHTML = `
-        <div class="empty-state" style="grid-column:1/-1">
-          <div class="icon">⭐</div>
-          <p>No companies watchlisted yet.<br>Click ☆ in the screener to add.</p>
-        </div>`;
-      return;
+    const [coRes, triggersRes, signalsRes, snapshotRes] = await Promise.allSettled([
+      apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker)),
+      apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker) + '/triggers'),
+      apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker) + '/signals'),
+      apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker) + '/snapshot'),
+    ]);
+    
+    if (coRes.status === 'rejected') throw new Error('Company not found');
+    const co = coRes.value.data;
+    const triggers = triggersRes.status === 'fulfilled' ? (triggersRes.value.data || []) : [];
+    const signals = signalsRes.status === 'fulfilled' ? (signalsRes.value.data || []) : [];
+    const snapshot = snapshotRes.status === 'fulfilled' ? snapshotRes.value.data : null;
+    
+    if (!co) throw new Error('Company not found');
+    
+    const revTrend = snapshot?.revenue_trend || 'stable';
+    const marTrend = snapshot?.margin_trend || 'stable';
+    const tone = snapshot?.tone || 'neutral';
+    
+    const revCls = revTrend === 'up' ? 'up' : revTrend === 'down' ? 'down' : 'stable';
+    const marCls = marTrend === 'up' ? 'up' : marTrend === 'down' ? 'down' : 'stable';
+    
+    const revIcon = revCls === 'up' ? '↑' : revCls === 'down' ? '↓' : '→';
+    const marIcon = marCls === 'up' ? '↑' : marCls === 'down' ? '↓' : '→';
+    
+    const highlights = [];
+    if (snapshot?.guidance_summary) highlights.push(snapshot.guidance_summary);
+    if (snapshot?.capex_commentary) highlights.push(snapshot.capex_commentary);
+    if (snapshot?.risks) highlights.push('Risks: ' + snapshot.risks);
+    if (highlights.length === 0) {
+      highlights.push('A structural growth play supported by strong demand tailwinds in the core industry.');
     }
-
-    // Load signals for each watchlisted company in parallel
-    const listWithUpdates = await Promise.all(
-      list.map(async (co) => {
-        try {
-          const sigRes = await apiFetch(`/data/companies/${co.id}/signals`);
-          co.recent_updates = (sigRes.data || []).slice(0, 2); // Get top 2 updates
-        } catch {
-          co.recent_updates = [];
-        }
-        return co;
-      })
-    );
-
-    container.innerHTML = listWithUpdates.map(r => {
-      const ticker = r.ticker || '';
-      const name = r.name || '';
-      const linkHTML = ticker 
-        ? `<a href="/company/${esc(ticker)}" style="font-size:16px;font-weight:700;color:var(--green)">${esc(name)}</a>`
-        : `<span style="font-size:16px;font-weight:700">${esc(name)}</span>`;
+    
+    let guidanceHTML = '';
+    if (snapshot?.guidance_summary) {
+      guidanceHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; border-bottom:1px solid var(--border);">
+          <span style="font-size:12px; color:var(--text2)">Revenue Growth Target</span>
+          <span style="font-size:13px; font-weight:700; color:${sMeta.accent}">${esc(snapshot.guidance_summary.split('.')[0])}</span>
+        </div>
+      `;
+    }
+    
+    content.innerHTML = `
+      <div style="background:linear-gradient(140deg, ${sMeta.accent}1C 0%, ${sMeta.accent}08 100%); border:1.5px solid ${sMeta.accent}28; border-radius:18px; padding:24px 24px 20px; position:relative; overflow:hidden;">
+        <div style="position:absolute; right:-24px; top:-24px; width:130px; height:130px; border-radius:50%; background:${sMeta.accent}0E; pointer-events:none;"></div>
+        <div style="display:flex; gap:8px; margin-bottom:14px;">
+          <span style="font-size:10px; font-weight:700; color:${sMeta.accent}; background:${sMeta.light}; padding:4px 11px; border-radius:20px; text-transform:uppercase; letter-spacing:0.6px;">${esc(selectedSector)}</span>
+          <span style="font-size:10px; color:var(--text3); background:#fff; border:1px solid var(--border); padding:3px 10px; border-radius:20px;">${esc(snapshot?.quarter || 'Q4FY26')}</span>
+        </div>
+        <h1 style="font-size:22px; font-weight:700; color:var(--text); margin:0 0 6px; font-family:'Space Grotesk',sans-serif; line-height:1.2;">${esc(co.name)}</h1>
+        <div style="font-size:11px; color:var(--text3)">${esc(co.ticker)} · NSE / BSE Listed · Indian Equity</div>
+      </div>
       
-      const thesis = getInvestmentThesis(ticker);
+      <div class="metrics-grid">
+        <div style="background:#fff; border:1.5px solid var(--border); border-left:4px solid ${revTrend === 'up' ? '#059669' : revTrend === 'down' ? '#EF4444' : 'var(--text3)'}; border-radius:12px; padding:14px 16px;">
+          <div style="font-size:9px; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">Revenue Trend</div>
+          <div style="font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; font-family:'Space Grotesk',sans-serif;">${revIcon} ${esc(revTrend)}</div>
+        </div>
+        <div style="background:#fff; border:1.5px solid var(--border); border-left:4px solid ${marTrend === 'up' ? '#059669' : marTrend === 'down' ? '#EF4444' : 'var(--text3)'}; border-radius:12px; padding:14px 16px;">
+          <div style="font-size:9px; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">Margin Trend</div>
+          <div style="font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; font-family:'Space Grotesk',sans-serif;">${marIcon} ${esc(marTrend)}</div>
+        </div>
+        <div style="background:#fff; border:1.5px solid var(--border); border-left:4px solid #7C3AED; border-radius:12px; padding:14px 16px;">
+          <div style="font-size:9px; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">Mgmt Tone</div>
+          <div style="font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; font-family:'Space Grotesk',sans-serif; text-transform:capitalize;">${esc(tone)}</div>
+        </div>
+        <div style="background:#fff; border:1.5px solid var(--border); border-left:4px solid #D97706; border-radius:12px; padding:14px 16px;">
+          <div style="font-size:9px; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">Trigger Score</div>
+          <div style="font-size:18px; font-weight:700; color:var(--text); margin-bottom:6px; font-family:'Space Grotesk',sans-serif;">${co.score || 0}/5</div>
+        </div>
+      </div>
       
-      let updatesHTML = '';
-      if (r.recent_updates && r.recent_updates.length > 0) {
-        updatesHTML = r.recent_updates.map(u => `
-          <div style="font-size:11px;background:var(--off);border:1px solid var(--border);border-radius:4px;padding:8px;margin-top:6px">
-            <div style="display:flex;justify-content:space-between;font-weight:700;color:var(--text3);margin-bottom:2px">
-              <span>${esc(u.signal_type.toUpperCase())}</span>
-              <span>${esc(u.quarter)}</span>
+      <div style="background:#fff; border:1.5px solid var(--border); border-radius:14px; overflow:hidden;">
+        <div style="padding:13px 20px; background:${sMeta.accent}09; border-bottom:1px solid ${sMeta.accent}1C;">
+          <span style="font-size:10px; font-weight:700; color:${sMeta.accent}; text-transform:uppercase; letter-spacing:0.9px;">Key Outlook & Performance</span>
+        </div>
+        <div>
+          ${highlights.map(h => `
+            <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid var(--border);">
+              <div style="width:22px; height:22px; border-radius:50%; background:${sMeta.light}; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+                <span style="color:${sMeta.accent}; font-weight:700; font-size:10px;">✓</span>
+              </div>
+              <span style="font-size:12px; color:var(--text2); line-height:1.65;">${esc(h)}</span>
             </div>
-            <div style="color:var(--text2);line-height:1.4">${esc(u.content)}</div>
-          </div>
-        `).join('');
-      } else {
-        updatesHTML = `<p style="font-size:11px;color:var(--text4);font-style:italic;margin-top:4px">No recent updates</p>`;
-      }
+          `).join('')}
+        </div>
+      </div>
+      
+      ${guidanceHTML ? `
+      <div style="background:#fff; border:1.5px solid ${sMeta.accent}30; border-radius:14px; overflow:hidden;">
+        <div style="padding:13px 20px; background:${sMeta.accent}0C; border-bottom:1px solid ${sMeta.accent}22;">
+          <span style="font-size:10px; font-weight:700; color:${sMeta.accent}; text-transform:uppercase; letter-spacing:0.9px;">FY27 Guidance Highlights</span>
+        </div>
+        <div>
+          ${guidanceHTML}
+        </div>
+      </div>` : ''}
 
-      return `
-        <div class="feat-card" style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:between">
-          <div>
-            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px">
+      ${triggers.length > 0 ? `
+      <div style="background:#fff; border:1.5px solid var(--border); border-radius:14px; overflow:hidden;">
+        <div style="padding:13px 20px; background:#F8FAFC; border-bottom:1px solid var(--border);">
+          <span style="font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.9px;">Key Growth Drivers</span>
+        </div>
+        <div>
+          ${triggers.slice(0, 3).map((t, i) => `
+            <div style="display:flex; gap:12px; align-items:flex-start; padding:12px 20px; border-bottom:1px solid var(--border);">
+              <div style="width:8px; height:8px; border-radius:50%; background:${sMeta.accent}; flex-shrink:0; margin-top:4px;"></div>
               <div>
-                ${linkHTML}
-                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);display:block;margin-top:1px">${esc(ticker)}</span>
-              </div>
-              <button class="btn-star" onclick="toggleWatchlist('${r.id}','${esc(name)}',this)" style="font-size:18px">⭐</button>
-            </div>
-            
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-              <span style="font-size:11px;color:var(--text3);font-weight:600;background:var(--bg);padding:2px 8px;border-radius:4px">${esc(r.industry)}</span>
-              <div style="display:flex;align-items:center;gap:4px">
-                <span style="font-size:10px;font-weight:700;color:var(--text3)">SCORE</span>
-                <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--green)">${r.score || 0}/5</div>
+                <div style="font-weight:600; font-size:11px; color:var(--text3); margin-bottom:2px;">DRIVER ${i+1}</div>
+                <span style="font-size:12px; color:var(--text2); line-height:1.65;">${esc(t.trigger_text)}</span>
               </div>
             </div>
-
-            <div style="margin-bottom:12px">
-              <span style="font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:4px">⚡ Top Trigger</span>
-              <p style="font-size:12px;color:var(--text2);line-height:1.5">${esc(r.top_trigger || '—')}</p>
-            </div>
-
-            <div style="margin-bottom:12px">
-              <span style="font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:4px">📋 Thesis</span>
-              <p style="font-size:12px;color:var(--text2);line-height:1.5;font-style:italic">${esc(thesis)}</p>
-            </div>
-          </div>
-          
-          <div style="margin-top:auto;padding-top:10px;border-top:1px solid var(--border)">
-            <span style="font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--text3);display:block">📡 Recent Updates</span>
-            ${updatesHTML}
-          </div>
-        </div>`;
-    }).join('');
+          `).join('')}
+        </div>
+      </div>` : ''}
+    `;
+    
   } catch (err) {
-    container.innerHTML = `<div class="empty-state" style="grid-column:1/-1;color:var(--red)">${esc(err.message)}</div>`;
+    content.innerHTML = `<div class="empty-state" style="color:var(--red)">${esc(err.message)}</div>`;
   }
 }
 
-async function toggleWatchlist(companyId, companyName, btn) {
-  const inWatch = WATCHLIST_IDS.has(companyId);
+// ═══════════════════════════════════════════════
+// ANNUAL REPORTS
+// ═══════════════════════════════════════════════
+let allAnnualCompanies = [];
+async function loadAnnualReports() {
+  const grid = document.getElementById('annual-companies-grid');
+  const meta = document.getElementById('annual-companies-meta');
+  if (!grid) return;
+  
+  grid.innerHTML = `<div class="loading-state" style="grid-column:1/-1"><span class="spinner" style="border-top-color:var(--text3)"></span> Loading companies...</div>`;
+  document.getElementById('annual-companies-view').style.display = 'block';
+  document.getElementById('annual-detail-view').style.display = 'none';
+  document.getElementById('annualCompanySearch').value = '';
+  
   try {
-    if (inWatch) {
-      await apiFetch('/data/watchlist/'+companyId,{method:'DELETE'});
-      WATCHLIST_IDS.delete(companyId);
-      if(btn) btn.textContent='☆';
-      showToast(companyName+' removed from watchlist');
-    } else {
-      await apiFetch('/data/watchlist/'+companyId,{method:'POST'});
-      WATCHLIST_IDS.add(companyId);
-      if(btn) btn.textContent='⭐';
-      showToast(companyName+' added to watchlist ⭐','success');
-    }
-    if (currentDashTab==='watchlist') loadWatchlist();
-  } catch (err) { showToast(err.message||'Failed','error'); }
+    const json = await apiFetch('/data/companies?limit=100');
+    allAnnualCompanies = json.data || [];
+    if (meta) meta.textContent = `${allAnnualCompanies.length} companies tracked · Q4FY26 annual reports`;
+    renderAnnualCompanies(allAnnualCompanies);
+  } catch (err) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;color:var(--red)">${esc(err.message)}</div>`;
+  }
 }
+
+function renderAnnualCompanies(companies) {
+  const grid = document.getElementById('annual-companies-grid');
+  if (!grid) return;
+  
+  if (!companies.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><p>No companies found.</p></div>`;
+    return;
+  }
+  
+  grid.innerHTML = companies.map(c => {
+    const sMeta = getSectorMeta(c.industry || 'IT Services');
+    return `
+      <div class="hov" onclick="showAnnualReportDetail('${esc(c.ticker)}', '${esc(c.industry || 'IT Services')}')"
+           style="background:#fff; border:1.5px solid var(--border); border-radius:14px; overflow:hidden; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.05); transform:translateY(0); transition:all 0.2s ease;"
+           onmouseenter="this.style.boxShadow='0 12px 32px ${sMeta.accent}28'; this.style.borderColor='${sMeta.accent}'; this.style.transform='translateY(-4px)';"
+           onmouseleave="this.style.boxShadow='0 2px 8px rgba(0,0,0,0.05)'; this.style.borderColor='var(--border)'; this.style.transform='translateY(0)';">
+        
+        <div style="background:linear-gradient(140deg, ${sMeta.accent}1A 0%, ${sMeta.accent}08 100%); padding:18px 20px 16px; border-bottom:1px solid ${sMeta.accent}1A;">
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px;">
+            <div style="width:7px; height:7px; border-radius:50%; background:${sMeta.accent}; flex-shrink:0;"></div>
+            <span style="font-size:10px; font-weight:700; color:${sMeta.accent}; text-transform:uppercase; letter-spacing:0.8px;">${esc(c.industry || 'Sector')}</span>
+          </div>
+          <div style="font-size:15px; font-weight:700; color:var(--text); line-height:1.4;">${esc(c.name)}</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text3); margin-top:2px;">${esc(c.ticker)}</div>
+        </div>
+        
+        <div style="padding:12px 20px; display:flex; justify-content:space-between; align-items:center;">
+          <div style="background:#2563EB; color:#fff; font-size:10px; font-weight:700; padding:3px 10px; border-radius:20px; letter-spacing:0.4px;">FY25 Annual Report</div>
+          <div style="width:30px; height:30px; border-radius:50%; background:${sMeta.light}; display:flex; align-items:center; justify-content:center;">
+            <span style="color:${sMeta.accent}; font-weight:700;">→</span>
+          </div>
+        </div>
+        
+      </div>
+    `;
+  }).join('');
+}
+
+function filterAnnualCompanies(query) {
+  const filtered = allAnnualCompanies.filter(c => 
+    c.name.toLowerCase().includes(query.toLowerCase()) || 
+    c.ticker.toLowerCase().includes(query.toLowerCase()) ||
+    (c.industry || '').toLowerCase().includes(query.toLowerCase())
+  );
+  renderAnnualCompanies(filtered);
+}
+
+function goBackToAnnualCompanies() {
+  document.getElementById('annual-companies-view').style.display = 'block';
+  document.getElementById('annual-detail-view').style.display = 'none';
+}
+
+async function showAnnualReportDetail(ticker, industry) {
+  const companiesView = document.getElementById('annual-companies-view');
+  const detailView = document.getElementById('annual-detail-view');
+  const content = document.getElementById('annual-detail-content');
+  
+  if (!companiesView || !detailView || !content) return;
+  
+  companiesView.style.display = 'none';
+  detailView.style.display = 'block';
+  content.innerHTML = `<div class="loading-state"><span class="spinner" style="border-top-color:var(--text3)"></span> Loading details...</div>`;
+  
+  const sMeta = getSectorMeta(industry || 'IT Services');
+  
+  try {
+    const res = await apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker) + '/annual-report');
+    const data = res.data;
+    if (!data) throw new Error('Annual report not found');
+    
+    content.innerHTML = `
+      <div style="background:linear-gradient(140deg, ${sMeta.accent}1C 0%, ${sMeta.accent}08 100%); border:1.5px solid ${sMeta.accent}28; border-radius:18px; padding:24px 24px 20px; position:relative; overflow:hidden;">
+        <div style="position:absolute; right:-24px; top:-24px; width:130px; height:130px; border-radius:50%; background:${sMeta.accent}0E; pointer-events:none;"></div>
+        <div style="display:flex; gap:8px; margin-bottom:14px;">
+          <span style="font-size:10px; font-weight:700; color:${sMeta.accent}; background:${sMeta.light}; padding:4px 11px; border-radius:20px; text-transform:uppercase; letter-spacing:0.6px;">${esc(data.industry)}</span>
+          <span style="font-size:10px; color:var(--text3); background:#fff; border:1px solid var(--border); padding:3px 10px; border-radius:20px;">${esc(data.fiscal_year)}</span>
+        </div>
+        <h1 style="font-size:22px; font-weight:700; color:var(--text); margin:0 0 6px; font-family:'Space Grotesk',sans-serif; line-height:1.2;">${esc(data.company_name)}</h1>
+        <div style="font-size:11px; color:var(--text3)">${esc(data.ticker)} · Annual Report Analysis · Indian Equity</div>
+      </div>
+      
+      <div class="metrics-grid">
+        <div style="background:#fff; border:1.5px solid var(--border); border-left:4px solid ${sMeta.accent}; border-radius:12px; padding:14px 16px;">
+          <div style="font-size:9px; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">Revenue</div>
+          <div style="font-size:16px; font-weight:700; color:var(--text); margin-bottom:4px; font-family:'Space Grotesk',sans-serif;">${esc(data.metrics.revenue)}</div>
+          <div style="font-size:11px; color:#059669; font-weight:600;">${esc(data.metrics.revenue_growth)}</div>
+        </div>
+        <div style="background:#fff; border:1.5px solid var(--border); border-left:4px solid #059669; border-radius:12px; padding:14px 16px;">
+          <div style="font-size:9px; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">EBITDA Margin</div>
+          <div style="font-size:16px; font-weight:700; color:var(--text); margin-bottom:4px; font-family:'Space Grotesk',sans-serif;">${esc(data.metrics.ebitda_margin)}</div>
+        </div>
+        <div style="background:#fff; border:1.5px solid var(--border); border-left:4px solid #7C3AED; border-radius:12px; padding:14px 16px;">
+          <div style="font-size:9px; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">PAT (Net profit)</div>
+          <div style="font-size:16px; font-weight:700; color:var(--text); margin-bottom:4px; font-family:'Space Grotesk',sans-serif;">${esc(data.metrics.pat)}</div>
+        </div>
+        <div style="background:#fff; border:1.5px solid var(--border); border-left:4px solid #D97706; border-radius:12px; padding:14px 16px;">
+          <div style="font-size:9px; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;">Debt/Equity</div>
+          <div style="font-size:16px; font-weight:700; color:var(--text); margin-bottom:4px; font-family:'Space Grotesk',sans-serif;">${esc(data.metrics.debt_equity)}</div>
+        </div>
+      </div>
+      
+      <div style="background:#fff; border:1.5px solid var(--border); border-radius:14px; overflow:hidden;">
+        <div style="padding:13px 20px; background:${sMeta.accent}09; border-bottom:1px solid ${sMeta.accent}1C;">
+          <span style="font-size:10px; font-weight:700; color:${sMeta.accent}; text-transform:uppercase; letter-spacing:0.9px;">Strategic Pillars & Highlights</span>
+        </div>
+        <div>
+          ${data.highlights.map(h => `
+            <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid var(--border);">
+              <div style="width:22px; height:22px; border-radius:50%; background:${sMeta.light}; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+                <span style="color:${sMeta.accent}; font-weight:700; font-size:10px;">✓</span>
+              </div>
+              <span style="font-size:12px; color:var(--text2); line-height:1.65;">${esc(h)}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div style="background:#fff; border:1.5px solid var(--border); border-radius:14px; overflow:hidden;">
+        <div style="padding:13px 20px; background:#F8FAFC; border-bottom:1px solid var(--border);">
+          <span style="font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.9px;">Long-Term Management Outlook</span>
+        </div>
+        <div style="padding:14px 20px;">
+          <p style="font-size:12px; color:var(--text2); line-height:1.65; margin:0;">${esc(data.outlook)}</p>
+        </div>
+      </div>
+
+      <div style="background:#fff; border:1.5px solid var(--border); border-radius:14px; overflow:hidden;">
+        <div style="padding:13px 20px; background:#FEE2E2; border-bottom:1px solid var(--border);">
+          <span style="font-size:10px; font-weight:700; color:#B91C1C; text-transform:uppercase; letter-spacing:0.9px;">Key Business Risks</span>
+        </div>
+        <div>
+          ${data.risks.map(r => `
+            <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid var(--border);">
+              <div style="width:22px; height:22px; border-radius:50%; background:#FEE2E2; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+                <span style="color:#B91C1C; font-weight:700; font-size:10px;">!</span>
+              </div>
+              <span style="font-size:12px; color:var(--text2); line-height:1.65;">${esc(r)}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  } catch (err) {
+    content.innerHTML = `<div class="empty-state" style="color:var(--red)">${esc(err.message)}</div>`;
+  }
+}
+
+let selectedSector = null;
+let currentSectorCompanies = [];iv>
+        <div>
+          ${guidanceHTML}
+        </div>
+      </div>` : ''}
+
+      ${triggers.length > 0 ? `
+      <div style="background:#fff; border:1.5px solid var(--border); border-radius:14px; overflow:hidden;">
+        <div style="padding:13px 20px; background:#F8FAFC; border-bottom:1px solid var(--border);">
+          <span style="font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.9px;">Key Growth Drivers</span>
+        </div>
+        <div>
+          ${triggers.slice(0, 3).map((t, i) => `
+            <div style="display:flex; gap:12px; align-items:flex-start; padding:12px 20px; border-bottom:1px solid var(--border);">
+              <div style="width:8px; height:8px; border-radius:50%; background:${sMeta.accent}; flex-shrink:0; margin-top:4px;"></div>
+              <div>
+                <div style="font-weight:600; font-size:11px; color:var(--text3); margin-bottom:2px;">DRIVER ${i+1}</div>
+                <span style="font-size:12px; color:var(--text2); line-height:1.65;">${esc(t.trigger_text)}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>` : ''}
+    `;
+    
+  } catch (err) {
+    content.innerHTML = `<div class="empty-state" style="color:var(--red)">${esc(err.message)}</div>`;
+  }
+}
+
+function handleConcallSearch(query) {
+  const resultsDiv = document.getElementById('concall-search-results');
+  const gridDiv = document.getElementById('concall-sectors-grid');
+  
+  if (!resultsDiv || !gridDiv) return;
+  
+  if (!query || query.trim().length < 2) {
+    resultsDiv.style.display = 'none';
+    gridDiv.style.display = 'grid';
+    return;
+  }
+  
+  const q = query.toLowerCase().trim();
+  resultsDiv.style.display = 'flex';
+  gridDiv.style.display = 'none';
+  resultsDiv.innerHTML = `<div class="loading-state"><span class="spinner" style="border-top-color:var(--text3)"></span> Searching...</div>`;
+  
+  const matches = SCREENER_DATA.filter(c => 
+    (c.co || c.name || '').toLowerCase().includes(q) || 
+    (c.ticker || '').toLowerCase().includes(q)
+  );
+  
+  if (!matches.length) {
+    resultsDiv.innerHTML = `<div style="text-align:center; padding:56px 0; color:var(--text3); font-size:13px;">No results for "${esc(query)}"</div>`;
+    return;
+  }
+  
+  resultsDiv.innerHTML = matches.map(c => {
+    const sMeta = getSectorMeta(c.ind || c.industry || 'IT Services');
+    return `
+      <div onclick="showConcallSector('${esc(c.ind || c.industry)}').then(() => showConcallCompany('${esc(c.ticker)}'))"
+           style="background:#fff; border:1.5px solid var(--border); border-left:4px solid ${sMeta.accent}; border-radius:12px; padding:12px 16px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:12px; transition:all 0.18s;"
+           onmouseenter="this.style.boxShadow='0 4px 16px ${sMeta.accent}30'; this.style.borderColor='${sMeta.accent}';"
+           onmouseleave="this.style.boxShadow=''; this.style.borderColor='var(--border)';"
+           style="margin-bottom:8px;">
+        <div>
+          <div style="font-size:13px; font-weight:600; color:var(--text);">${esc(c.co || c.name)}</div>
+          <div style="font-size:11px; color:${sMeta.accent}; font-weight:600; margin-top:3px;">${esc(c.ind || c.industry)}</div>
+        </div>
+        <span style="font-size:10px; background:#DCFCE7; color:#15803D; padding:3px 9px; border-radius:20px; font-weight:700;">Research ✓</span>
+      </div>
+    `;
+  }).join('');
+}
+
+let selectedSector = null;
+let currentSectorCompanies = [];
+
+
 
 // ═══════════════════════════════════════════════
 // SIGNALS MODAL
@@ -2368,7 +2495,7 @@ function renderIndustries() {
 // ═══════════════════════════════════════════════
 function handleGetAccess() {
   if (!currentUser) { openAuth('signup'); return; }
-  if (isPaid) { showPage('dashboard'); return; }
+  if (isPaid) { showPage('screener'); return; }
   showPage('pricing');
 }
 
@@ -2399,7 +2526,7 @@ async function handlePayment(plan) {
           fetch(API_BASE+'/data/referral/reward',{method:'POST',headers:{'Content-Type':'application/json','x-internal-secret':''},body:JSON.stringify({userId:currentUser.id})}).catch(()=>{});
           await loadUserState();
           showToast("You're Pro now! Full access unlocked 🎉",'success');
-          setTimeout(()=>showPage('dashboard'),800);
+          setTimeout(()=>showPage('screener'),800);
         } catch(err) { showToast(err.message||'Activation failed. Contact support.','error'); }
         finally { btn.disabled=false; btn.textContent=origText; }
       },
@@ -2419,14 +2546,14 @@ async function handlePayment(plan) {
 // ═══════════════════════════════════════════════
 async function startTrial() {
   if (!currentUser) { openAuth('signup'); return; }
-  if (isPaid) { showToast('You already have access!','success'); showPage('dashboard'); return; }
+  if (isPaid) { showToast('You already have access!','success'); showPage('screener'); return; }
   const btn = document.getElementById('btn-trial');
   if (btn) { btn.disabled=true; btn.innerHTML=`<span class="spinner"></span>Starting...`; }
   try {
     await apiFetch('/data/trial/start',{method:'POST'});
     await loadUserState();
     showToast('2-day trial started! Full access unlocked.','success');
-    setTimeout(()=>showPage('dashboard'),600);
+    setTimeout(()=>showPage('screener'),600);
   } catch(err) {
     showToast(err.message||'Could not start trial','error');
     if(btn){btn.disabled=false;btn.textContent='Start Free Trial →';}
@@ -2590,16 +2717,12 @@ async function adminDeactivate(userId, btn) {
 // PAGE ROUTER
 // ═══════════════════════════════════════════════
 function showPage(id) {
-  if (id==='dashboard') {
-    if (!currentUser) { openAuth('login'); return; }
-    if (!isPaid) { showPage('pricing'); return; }
-    renderDashboard();
-  }
   if (id==='admin') {
     if (!currentUser) { openAuth('login'); return; }
     loadAdminData();
   }
   if (id==='screener') updateScreenerState();
+  if (id==='annual') loadAnnualReports();
 
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
@@ -2893,16 +3016,6 @@ function goToIndustry(name) {
 
 function goToCatalyst(catKey) {
   showPage('screener');
-  const sel = document.getElementById('filterCatalyst');
-  if (sel) {
-    sel.value = catKey;
-    filterTable();
-  }
-  const dashSel = document.getElementById('dashFilterCatalyst');
-  if (dashSel) {
-    dashSel.value = catKey;
-    filterDashTable();
-  }
   document.getElementById('global-search-input').value = '';
 }
 
@@ -2942,10 +3055,6 @@ async function initApp() {
   if (showCat) {
     setTimeout(() => {
       showPage('screener');
-      const sel = document.getElementById('filterCatalyst');
-      if (sel) { sel.value = showCat; filterTable(); }
-      const dashSel = document.getElementById('dashFilterCatalyst');
-      if (dashSel) { dashSel.value = showCat; filterDashTable(); }
     }, 200);
   }
 }
