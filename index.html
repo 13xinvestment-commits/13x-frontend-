@@ -1961,39 +1961,18 @@ footer {
 
 <!-- ════════════════ ANNUAL REPORTS PAGE ════════════════ -->
 <div id="page-annual" class="page">
-  <div class="screener-page">
-    
-    <!-- Company List View -->
-    <div id="annual-companies-view">
-      <div style="margin-bottom: 26px;">
-        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;">
-          <div>
-            <h1 style="font-size:26px; font-weight:700; color:var(--text); font-family:'Playfair Display',serif; margin:0 0 6px;">Annual Reports</h1>
-            <p style="font-size:13px; color:var(--text3); margin:0;" id="annual-companies-meta">Loading companies...</p>
-          </div>
-          <div style="position:relative; display:flex; align-items:center; margin-top:4px;">
-            <input class="gsearch" type="text" id="annualCompanySearch" oninput="filterAnnualCompanies(this.value)" placeholder="Search company…" style="max-width:260px; padding:9px 14px 9px 36px; border:1.5px solid var(--border); border-radius:10px; font-size:13px; font-family:inherit; color:var(--text); background:#fff; outline:none; transition:border-color 0.18s;"/>
-            <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text3); pointer-events:none;">🔍</span>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Companies Card Grid -->
-      <div id="annual-companies-grid" class="company-grid">
-        <!-- Dynamically filled -->
-      </div>
+  <div style="max-width: 600px; margin: 80px auto; text-align: center; padding: 48px 32px; background: #fff; border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow-lg); position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899);"></div>
+    <div style="font-size: 52px; margin-bottom: 24px;">📊</div>
+    <div style="font-size: 11px; font-weight: 700; color: #8b5cf6; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px;">Premium Expansion</div>
+    <h1 style="font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--text); margin-bottom: 14px; letter-spacing: -0.5px;">Annual Reports Analysis</h1>
+    <p style="font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 28px; max-width: 480px; margin-left: auto; margin-right: auto;">
+      Complete synthesis of annual statements, balance sheet audit checklists, cash flow stability scores, and CAPEX tracking pipelines.
+    </p>
+    <div style="display: inline-flex; align-items: center; gap: 8px; background: var(--bg); padding: 8px 20px; border-radius: 30px; font-size: 12px; font-weight: 600; color: var(--text2); border: 1px solid var(--border);">
+      <span style="display: inline-block; width: 8px; height: 8px; background: #8b5cf6; border-radius: 50%;"></span>
+      Coming Soon in H2 FY27
     </div>
-
-    <!-- Company Detail View -->
-    <div id="annual-detail-view" style="display:none;">
-      <div style="margin-bottom: 20px;">
-        <button class="nav-back" onclick="goBackToAnnualCompanies()" style="background:none; border:1px solid var(--border); border-radius:8px; padding:6px 12px; font-size:12px; color:var(--text3); cursor:pointer; transition:border-color 0.18s,color 0.18s; display:inline-flex; align-items:center; gap:5px;">← Back to Annual Reports</button>
-      </div>
-      <div id="annual-detail-content" style="display:flex; flex-direction:column; gap:12px;">
-        <!-- Dynamically filled -->
-      </div>
-    </div>
-
   </div>
 </div>
 
