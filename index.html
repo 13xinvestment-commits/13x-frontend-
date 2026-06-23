@@ -4,27 +4,27 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>13X — Growth Alpha Intelligence</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --green:#0b3c26;
-  --green-mid:#115234;
-  --green-light:#10B981;
-  --green-pale:#E6F4EA;
-  --green-mist:#F2FAF5;
-  --sage:#528965;
+  --green:#1B365D;
+  --green-mid:#132642;
+  --green-light:#0048FE;
+  --green-pale:#DBEAFE;
+  --green-mist:#EDF1F7;
+  --sage:#5C6F84;
   --white:#FFFFFF;
-  --off:#FAFAF9;
-  --bg:#FAF9F6;
+  --off:#EFE8DD;
+  --bg:#F1EDE5;
   --text:#0F172A;
-  --text2:#334155;
-  --text3:#64748B;
+  --text2:#273B56;
+  --text3:#5C6F84;
   --text4:#94A3B8;
-  --border:#EBEAE4;
-  --border2:#D8D7CF;
+  --border:#E0D8CC;
+  --border2:#CFC5B6;
   --gold:#9A7818;
   --gold-bg:#FFF9E6;
   --red:#9F1239;
@@ -36,15 +36,15 @@
   --card:#FFFFFF;
   --radius:8px;
   --radius-lg:16px;
-  --shadow:0 2px 8px rgba(15, 23, 42, 0.03), 0 1px 3px rgba(15, 23, 42, 0.02);
-  --shadow-md:0 8px 24px rgba(15, 23, 42, 0.05), 0 2px 8px rgba(15, 23, 42, 0.02);
-  --shadow-lg:0 24px 64px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.03);
+  --shadow:0 2px 8px rgba(27, 54, 93, 0.04), 0 1px 3px rgba(27, 54, 93, 0.02);
+  --shadow-md:0 8px 24px rgba(27, 54, 93, 0.06), 0 2px 8px rgba(27, 54, 93, 0.03);
+  --shadow-lg:0 24px 64px rgba(27, 54, 93, 0.1), 0 4px 12px rgba(27, 54, 93, 0.04);
 }
 html{scroll-behavior:smooth}
-body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:14px;-webkit-font-smoothing:antialiased}
+body{font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:14px;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
-button{font-family:'Sora',sans-serif;cursor:pointer}
-input,select{font-family:'Sora',sans-serif}
+button{font-family:'Montserrat',sans-serif;cursor:pointer}
+input,select{font-family:'Montserrat',sans-serif}
 
 /* ── PAGES ── */
 .page{display:none}
@@ -71,12 +71,12 @@ nav{
   background:var(--green);
   border-radius:var(--radius);
   display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:15px;font-weight:700;color:#fff;
   letter-spacing:-0.5px;
 }
 .nav-logo-text{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:17px;font-weight:600;
   color:var(--text);letter-spacing:-0.3px;
 }
@@ -139,7 +139,7 @@ nav{
 }
 .modal-close:hover{color:var(--text)}
 .modal-title{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:22px;font-weight:700;
   letter-spacing:-0.3px;margin-bottom:4px;
 }
@@ -220,7 +220,7 @@ nav{
 }
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 .hero-headline{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:clamp(40px,6vw,72px);
   font-weight:700;line-height:1.06;
   letter-spacing:-1.5px;
@@ -276,7 +276,7 @@ nav{
 }
 .h-stat:last-child{border-right:none}
 .h-stat-num{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:24px;font-weight:700;
   color:var(--green);letter-spacing:-0.5px;
   margin-bottom:2px;
@@ -320,7 +320,7 @@ nav{
   text-transform:uppercase;color:var(--green);margin-bottom:10px;
 }
 .section-title{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:clamp(24px,4vw,38px);font-weight:700;
   letter-spacing:-0.8px;color:var(--text);
   margin-bottom:10px;
@@ -579,7 +579,7 @@ tr:hover td{background:var(--green-mist)}
 }
 .step-num{
   position:absolute;top:14px;right:16px;
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:48px;font-weight:700;
   color:rgba(11, 60, 38, 0.08);line-height:1;
   letter-spacing:-2px;
@@ -642,11 +642,11 @@ tr:hover td{background:var(--green-mist)}
   color:var(--text3);margin-bottom:12px;
 }
 .plan-price{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:38px;font-weight:700;
   color:var(--text);letter-spacing:-1px;margin-bottom:4px;
 }
-.plan-price span{font-size:15px;font-weight:400;color:var(--text3);font-family:'Sora',sans-serif}
+.plan-price span{font-size:15px;font-weight:400;color:var(--text3);font-family:'Montserrat', sans-serif}
 .plan-desc{font-size:13px;color:var(--text3);margin-bottom:20px}
 .plan-features{list-style:none;margin-bottom:24px}
 .plan-features li{
@@ -757,7 +757,7 @@ tr:hover td{background:var(--green-mist)}
 .dash-wrap{max-width:1080px;margin:0 auto;padding:32px 28px 80px}
 .dash-top{margin-bottom:28px}
 .dash-greeting{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:clamp(22px,3vw,30px);font-weight:700;
   letter-spacing:-0.5px;margin-bottom:4px;
 }
@@ -866,7 +866,7 @@ tr:hover td{background:var(--green-mist)}
 /* ══════════════════════ ABOUT PAGE ══════════════════════ */
 .about-page{max-width:1080px;margin:0 auto;padding:60px 28px 80px}
 .about-hero-text{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:clamp(28px,5vw,52px);font-weight:700;
   letter-spacing:-1px;line-height:1.1;
   margin-bottom:20px;max-width:600px;
@@ -882,7 +882,7 @@ tr:hover td{background:var(--green-mist)}
   box-shadow:var(--shadow);
 }
 .quote-block blockquote{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:17px;font-style:italic;
   color:var(--text);line-height:1.7;margin-bottom:8px;
 }
@@ -902,7 +902,7 @@ tr:hover td{background:var(--green-mist)}
   border-radius:var(--radius-lg);padding:18px 20px;
 }
 .analytics-num{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:28px;font-weight:700;color:var(--text);
   letter-spacing:-0.5px;margin-bottom:4px;
 }
@@ -922,7 +922,7 @@ footer{
   flex-wrap:wrap;gap:32px;margin-bottom:36px;
 }
 .footer-logo{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:20px;font-weight:700;color:#fff;
   letter-spacing:-0.3px;margin-bottom:8px;
 }
@@ -1958,7 +1958,7 @@ footer {
       <div style="margin-bottom: 26px;">
         <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;">
           <div>
-            <h1 style="font-size:26px; font-weight:700; color:var(--text); font-family:'Playfair Display',serif; margin:0 0 6px;">Concall Insights</h1>
+            <h1 style="font-size:26px; font-weight:700; color:var(--text); font-family:'Libre Baskerville', serif; margin:0 0 6px;">Concall Insights</h1>
             <p style="font-size:13px; color:var(--text3); margin:0;" id="concall-companies-meta">Loading companies...</p>
           </div>
           <div style="position:relative; display:flex; align-items:center; margin-top:4px;">
@@ -1993,7 +1993,7 @@ footer {
     <div style="position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, #8b5cf6, #ec4899);"></div>
     <div style="font-size: 52px; margin-bottom: 24px;">📊</div>
     <div style="font-size: 11px; font-weight: 700; color: #8b5cf6; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px;">Premium Expansion</div>
-    <h1 style="font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--text); margin-bottom: 14px; letter-spacing: -0.5px;">Annual Reports Analysis</h1>
+    <h1 style="font-family: 'Libre Baskerville', serif; font-size: 32px; font-weight: 700; color: var(--text); margin-bottom: 14px; letter-spacing: -0.5px;">Annual Reports Analysis</h1>
     <p style="font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 28px; max-width: 480px; margin-left: auto; margin-right: auto;">
       Complete synthesis of annual statements, balance sheet audit checklists, cash flow stability scores, and CAPEX tracking pipelines.
     </p>
@@ -3224,7 +3224,7 @@ async function showIndustryDetail(name) {
           <div class="feat-card" style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;box-shadow:var(--shadow)">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
               ${linkHTML}
-              <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--green)">${b.score}/5</div>
+              <div style="font-family:'Libre Baskerville', serif;font-size:18px;font-weight:700;color:var(--green)">${b.score}/5</div>
             </div>
             <p style="font-size:12px;color:var(--text3);margin-bottom:8px">${esc(b.ticker)} · ${esc(b.ind || b.industry)}</p>
             <div style="font-size:12px;color:var(--text2);line-height:1.6">${esc(b.trigger || b.top_trigger || '—')}</div>

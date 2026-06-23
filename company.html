@@ -4,26 +4,26 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Company — 13X</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --green:#0b3c26;
-  --green-mid:#115234;
-  --green-light:#10B981;
-  --green-pale:#E6F4EA;
-  --green-mist:#F2FAF5;
-  --sage:#528965;
+  --green:#1B365D;
+  --green-mid:#132642;
+  --green-light:#0048FE;
+  --green-pale:#DBEAFE;
+  --green-mist:#EDF1F7;
+  --sage:#5C6F84;
   --white:#FFFFFF;
-  --off:#FAFAF9;
-  --bg:#FAF9F6;
+  --off:#EFE8DD;
+  --bg:#F1EDE5;
   --text:#0F172A;
-  --text2:#334155;
-  --text3:#64748B;
+  --text2:#273B56;
+  --text3:#5C6F84;
   --text4:#94A3B8;
-  --border:#EBEAE4;
-  --border2:#D8D7CF;
+  --border:#E0D8CC;
+  --border2:#CFC5B6;
   --gold:#9A7818;
   --gold-bg:#FFF9E6;
   --red:#9F1239;
@@ -35,13 +35,13 @@
   --card:#FFFFFF;
   --radius:8px;
   --radius-lg:16px;
-  --shadow:0 2px 8px rgba(15, 23, 42, 0.03), 0 1px 3px rgba(15, 23, 42, 0.02);
-  --shadow-md:0 8px 24px rgba(15, 23, 42, 0.05), 0 2px 8px rgba(15, 23, 42, 0.02);
-  --shadow-lg:0 24px 64px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.03);
+  --shadow:0 2px 8px rgba(27, 54, 93, 0.04), 0 1px 3px rgba(27, 54, 93, 0.02);
+  --shadow-md:0 8px 24px rgba(27, 54, 93, 0.06), 0 2px 8px rgba(27, 54, 93, 0.03);
+  --shadow-lg:0 24px 64px rgba(27, 54, 93, 0.1), 0 4px 12px rgba(27, 54, 93, 0.04);
 }
 html{scroll-behavior:smooth}
 body{
-  font-family:'Sora',sans-serif;
+  font-family:'Montserrat', sans-serif;
   background:var(--bg);
   color:var(--text);
   line-height:1.6;
@@ -49,7 +49,7 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 a{color:inherit;text-decoration:none}
-button{font-family:'Sora',sans-serif;cursor:pointer}
+button{font-family:'Montserrat', sans-serif;cursor:pointer}
 
 /* ══════════ NAV ══════════ */
 nav{
@@ -70,11 +70,11 @@ nav{
   width:30px;height:30px;
   background:var(--green);border-radius:5px;
   display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:14px;font-weight:700;color:#fff;
 }
 .nav-logo-text{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:16px;font-weight:600;color:var(--text);
   letter-spacing:-0.3px;
 }
@@ -140,7 +140,7 @@ nav{
   border-radius:4px;padding:3px 9px;margin-bottom:10px;
 }
 .co-name{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:clamp(26px,5vw,42px);
   font-weight:700;line-height:1.08;
   letter-spacing:-0.8px;
@@ -175,14 +175,14 @@ nav{
   flex-shrink:0;
 }
 .score-num{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:52px;font-weight:700;
   color:var(--green);line-height:1;
   letter-spacing:-2px;
 }
 .score-denom{
   font-size:18px;color:var(--text3);
-  font-family:'Sora',sans-serif;font-weight:400;
+  font-family:'Montserrat', sans-serif;font-weight:400;
 }
 .score-label{
   font-size:10px;font-weight:700;letter-spacing:1px;
@@ -243,12 +243,12 @@ nav{
   text-transform:uppercase;color:var(--text3);margin-bottom:6px;
 }
 .stat-value{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:20px;font-weight:700;
   color:var(--text);line-height:1.1;
 }
 .stat-value.text-sm{
-  font-size:13px;font-family:'Sora',sans-serif;
+  font-size:13px;font-family:'Montserrat', sans-serif;
   font-weight:600;
 }
 
@@ -500,7 +500,7 @@ nav{
   justify-content: space-between;
 }
 .quote-mark {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Libre Baskerville', serif;
   font-size: 48px;
   line-height: 1;
   color: var(--green-pale);
@@ -511,7 +511,7 @@ nav{
   pointer-events: none;
 }
 .quote-card-text {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Libre Baskerville', serif;
   font-size: 14px;
   font-style: italic;
   color: var(--text);
@@ -816,7 +816,7 @@ nav{
   text-transform:uppercase;color:var(--text3);margin-bottom:8px;
 }
 .metric-val{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:20px;font-weight:700;color:var(--text);
 }
 .metric-val.up{color:var(--green-light)}
@@ -853,7 +853,7 @@ nav{
   border-radius:2px;background:var(--green);flex-shrink:0;
 }
 .quote-text{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:14px;color:var(--text);
   line-height:1.65;font-style:italic;margin-bottom:5px;
 }
@@ -886,7 +886,7 @@ nav{
 }
 .paywall-icon{font-size:40px;margin-bottom:16px;display:block}
 .paywall-title{
-  font-family:'Playfair Display',serif;
+  font-family:'Libre Baskerville', serif;
   font-size:28px;font-weight:700;
   margin-bottom:8px;letter-spacing:-0.3px;
 }
@@ -900,7 +900,7 @@ nav{
   background:var(--green);color:#fff;border:none;
   padding:10px 24px;border-radius:6px;
   font-size:13px;font-weight:600;
-  font-family:'Sora',sans-serif;cursor:pointer;
+  font-family:'Montserrat', sans-serif;cursor:pointer;
   transition:opacity .15s;
 }
 .btn-primary:hover{opacity:.88}
@@ -908,7 +908,7 @@ nav{
   background:none;border:1.5px solid var(--border2);
   padding:9px 20px;border-radius:6px;
   font-size:13px;font-weight:500;color:var(--text2);
-  font-family:'Sora',sans-serif;cursor:pointer;
+  font-family:'Montserrat', sans-serif;cursor:pointer;
   transition:all .15s;
 }
 .btn-outline:hover{border-color:var(--green);color:var(--green)}
@@ -1762,7 +1762,7 @@ function buildOverview(co, triggers, signals, snapshot){
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-label">Score</div>
-        <div class="stat-value">${co.score||0}<span style="font-size:14px;color:var(--text3);font-family:'Sora',sans-serif;font-weight:400">/5</span></div>
+        <div class="stat-value">${co.score||0}<span style="font-size:14px;color:var(--text3);font-family:'Montserrat', sans-serif;font-weight:400">/5</span></div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Stage</div>
