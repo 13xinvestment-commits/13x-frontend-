@@ -4210,15 +4210,26 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
   let roceVal = '60%+';
   let roceBadge = 'Sustained';
 
+  let customRevenueStr = '';
+  let customEbitdaStr = '';
+  let customPatStr = '';
+  let customRoceStr = '';
+
   if (annualReport?.metrics) {
-    if (annualReport.metrics.revenue) {
+    if (annualReport.metrics.revenue_str) {
+      customRevenueStr = annualReport.metrics.revenue_str;
+    } else if (annualReport.metrics.revenue) {
       const raw = parseFloat(String(annualReport.metrics.revenue).replace(/[^0-9.]/g, ''));
       if (!isNaN(raw)) revenueVal = raw;
     }
+    
     if (annualReport.metrics.revenue_growth) {
       revenueGrowth = annualReport.metrics.revenue_growth;
     }
-    if (annualReport.metrics.ebitda_margin) {
+    
+    if (annualReport.metrics.ebitda_str) {
+      customEbitdaStr = annualReport.metrics.ebitda_str;
+    } else if (annualReport.metrics.ebitda_margin) {
       const margin = parseFloat(String(annualReport.metrics.ebitda_margin).replace(/[^0-9.]/g, ''));
       if (!isNaN(margin)) {
         ebitdaVal = Math.round(revenueVal * (margin / 100));
@@ -4226,7 +4237,14 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
         ebitdaGrowth = (growthNum >= 0 ? '+' : '') + Math.round(growthNum * 1.35) + '% YoY';
       }
     }
-    if (annualReport.metrics.pat) {
+    
+    if (annualReport.metrics.ebitda_growth) {
+      ebitdaGrowth = annualReport.metrics.ebitda_growth;
+    }
+    
+    if (annualReport.metrics.pat_str) {
+      customPatStr = annualReport.metrics.pat_str;
+    } else if (annualReport.metrics.pat) {
       const rawPat = parseFloat(String(annualReport.metrics.pat).replace(/[^0-9.]/g, ''));
       if (!isNaN(rawPat)) {
         patVal = rawPat;
@@ -4234,11 +4252,28 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
         patGrowth = (growthNum >= 0 ? '+' : '') + Math.round(growthNum * 2.1) + '% YoY';
       }
     }
-    const seedVal = Math.round((revenueVal % 30) + 25);
-    roceVal = seedVal + '%+';
+    
+    if (annualReport.metrics.pat_growth) {
+      patGrowth = annualReport.metrics.pat_growth;
+    }
+    
+    if (annualReport.metrics.roce_str) {
+      customRoceStr = annualReport.metrics.roce_str;
+    } else {
+      const seedVal = Math.round((revenueVal % 30) + 25);
+      roceVal = seedVal + '%+';
+    }
+    
+    if (annualReport.metrics.roce_badge) {
+      roceBadge = annualReport.metrics.roce_badge;
+    }
   }
 
   const fmtVal = (val) => '₹' + Math.round(val).toLocaleString('en-IN') + ' Cr';
+  const renderRevenue = customRevenueStr || fmtVal(revenueVal);
+  const renderEbitda = customEbitdaStr || fmtVal(ebitdaVal);
+  const renderPat = customPatStr || fmtVal(patVal);
+  const renderRoce = customRoceStr || roceVal;
 
   return `
     <style>
@@ -4274,7 +4309,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
           <!-- Card 1: Revenue -->
           <div style="background:#fff; border:1px solid var(--border); border-left:4px solid #10b981; border-radius:12px; padding:18px 20px; display:flex; flex-direction:column; gap:8px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
             <div style="font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px;">REVENUE (FY26)</div>
-            <div style="font-size:20px; font-weight:700; color:var(--text); font-family:'Space Grotesk',sans-serif; margin:2px 0;">${fmtVal(revenueVal)}</div>
+            <div style="font-size:20px; font-weight:700; color:var(--text); font-family:'Space Grotesk',sans-serif; margin:2px 0;">${renderRevenue}</div>
             <div>
               <span style="font-size:10px; font-weight:600; background:#e8f5ee; color:#10b981; padding:2px 8px; border-radius:20px; display:inline-block;">${esc(revenueGrowth)}</span>
             </div>
@@ -4282,7 +4317,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
           <!-- Card 2: Op. EBITDA -->
           <div style="background:#fff; border:1px solid var(--border); border-left:4px solid #10b981; border-radius:12px; padding:18px 20px; display:flex; flex-direction:column; gap:8px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
             <div style="font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px;">OP. EBITDA</div>
-            <div style="font-size:20px; font-weight:700; color:var(--text); font-family:'Space Grotesk',sans-serif; margin:2px 0;">${fmtVal(ebitdaVal)}</div>
+            <div style="font-size:20px; font-weight:700; color:var(--text); font-family:'Space Grotesk',sans-serif; margin:2px 0;">${renderEbitda}</div>
             <div>
               <span style="font-size:10px; font-weight:600; background:#e8f5ee; color:#10b981; padding:2px 8px; border-radius:20px; display:inline-block;">${esc(ebitdaGrowth)}</span>
             </div>
@@ -4290,7 +4325,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
           <!-- Card 3: PAT BEFORE EI -->
           <div style="background:#fff; border:1px solid var(--border); border-left:4px solid #10b981; border-radius:12px; padding:18px 20px; display:flex; flex-direction:column; gap:8px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
             <div style="font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px;">PAT BEFORE EI</div>
-            <div style="font-size:20px; font-weight:700; color:var(--text); font-family:'Space Grotesk',sans-serif; margin:2px 0;">${fmtVal(patVal)}</div>
+            <div style="font-size:20px; font-weight:700; color:var(--text); font-family:'Space Grotesk',sans-serif; margin:2px 0;">${renderPat}</div>
             <div>
               <span style="font-size:10px; font-weight:600; background:#e8f5ee; color:#10b981; padding:2px 8px; border-radius:20px; display:inline-block;">${esc(patGrowth)}</span>
             </div>
@@ -4298,7 +4333,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
           <!-- Card 4: ROCE -->
           <div style="background:#fff; border:1px solid var(--border); border-left:4px solid #10b981; border-radius:12px; padding:18px 20px; display:flex; flex-direction:column; gap:8px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
             <div style="font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px;">ROCE</div>
-            <div style="font-size:20px; font-weight:700; color:var(--text); font-family:'Space Grotesk',sans-serif; margin:2px 0;">${roceVal}</div>
+            <div style="font-size:20px; font-weight:700; color:var(--text); font-family:'Space Grotesk',sans-serif; margin:2px 0;">${renderRoce}</div>
             <div>
               <span style="font-size:10px; font-weight:600; background:#e8f5ee; color:#10b981; padding:2px 8px; border-radius:20px; display:inline-block;">${esc(roceBadge)}</span>
             </div>
