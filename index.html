@@ -2948,7 +2948,8 @@ async function showConcallCompany(ticker, industry) {
     const signals = signalsRes.status === 'fulfilled' ? (signalsRes.value.data || []) : [];
     const snapshot = snapshotRes.status === 'fulfilled' ? snapshotRes.value.data : null;
     const annualReport = annualReportRes.status === 'fulfilled' ? annualReportRes.value.data : null;
-    const concallInsight = concallInsightRes.status === 'fulfilled' ? concallInsightRes.value.data : null;
+    const _ciRaw = concallInsightRes.status === 'fulfilled' ? concallInsightRes.value.data : null;
+    const concallInsight = _ciRaw?.insight ?? _ciRaw;
     
     if (!co) throw new Error('Company not found');
     
@@ -4314,18 +4315,25 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
   const renderPat = customPatStr || fmtVal(patVal);
   const renderRoce = customRoceStr || roceVal;
 
-  // Full Year Performance bullets — from concall_insights, falling back to signals
-  const fullYearBullets = (concallInsight?.full_year_performance && concallInsight.full_year_performance.length)
-    ? concallInsight.full_year_performance
-    : null;
+  // Normalize a field that may be an array or a pipe-separated string from the sheet
+  function toBullets(val) {
+    if (!val) return null;
+    if (Array.isArray(val)) return val.length ? val : null;
+    if (typeof val === 'string') {
+      const parts = val.split('|').map(s => s.trim()).filter(Boolean);
+      return parts.length ? parts : null;
+    }
+    return null;
+  }
 
-  // Key Growth Drivers bullets — from concall_insights, falling back to old triggers
-  const growthDriverBullets = (concallInsight?.key_growth_drivers && concallInsight.key_growth_drivers.length)
-    ? concallInsight.key_growth_drivers
-    : null;
+  // Full Year Performance bullets
+  const fullYearBullets = toBullets(concallInsight?.full_year_performance);
 
-  // Risks — from concall_insights
-  const riskBullets = (concallInsight?.risks && concallInsight.risks.length) ? concallInsight.risks : null;
+  // Key Growth Drivers bullets
+  const growthDriverBullets = toBullets(concallInsight?.key_growth_drivers);
+
+  // Risks
+  const riskBullets = toBullets(concallInsight?.risks);
 
   return `
     <style>
