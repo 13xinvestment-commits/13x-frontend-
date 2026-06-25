@@ -2933,12 +2933,13 @@ async function showConcallCompany(ticker, industry) {
   const sMeta = getSectorMeta(selectedSector);
   
   try {
-    const [coRes, triggersRes, signalsRes, snapshotRes, annualReportRes] = await Promise.allSettled([
+    const [coRes, triggersRes, signalsRes, snapshotRes, annualReportRes, concallInsightRes] = await Promise.allSettled([
       apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker)),
       apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker) + '/triggers'),
       apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker) + '/signals'),
       apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker) + '/snapshot'),
       apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker) + '/annual-report'),
+      apiFetch('/data/companies/by-ticker/' + encodeURIComponent(ticker) + '/concall-insights'),
     ]);
     
     if (coRes.status === 'rejected') throw new Error('Company not found');
@@ -2947,12 +2948,13 @@ async function showConcallCompany(ticker, industry) {
     const signals = signalsRes.status === 'fulfilled' ? (signalsRes.value.data || []) : [];
     const snapshot = snapshotRes.status === 'fulfilled' ? snapshotRes.value.data : null;
     const annualReport = annualReportRes.status === 'fulfilled' ? annualReportRes.value.data : null;
+    const concallInsight = concallInsightRes.status === 'fulfilled' ? concallInsightRes.value.data : null;
     
     if (!co) throw new Error('Company not found');
     
-    const revTrend = snapshot?.revenue_trend || 'stable';
-    const marTrend = snapshot?.margin_trend || 'stable';
-    const tone = snapshot?.tone || 'neutral';
+    const revTrend = concallInsight?.revenue_trend || snapshot?.revenue_trend || 'stable';
+    const marTrend = concallInsight?.margin_trend  || snapshot?.margin_trend  || 'stable';
+    const tone     = concallInsight?.tone          || snapshot?.tone          || 'neutral';
     
     const revCls = revTrend === 'up' ? 'up' : revTrend === 'down' ? 'down' : 'stable';
     const marCls = marTrend === 'up' ? 'up' : marTrend === 'down' ? 'down' : 'stable';
@@ -2960,16 +2962,36 @@ async function showConcallCompany(ticker, industry) {
     const revIcon = revCls === 'up' ? '↑' : revCls === 'down' ? '↓' : '→';
     const marIcon = marCls === 'up' ? '↑' : marCls === 'down' ? '↓' : '→';
     
-    const highlights = [];
-    if (snapshot?.guidance_summary) highlights.push(snapshot.guidance_summary);
-    if (snapshot?.capex_commentary) highlights.push(snapshot.capex_commentary);
-    if (snapshot?.risks) highlights.push('Risks: ' + snapshot.risks);
+    // Key Outlook & Performance — prefer real concall_insights bullets
+    let highlights = [];
+    if (concallInsight?.key_outlook && concallInsight.key_outlook.length) {
+      highlights = concallInsight.key_outlook.slice();
+    } else {
+      if (snapshot?.guidance_summary) highlights.push(snapshot.guidance_summary);
+      if (snapshot?.capex_commentary) highlights.push(snapshot.capex_commentary);
+      if (snapshot?.risks) highlights.push('Risks: ' + snapshot.risks);
+    }
+    if (concallInsight?.guidance_summary) highlights.push(concallInsight.guidance_summary);
     if (highlights.length === 0) {
       highlights.push('A structural growth play supported by strong demand tailwinds in the core industry.');
     }
     
+    // FY27 Guidance block — prefer real guidance targets from concall_insights
     let guidanceHTML = '';
-    if (snapshot?.guidance_summary) {
+    if (concallInsight?.guidance_revenue_target || concallInsight?.guidance_margin_target) {
+      guidanceHTML = `
+        ${concallInsight.guidance_revenue_target ? `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; border-bottom:1px solid var(--border);">
+          <span style="font-size:12px; color:var(--text2)">Revenue Target</span>
+          <span style="font-size:13px; font-weight:700; color:${sMeta.accent}">${esc(concallInsight.guidance_revenue_target)}</span>
+        </div>` : ''}
+        ${concallInsight.guidance_margin_target ? `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; border-bottom:1px solid var(--border);">
+          <span style="font-size:12px; color:var(--text2)">Margin Target</span>
+          <span style="font-size:13px; font-weight:700; color:${sMeta.accent}">${esc(concallInsight.guidance_margin_target)}</span>
+        </div>` : ''}
+      `;
+    } else if (snapshot?.guidance_summary) {
       guidanceHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; border-bottom:1px solid var(--border);">
           <span style="font-size:12px; color:var(--text2)">Revenue Growth Target</span>
@@ -2978,7 +3000,7 @@ async function showConcallCompany(ticker, industry) {
       `;
     }
     
-    content.innerHTML = buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector, revTrend, marTrend, tone, revIcon, marIcon, highlights, guidanceHTML, annualReport, signals);
+    content.innerHTML = buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector, revTrend, marTrend, tone, revIcon, marIcon, highlights, guidanceHTML, annualReport, signals, concallInsight);
     
   } catch (err) {
     content.innerHTML = `<div class="empty-state" style="color:var(--red)">${esc(err.message)}</div>`;
@@ -4191,11 +4213,28 @@ initApp();
     document.getElementById('reset-modal').classList.add('open');
   }
 })();
-function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector, revTrend, marTrend, tone, revIcon, marIcon, highlights, guidanceHTML, annualReport, signals) {
+function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector, revTrend, marTrend, tone, revIcon, marIcon, highlights, guidanceHTML, annualReport, signals, concallInsight) {
+  // Prefer real concall_insights data (from the sheet) over the mock annual-report
+  // generator. We translate it into the same {metrics:{...}} shape annualReport
+  // uses so all the parsing logic below works unchanged.
+  const effectiveReport = concallInsight ? {
+    metrics: {
+      revenue_str:    concallInsight.revenue_str    || '',
+      revenue_growth: concallInsight.revenue_growth || '',
+      ebitda_str:     concallInsight.ebitda_str      || '',
+      ebitda_margin:  concallInsight.ebitda_margin   || '',
+      ebitda_growth:  concallInsight.ebitda_growth   || '',
+      pat_str:        concallInsight.pat_str         || '',
+      pat_growth:     concallInsight.pat_growth      || '',
+      roce_str:       concallInsight.roce_str        || '',
+      roce_badge:     concallInsight.roce_badge      || '',
+    }
+  } : annualReport;
+
   // Parse baseline revenue
   let baseRevenue = 1000;
-  if (annualReport?.metrics?.revenue) {
-    const rawVal = annualReport.metrics.revenue.replace(/[^0-9.]/g, '');
+  if (effectiveReport?.metrics?.revenue) {
+    const rawVal = effectiveReport.metrics.revenue.replace(/[^0-9.]/g, '');
     const parsedVal = parseFloat(rawVal);
     if (!isNaN(parsedVal)) baseRevenue = parsedVal;
   }
@@ -4215,22 +4254,22 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
   let customPatStr = '';
   let customRoceStr = '';
 
-  if (annualReport?.metrics) {
-    if (annualReport.metrics.revenue_str) {
-      customRevenueStr = annualReport.metrics.revenue_str;
-    } else if (annualReport.metrics.revenue) {
-      const raw = parseFloat(String(annualReport.metrics.revenue).replace(/[^0-9.]/g, ''));
+  if (effectiveReport?.metrics) {
+    if (effectiveReport.metrics.revenue_str) {
+      customRevenueStr = effectiveReport.metrics.revenue_str;
+    } else if (effectiveReport.metrics.revenue) {
+      const raw = parseFloat(String(effectiveReport.metrics.revenue).replace(/[^0-9.]/g, ''));
       if (!isNaN(raw)) revenueVal = raw;
     }
     
-    if (annualReport.metrics.revenue_growth) {
-      revenueGrowth = annualReport.metrics.revenue_growth;
+    if (effectiveReport.metrics.revenue_growth) {
+      revenueGrowth = effectiveReport.metrics.revenue_growth;
     }
     
-    if (annualReport.metrics.ebitda_str) {
-      customEbitdaStr = annualReport.metrics.ebitda_str;
-    } else if (annualReport.metrics.ebitda_margin) {
-      const margin = parseFloat(String(annualReport.metrics.ebitda_margin).replace(/[^0-9.]/g, ''));
+    if (effectiveReport.metrics.ebitda_str) {
+      customEbitdaStr = effectiveReport.metrics.ebitda_str;
+    } else if (effectiveReport.metrics.ebitda_margin) {
+      const margin = parseFloat(String(effectiveReport.metrics.ebitda_margin).replace(/[^0-9.]/g, ''));
       if (!isNaN(margin)) {
         ebitdaVal = Math.round(revenueVal * (margin / 100));
         const growthNum = parseFloat(revenueGrowth.replace(/[^0-9.-]/g, '')) || 24;
@@ -4238,14 +4277,14 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
       }
     }
     
-    if (annualReport.metrics.ebitda_growth) {
-      ebitdaGrowth = annualReport.metrics.ebitda_growth;
+    if (effectiveReport.metrics.ebitda_growth) {
+      ebitdaGrowth = effectiveReport.metrics.ebitda_growth;
     }
     
-    if (annualReport.metrics.pat_str) {
-      customPatStr = annualReport.metrics.pat_str;
-    } else if (annualReport.metrics.pat) {
-      const rawPat = parseFloat(String(annualReport.metrics.pat).replace(/[^0-9.]/g, ''));
+    if (effectiveReport.metrics.pat_str) {
+      customPatStr = effectiveReport.metrics.pat_str;
+    } else if (effectiveReport.metrics.pat) {
+      const rawPat = parseFloat(String(effectiveReport.metrics.pat).replace(/[^0-9.]/g, ''));
       if (!isNaN(rawPat)) {
         patVal = rawPat;
         const growthNum = parseFloat(revenueGrowth.replace(/[^0-9.-]/g, '')) || 24;
@@ -4253,19 +4292,19 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
       }
     }
     
-    if (annualReport.metrics.pat_growth) {
-      patGrowth = annualReport.metrics.pat_growth;
+    if (effectiveReport.metrics.pat_growth) {
+      patGrowth = effectiveReport.metrics.pat_growth;
     }
     
-    if (annualReport.metrics.roce_str) {
-      customRoceStr = annualReport.metrics.roce_str;
+    if (effectiveReport.metrics.roce_str) {
+      customRoceStr = effectiveReport.metrics.roce_str;
     } else {
       const seedVal = Math.round((revenueVal % 30) + 25);
       roceVal = seedVal + '%+';
     }
     
-    if (annualReport.metrics.roce_badge) {
-      roceBadge = annualReport.metrics.roce_badge;
+    if (effectiveReport.metrics.roce_badge) {
+      roceBadge = effectiveReport.metrics.roce_badge;
     }
   }
 
@@ -4274,6 +4313,19 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
   const renderEbitda = customEbitdaStr || fmtVal(ebitdaVal);
   const renderPat = customPatStr || fmtVal(patVal);
   const renderRoce = customRoceStr || roceVal;
+
+  // Full Year Performance bullets — from concall_insights, falling back to signals
+  const fullYearBullets = (concallInsight?.full_year_performance && concallInsight.full_year_performance.length)
+    ? concallInsight.full_year_performance
+    : null;
+
+  // Key Growth Drivers bullets — from concall_insights, falling back to old triggers
+  const growthDriverBullets = (concallInsight?.key_growth_drivers && concallInsight.key_growth_drivers.length)
+    ? concallInsight.key_growth_drivers
+    : null;
+
+  // Risks — from concall_insights
+  const riskBullets = (concallInsight?.risks && concallInsight.risks.length) ? concallInsight.risks : null;
 
   return `
     <style>
@@ -4292,7 +4344,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
           <div style="position:absolute; right:-24px; top:-24px; width:130px; height:130px; border-radius:50%; background:${sMeta.accent}0E; pointer-events:none;"></div>
           <div style="display:flex; gap:8px; margin-bottom:14px;">
             <span style="font-size:10px; font-weight:700; color:${sMeta.accent}; background:${sMeta.light}; padding:4px 11px; border-radius:20px; text-transform:uppercase; letter-spacing:0.6px;">${esc(selectedSector)}</span>
-            <span style="font-size:10px; color:var(--text3); background:rgba(0,0,0,0.03); border:1px solid var(--border); padding:3px 10px; border-radius:20px;">${esc(snapshot?.quarter || 'Q4FY26')}</span>
+            <span style="font-size:10px; color:var(--text3); background:rgba(0,0,0,0.03); border:1px solid var(--border); padding:3px 10px; border-radius:20px;">${esc(concallInsight?.quarter || snapshot?.quarter || 'Q4FY26')}</span>
           </div>
           <h1 style="font-size:22px; font-weight:700; color:var(--text); margin:0 0 6px; font-family:'Space Grotesk',sans-serif; line-height:1.2;">${esc(co.name)}</h1>
           <div style="font-size:11px; color:var(--text3)">${esc(co.ticker)} · NSE / BSE Listed · Indian Equity</div>
@@ -4346,7 +4398,14 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
             <span style="font-size:10px; font-weight:700; color:${sMeta.accent}; text-transform:uppercase; letter-spacing:0.9px;">Full Year Performance</span>
           </div>
           <div>
-            ${(signals || []).length > 0 ? (signals || []).map(s => `
+            ${fullYearBullets ? fullYearBullets.map(b => `
+              <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid var(--border);">
+                <div style="width:22px; height:22px; border-radius:50%; background:${sMeta.light}1C; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+                  <span style="color:${sMeta.accent}; font-weight:700; font-size:10px;">✓</span>
+                </div>
+                <span style="font-size:12px; color:var(--text2); line-height:1.65;">${esc(b)}</span>
+              </div>
+            `).join('') : (signals || []).length > 0 ? (signals || []).map(s => `
               <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid var(--border);">
                 <div style="width:22px; height:22px; border-radius:50%; background:${sMeta.light}1C; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
                   <span style="color:${sMeta.accent}; font-weight:700; font-size:10px;">✓</span>
@@ -4389,7 +4448,23 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
           </div>
         </div>` : ''}
 
-        ${triggers.length > 0 ? `
+        ${growthDriverBullets ? `
+        <div style="background:rgba(255, 255, 255, 0.7); border:1px solid var(--border); border-radius:14px; overflow:hidden;">
+          <div style="padding:13px 20px; background:rgba(0,0,0,0.01); border-bottom:1px solid var(--border);">
+            <span style="font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.9px;">Key Growth Drivers</span>
+          </div>
+          <div>
+            ${growthDriverBullets.map((b, i) => `
+              <div style="display:flex; gap:12px; align-items:flex-start; padding:12px 20px; border-bottom:1px solid var(--border);">
+                <div style="width:8px; height:8px; border-radius:50%; background:${sMeta.accent}; flex-shrink:0; margin-top:4px;"></div>
+                <div>
+                  <div style="font-weight:600; font-size:11px; color:var(--text3); margin-bottom:2px;">DRIVER ${i+1}</div>
+                  <span style="font-size:12px; color:var(--text2); line-height:1.65;">${esc(b)}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>` : triggers.length > 0 ? `
         <div style="background:rgba(255, 255, 255, 0.7); border:1px solid var(--border); border-radius:14px; overflow:hidden;">
           <div style="padding:13px 20px; background:rgba(0,0,0,0.01); border-bottom:1px solid var(--border);">
             <span style="font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.9px;">Key Growth Drivers</span>
@@ -4404,6 +4479,28 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
                 </div>
               </div>
             `).join('')}
+          </div>
+        </div>` : ''}
+
+        <!-- Risks & Flags -->
+        ${riskBullets ? `
+        <div style="background:rgba(255, 255, 255, 0.7); border:1px solid var(--border); border-radius:14px; overflow:hidden;">
+          <div style="padding:13px 20px; background:rgba(220,38,38,0.05); border-bottom:1px solid rgba(220,38,38,0.12);">
+            <span style="font-size:10px; font-weight:700; color:#dc2626; text-transform:uppercase; letter-spacing:0.9px;">Risks & Flags</span>
+          </div>
+          <div>
+            ${riskBullets.map(r => `
+              <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid var(--border);">
+                <div style="width:8px; height:8px; border-radius:50%; background:#dc2626; flex-shrink:0; margin-top:5px;"></div>
+                <span style="font-size:12px; color:var(--text2); line-height:1.65;">${esc(r)}</span>
+              </div>
+            `).join('')}
+            ${(concallInsight?.has_audit_qualification || concallInsight?.has_regulatory_action) ? `
+              <div style="display:flex; gap:8px; padding:11px 20px; flex-wrap:wrap;">
+                ${concallInsight.has_audit_qualification ? `<span style="font-size:10px; font-weight:600; background:#fef2f2; color:#dc2626; padding:3px 10px; border-radius:20px;">Audit Qualification</span>` : ''}
+                ${concallInsight.has_regulatory_action ? `<span style="font-size:10px; font-weight:600; background:#fef2f2; color:#dc2626; padding:3px 10px; border-radius:20px;">Regulatory Action</span>` : ''}
+              </div>
+            ` : ''}
           </div>
         </div>` : ''}
       </div>
