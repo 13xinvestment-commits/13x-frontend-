@@ -4263,7 +4263,8 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
       if (!isNaN(raw)) revenueVal = raw;
     }
     
-    if (effectiveReport.metrics.revenue_growth) {
+    const isError = v => !v || String(v).includes('#ERROR') || String(v).includes('ERROR');
+    if (effectiveReport.metrics.revenue_growth && !isError(effectiveReport.metrics.revenue_growth)) {
       revenueGrowth = effectiveReport.metrics.revenue_growth;
     }
     
@@ -4278,7 +4279,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
       }
     }
     
-    if (effectiveReport.metrics.ebitda_growth) {
+    if (effectiveReport.metrics.ebitda_growth && !isError(effectiveReport.metrics.ebitda_growth)) {
       ebitdaGrowth = effectiveReport.metrics.ebitda_growth;
     }
     
@@ -4293,12 +4294,20 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
       }
     }
     
-    if (effectiveReport.metrics.pat_growth) {
+    if (effectiveReport.metrics.pat_growth && !isError(effectiveReport.metrics.pat_growth)) {
       patGrowth = effectiveReport.metrics.pat_growth;
     }
     
     if (effectiveReport.metrics.roce_str) {
-      customRoceStr = effectiveReport.metrics.roce_str;
+      // Format raw decimal (e.g. 0.172) to percentage (17.2%), or use as-is if already formatted
+      const rawRoce = String(effectiveReport.metrics.roce_str).trim();
+      const roceNum = parseFloat(rawRoce);
+      if (!isNaN(roceNum) && roceNum < 2) {
+        // It's a decimal ratio — convert to percentage
+        customRoceStr = (roceNum * 100).toFixed(1).replace(/\.0$/, '') + '%';
+      } else {
+        customRoceStr = rawRoce;
+      }
     } else {
       const seedVal = Math.round((revenueVal % 30) + 25);
       roceVal = seedVal + '%+';
@@ -4361,7 +4370,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
         <!-- Company Overview -->
         <div class="premium-co-overview" style="background:#fff; border:1.5px solid var(--border); border-left:4px solid #8b5cf6; border-radius:12px; padding:18px 20px; display:flex; flex-direction:column; gap:6px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
           <div style="font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px;">🏢 Company Overview</div>
-          <div style="font-size:13px; color:var(--text2); line-height:1.6;">${esc(co.company_overview || 'A prominent growth player in its sector with sound corporate governance and executing scale expansions.')}</div>
+          <div style="font-size:13px; color:var(--text2); line-height:1.6;">${esc(concallInsight?.company_overview || co.company_overview || co.description || co.about || '')}</div>
         </div>
         
         <!-- Metrics Grid (As in the attached image) -->
