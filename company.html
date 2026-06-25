@@ -1919,10 +1919,27 @@ function buildConcall(snapshot, co, triggers, signals, annualReport){
 
   const sMeta = getSectorMeta(co.industry || 'IT Services');
 
+  // Prefer real concall_insights data (from the sheet) over the mock annual-report
+  // generator. We translate it into the same {metrics:{...}} shape annualReport
+  // uses so all the parsing logic below works unchanged.
+  const effectiveReport = concallInsight ? {
+    metrics: {
+      revenue_str:    concallInsight.revenue_str    || '',
+      revenue_growth: concallInsight.revenue_growth || '',
+      ebitda_str:     concallInsight.ebitda_str      || '',
+      ebitda_margin:  concallInsight.ebitda_margin   || '',
+      ebitda_growth:  concallInsight.ebitda_growth   || '',
+      pat_str:        concallInsight.pat_str         || '',
+      pat_growth:     concallInsight.pat_growth      || '',
+      roce_str:       concallInsight.roce_str        || '',
+      roce_badge:     concallInsight.roce_badge      || '',
+    }
+  } : annualReport;
+
   // Parse baseline revenue
   let baseRevenue = 1000;
-  if (annualReport?.metrics?.revenue) {
-    const rawVal = annualReport.metrics.revenue.replace(/[^0-9.]/g, '');
+  if (effectiveReport?.metrics?.revenue) {
+    const rawVal = effectiveReport.metrics.revenue.replace(/[^0-9.]/g, '');
     const parsedVal = parseFloat(rawVal);
     if (!isNaN(parsedVal)) baseRevenue = parsedVal;
   }
@@ -1942,22 +1959,22 @@ function buildConcall(snapshot, co, triggers, signals, annualReport){
   let customPatStr = '';
   let customRoceStr = '';
 
-  if (annualReport?.metrics) {
-    if (annualReport.metrics.revenue_str) {
-      customRevenueStr = annualReport.metrics.revenue_str;
-    } else if (annualReport.metrics.revenue) {
-      const raw = parseFloat(String(annualReport.metrics.revenue).replace(/[^0-9.]/g, ''));
+  if (effectiveReport?.metrics) {
+    if (effectiveReport.metrics.revenue_str) {
+      customRevenueStr = effectiveReport.metrics.revenue_str;
+    } else if (effectiveReport.metrics.revenue) {
+      const raw = parseFloat(String(effectiveReport.metrics.revenue).replace(/[^0-9.]/g, ''));
       if (!isNaN(raw)) revenueVal = raw;
     }
     
-    if (annualReport.metrics.revenue_growth) {
-      revenueGrowth = annualReport.metrics.revenue_growth;
+    if (effectiveReport.metrics.revenue_growth) {
+      revenueGrowth = effectiveReport.metrics.revenue_growth;
     }
     
-    if (annualReport.metrics.ebitda_str) {
-      customEbitdaStr = annualReport.metrics.ebitda_str;
-    } else if (annualReport.metrics.ebitda_margin) {
-      const margin = parseFloat(String(annualReport.metrics.ebitda_margin).replace(/[^0-9.]/g, ''));
+    if (effectiveReport.metrics.ebitda_str) {
+      customEbitdaStr = effectiveReport.metrics.ebitda_str;
+    } else if (effectiveReport.metrics.ebitda_margin) {
+      const margin = parseFloat(String(effectiveReport.metrics.ebitda_margin).replace(/[^0-9.]/g, ''));
       if (!isNaN(margin)) {
         ebitdaVal = Math.round(revenueVal * (margin / 100));
         const growthNum = parseFloat(revenueGrowth.replace(/[^0-9.-]/g, '')) || 24;
@@ -1965,14 +1982,14 @@ function buildConcall(snapshot, co, triggers, signals, annualReport){
       }
     }
     
-    if (annualReport.metrics.ebitda_growth) {
-      ebitdaGrowth = annualReport.metrics.ebitda_growth;
+    if (effectiveReport.metrics.ebitda_growth) {
+      ebitdaGrowth = effectiveReport.metrics.ebitda_growth;
     }
     
-    if (annualReport.metrics.pat_str) {
-      customPatStr = annualReport.metrics.pat_str;
-    } else if (annualReport.metrics.pat) {
-      const rawPat = parseFloat(String(annualReport.metrics.pat).replace(/[^0-9.]/g, ''));
+    if (effectiveReport.metrics.pat_str) {
+      customPatStr = effectiveReport.metrics.pat_str;
+    } else if (effectiveReport.metrics.pat) {
+      const rawPat = parseFloat(String(effectiveReport.metrics.pat).replace(/[^0-9.]/g, ''));
       if (!isNaN(rawPat)) {
         patVal = rawPat;
         const growthNum = parseFloat(revenueGrowth.replace(/[^0-9.-]/g, '')) || 24;
@@ -1980,21 +1997,22 @@ function buildConcall(snapshot, co, triggers, signals, annualReport){
       }
     }
     
-    if (annualReport.metrics.pat_growth) {
-      patGrowth = annualReport.metrics.pat_growth;
+    if (effectiveReport.metrics.pat_growth) {
+      patGrowth = effectiveReport.metrics.pat_growth;
     }
     
-    if (annualReport.metrics.roce_str) {
-      customRoceStr = annualReport.metrics.roce_str;
+    if (effectiveReport.metrics.roce_str) {
+      customRoceStr = effectiveReport.metrics.roce_str;
     } else {
       const seedVal = Math.round((revenueVal % 30) + 25);
       roceVal = seedVal + '%+';
     }
     
-    if (annualReport.metrics.roce_badge) {
-      roceBadge = annualReport.metrics.roce_badge;
+    if (effectiveReport.metrics.roce_badge) {
+      roceBadge = effectiveReport.metrics.roce_badge;
     }
   }
+
 
   const fmtVal = (val) => '₹' + Math.round(val).toLocaleString('en-IN') + ' Cr';
   const renderRevenue = customRevenueStr || fmtVal(revenueVal);
@@ -2002,16 +2020,48 @@ function buildConcall(snapshot, co, triggers, signals, annualReport){
   const renderPat = customPatStr || fmtVal(patVal);
   const renderRoce = customRoceStr || roceVal;
 
-  const highlights = [];
-  if (snapshot?.guidance_summary) highlights.push(snapshot.guidance_summary);
-  if (snapshot?.capex_commentary) highlights.push(snapshot.capex_commentary);
-  if (snapshot?.risks) highlights.push('Risks: ' + snapshot.risks);
+  // Full Year Performance bullets — from concall_insights, falling back to signals
+  const fullYearBullets = (concallInsight?.full_year_performance && concallInsight.full_year_performance.length)
+    ? concallInsight.full_year_performance
+    : null;
+
+  // Key Outlook & Performance bullets — from concall_insights, falling back to old snapshot-derived highlights
+  let highlights = [];
+  if (concallInsight?.key_outlook && concallInsight.key_outlook.length) {
+    highlights = concallInsight.key_outlook.slice();
+  } else {
+    if (snapshot?.guidance_summary) highlights.push(snapshot.guidance_summary);
+    if (snapshot?.capex_commentary) highlights.push(snapshot.capex_commentary);
+    if (snapshot?.risks) highlights.push('Risks: ' + snapshot.risks);
+  }
+  if (concallInsight?.guidance_summary) highlights.push(concallInsight.guidance_summary);
   if (highlights.length === 0) {
     highlights.push('A structural growth play supported by strong demand tailwinds in the core industry.');
   }
 
+  // Key Growth Drivers bullets — from concall_insights, falling back to old triggers
+  const growthDriverBullets = (concallInsight?.key_growth_drivers && concallInsight.key_growth_drivers.length)
+    ? concallInsight.key_growth_drivers
+    : null;
+
+  // Risks — from concall_insights
+  const riskBullets = (concallInsight?.risks && concallInsight.risks.length) ? concallInsight.risks : null;
+
   let guidanceHTML = '';
-  if (snapshot?.guidance_summary) {
+  if (concallInsight?.guidance_revenue_target || concallInsight?.guidance_margin_target) {
+    guidanceHTML = `
+      ${concallInsight.guidance_revenue_target ? `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; border-bottom:1px solid var(--border);">
+        <span style="font-size:12px; color:var(--text2)">Revenue Target</span>
+        <span style="font-size:13px; font-weight:700; color:${sMeta.accent}">${esc(concallInsight.guidance_revenue_target)}</span>
+      </div>` : ''}
+      ${concallInsight.guidance_margin_target ? `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; border-bottom:1px solid var(--border);">
+        <span style="font-size:12px; color:var(--text2)">Margin Target</span>
+        <span style="font-size:13px; font-weight:700; color:${sMeta.accent}">${esc(concallInsight.guidance_margin_target)}</span>
+      </div>` : ''}
+    `;
+  } else if (snapshot?.guidance_summary) {
     guidanceHTML = `
       <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; border-bottom:1px solid var(--border);">
         <span style="font-size:12px; color:var(--text2)">Revenue Growth Target</span>
@@ -2069,7 +2119,14 @@ function buildConcall(snapshot, co, triggers, signals, annualReport){
         <span style="font-size:10px; font-weight:700; color:${sMeta.accent}; text-transform:uppercase; letter-spacing:0.9px;">Full Year Performance</span>
       </div>
       <div>
-        ${(signals || []).length > 0 ? (signals || []).map(s => `
+        ${fullYearBullets ? fullYearBullets.map(b => `
+          <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid var(--border);">
+            <div style="width:22px; height:22px; border-radius:50%; background:${sMeta.light}1C; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+              <span style="color:${sMeta.accent}; font-weight:700; font-size:10px;">✓</span>
+            </div>
+            <span style="font-size:12px; color:var(--text2); line-height:1.65;">${esc(b)}</span>
+          </div>
+        `).join('') : (signals || []).length > 0 ? (signals || []).map(s => `
           <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid var(--border);">
             <div style="width:22px; height:22px; border-radius:50%; background:${sMeta.light}1C; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
               <span style="color:${sMeta.accent}; font-weight:700; font-size:10px;">✓</span>
@@ -2113,7 +2170,23 @@ function buildConcall(snapshot, co, triggers, signals, annualReport){
       </div>
     </div>` : ''}
 
-    ${triggers.length > 0 ? `
+    ${growthDriverBullets ? `
+    <div style="background:rgba(255, 255, 255, 0.7); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:20px;">
+      <div style="padding:13px 20px; background:rgba(0,0,0,0.01); border-bottom:1px solid var(--border);">
+        <span style="font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.9px;">Key Growth Drivers</span>
+      </div>
+      <div>
+        ${growthDriverBullets.map((b, i) => `
+          <div style="display:flex; gap:12px; align-items:flex-start; padding:12px 20px; border-bottom:1px solid var(--border);">
+            <div style="width:8px; height:8px; border-radius:50%; background:${sMeta.accent}; flex-shrink:0; margin-top:4px;"></div>
+            <div>
+              <div style="font-weight:600; font-size:11px; color:var(--text3); margin-bottom:2px;">DRIVER ${i+1}</div>
+              <span style="font-size:12px; color:var(--text2); line-height:1.65;">${esc(b)}</span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>` : triggers.length > 0 ? `
     <div style="background:rgba(255, 255, 255, 0.7); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:20px;">
       <div style="padding:13px 20px; background:rgba(0,0,0,0.01); border-bottom:1px solid var(--border);">
         <span style="font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.9px;">Key Growth Drivers</span>
@@ -2131,8 +2204,30 @@ function buildConcall(snapshot, co, triggers, signals, annualReport){
       </div>
     </div>` : ''}
 
+    <!-- Risks & Flags -->
+    ${riskBullets ? `
+    <div style="background:rgba(255, 255, 255, 0.7); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:20px;">
+      <div style="padding:13px 20px; background:rgba(220,38,38,0.05); border-bottom:1px solid rgba(220,38,38,0.12);">
+        <span style="font-size:10px; font-weight:700; color:#dc2626; text-transform:uppercase; letter-spacing:0.9px;">Risks & Flags</span>
+      </div>
+      <div>
+        ${riskBullets.map(r => `
+          <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid var(--border);">
+            <div style="width:8px; height:8px; border-radius:50%; background:#dc2626; flex-shrink:0; margin-top:5px;"></div>
+            <span style="font-size:12px; color:var(--text2); line-height:1.65;">${esc(r)}</span>
+          </div>
+        `).join('')}
+        ${(concallInsight?.has_audit_qualification || concallInsight?.has_regulatory_action) ? `
+          <div style="display:flex; gap:8px; padding:11px 20px; flex-wrap:wrap;">
+            ${concallInsight.has_audit_qualification ? `<span style="font-size:10px; font-weight:600; background:#fef2f2; color:#dc2626; padding:3px 10px; border-radius:20px;">Audit Qualification</span>` : ''}
+            ${concallInsight.has_regulatory_action ? `<span style="font-size:10px; font-weight:600; background:#fef2f2; color:#dc2626; padding:3px 10px; border-radius:20px;">Regulatory Action</span>` : ''}
+          </div>
+        ` : ''}
+      </div>
+    </div>` : ''}
+
     <!-- Key Management Quotes -->
-    ${snapshot.key_quotes && snapshot.key_quotes.length ? `
+    ${snapshot?.key_quotes && snapshot.key_quotes.length ? `
     <div class="concall-block" style="margin-top:24px">
       <div class="cb-header">📞 Key Management Quotes</div>
       <div class="key-quotes-wrap">
@@ -2315,7 +2410,7 @@ document.addEventListener('keydown', e => {
 // ══════════════════════════════════════════════
 // MAIN PAGE RENDER
 // ══════════════════════════════════════════════
-function renderPage(co, triggers, signals, snapshot, inWatch, annualReport){
+function renderPage(co, triggers, signals, snapshot, inWatch, annualReport, concallInsight){
   document.title = co.name + ' — 13X';
   const bc = document.getElementById('breadcrumb-name');
   if(bc) bc.textContent = co.name;
@@ -2392,13 +2487,14 @@ async function init(){
   loadIndustries();
 
   try{
-    const [coRes, triggersRes, signalsRes, snapshotRes, watchlistRes, annualReportRes] = await Promise.allSettled([
+    const [coRes, triggersRes, signalsRes, snapshotRes, watchlistRes, annualReportRes, concallInsightRes] = await Promise.allSettled([
       apiFetch('/data/companies/by-ticker/'+encodeURIComponent(ticker)),
       apiFetch('/data/companies/by-ticker/'+encodeURIComponent(ticker)+'/triggers'),
       apiFetch('/data/companies/by-ticker/'+encodeURIComponent(ticker)+'/signals'),
       apiFetch('/data/companies/by-ticker/'+encodeURIComponent(ticker)+'/snapshot'),
       apiFetch('/data/watchlist'),
       apiFetch('/data/companies/by-ticker/'+encodeURIComponent(ticker)+'/annual-report'),
+      apiFetch('/data/companies/by-ticker/'+encodeURIComponent(ticker)+'/concall-insights'),
     ]);
 
     if(coRes.status==='rejected'){ renderError('Company not found: '+ticker); return; }
@@ -2410,13 +2506,14 @@ async function init(){
     const signals  = signalsRes.status ==='fulfilled' ? (signalsRes.value.data ||[]) : [];
     const snapshot = snapshotRes.status==='fulfilled' ? snapshotRes.value.data   : null;
     const annualReport = annualReportRes.status==='fulfilled' ? annualReportRes.value.data : null;
+    const concallInsight = concallInsightRes.status==='fulfilled' ? concallInsightRes.value.data : null;
 
     if(watchlistRes.status==='fulfilled'){
       const wids = new Set((watchlistRes.value.data||[]).map(c=>c.id));
       watchlisted = wids.has(companyData.id);
     }
 
-    renderPage(companyData, triggers, signals, snapshot, watchlisted, annualReport);
+    renderPage(companyData, triggers, signals, snapshot, watchlisted, annualReport, concallInsight);
   } catch(err){
     renderError(err.message||'Failed to load company.');
   }
