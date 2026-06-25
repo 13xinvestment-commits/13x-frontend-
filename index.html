@@ -4370,7 +4370,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
         <!-- Company Overview -->
         <div class="premium-co-overview" style="background:#fff; border:1.5px solid var(--border); border-left:4px solid #8b5cf6; border-radius:12px; padding:18px 20px; display:flex; flex-direction:column; gap:6px; box-shadow:0 1px 3px rgba(0,0,0,0.02);">
           <div style="font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px;">🏢 Company Overview</div>
-          <div style="font-size:13px; color:var(--text2); line-height:1.6;">${esc(concallInsight?.company_overview || co.company_overview || co.description || co.about || '')}</div>
+          <div style="font-size:13px; color:var(--text2); line-height:1.6;">${esc(_ciRaw?.company?.company_overview || co.company_overview || co.description || co.about || '')}</div>
         </div>
         
         <!-- Metrics Grid (As in the attached image) -->
