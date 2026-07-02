@@ -7,7 +7,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --green:#1B365D;
@@ -1703,9 +1705,239 @@ footer {
   text-decoration: line-through;
   opacity: 0.65;
 }
+
+/* Cinematic liquid-glass landing theme */
+.liquid-glass{
+  background:rgba(255,255,255,.01);
+  background-blend-mode:luminosity;
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  border:none;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.1);
+  position:relative;
+  overflow:hidden;
+}
+.liquid-glass::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  padding:1.4px;
+  background:linear-gradient(180deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.15) 80%,rgba(255,255,255,.45) 100%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+}
+body.home-mode{background:#000!important;overflow:hidden}
+body.home-mode::before{display:none}
+body.home-mode nav{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:20;
+  height:auto!important;
+  padding:24px;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.home-nav-inner{display:contents}
+body.home-mode .home-nav-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  max-width:1024px;
+  margin:0 auto;
+  padding:12px 24px;
+  border-radius:999px;
+}
+.home-brand{display:none}
+body.home-mode .app-brand{display:none}
+body.home-mode .home-brand{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#fff;
+  font-size:18px;
+  font-weight:600;
+  cursor:pointer;
+  flex-shrink:0;
+}
+.home-brand svg{width:24px;height:24px}
+body.home-mode .nav-search-container{display:none}
+body.home-mode .nav-center{gap:32px;margin-right:auto;margin-left:32px}
+body.home-mode .nav-link{
+  color:rgba(255,255,255,.8);
+  padding:0;
+  background:none!important;
+  font-size:14px;
+  font-weight:500;
+  transition:color .2s ease;
+}
+body.home-mode .nav-link:hover,body.home-mode .nav-link.active{color:#fff}
+body.home-mode #nav-home,body.home-mode #nav-annual,body.home-mode #nav-research{display:none}
+body.home-mode .nav-right{gap:16px}
+body.home-mode #nav-logged-out{display:flex;align-items:center;gap:16px}
+.home-signup{display:none}
+body.home-mode .home-signup{
+  display:inline-flex;
+  border:0;
+  background:none;
+  color:#fff;
+  padding:8px 0;
+  font-size:14px;
+  font-weight:500;
+}
+body.home-mode .btn-nav-sign{
+  color:#fff!important;
+  padding:8px 24px!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.01)!important;
+  background-blend-mode:luminosity;
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.1)!important;
+}
+body.home-mode .btn-nav-sign:hover{color:#fff!important;background:rgba(255,255,255,.05)!important}
+body.home-mode #nav-logged-in{color:#fff}
+body.home-mode #nav-user-name{color:#fff!important}
+#page-home.active{min-height:100vh;background:#000;overflow:hidden}
+#page-home>.cinematic-home{display:flex}
+#page-home>.cinematic-home~*{display:none!important}
+.cinematic-home{
+  display:none;
+  position:relative;
+  min-height:100vh;
+  height:100vh;
+  overflow:hidden;
+  flex-direction:column;
+  background:#000;
+  isolation:isolate;
+}
+.cinematic-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:translateY(17%);
+  opacity:0;
+  z-index:-3;
+}
+.cinematic-scrim{
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.66) 0%,rgba(0,0,0,.18) 42%,rgba(0,0,0,.5) 100%);
+}
+.cinematic-vignette{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  box-shadow:inset 0 0 180px 28px rgba(0,0,0,.58);
+}
+.cinematic-content{
+  position:relative;
+  z-index:10;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:200px 24px 48px;
+  text-align:center;
+  transform:translateY(-20%);
+}
+.cinematic-title{
+  margin:0 0 32px;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-family:'Instrument Serif',serif!important;
+  font-size:72px;
+  font-weight:400;
+  line-height:1;
+  letter-spacing:-.025em;
+  white-space:nowrap;
+  text-shadow:0 2px 32px rgba(0,0,0,.28);
+}
+.cinematic-form-wrap{width:100%;max-width:576px;display:flex;flex-direction:column;gap:16px}
+.cinematic-email{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:8px 8px 8px 24px;
+  border-radius:999px;
+}
+.cinematic-email input{
+  min-width:0;
+  flex:1;
+  color:#fff;
+  background:transparent;
+  border:0;
+  outline:none;
+  font:400 16px 'Montserrat',sans-serif;
+}
+.cinematic-email input::placeholder{color:rgba(255,255,255,.4)}
+.cinematic-submit{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px;
+  border:0;
+  border-radius:50%;
+  color:#000;
+  background:#fff;
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.cinematic-submit:hover{transform:translateX(2px);box-shadow:0 8px 24px rgba(255,255,255,.22)}
+.cinematic-submit svg{width:20px;height:20px}
+.cinematic-subtitle{margin:0;padding:0 16px;color:#fff;font-size:14px;line-height:1.65;text-shadow:0 1px 18px rgba(0,0,0,.7)}
+.manifesto-button{
+  align-self:center;
+  padding:12px 32px;
+  border-radius:999px;
+  color:#fff;
+  font-size:14px;
+  font-weight:500;
+  transition:background .2s ease;
+}
+.manifesto-button:hover{background:rgba(255,255,255,.05)}
+.cinematic-socials{position:relative;z-index:10;display:flex;justify-content:center;gap:16px;padding:0 0 48px!important;background:transparent!important;border:0!important}
+.social-button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  border-radius:999px;
+  color:rgba(255,255,255,.8);
+  transition:color .2s ease,background .2s ease,transform .2s ease;
+}
+.social-button:hover{color:#fff;background:rgba(255,255,255,.05);transform:translateY(-2px)}
+.social-button svg{width:20px;height:20px}
+@media(max-width:767px){
+  body.home-mode nav{padding:16px}
+  body.home-mode .home-nav-inner{padding:11px 16px}
+  body.home-mode .nav-center{display:none}
+  body.home-mode .nav-right{margin-left:auto}
+  body.home-mode .home-signup{display:none}
+  body.home-mode .btn-nav-sign{padding:8px 18px}
+  .cinematic-title{font-size:48px;margin-bottom:28px}
+  .cinematic-content{padding:40px 20px;transform:translateY(-14%)}
+  .cinematic-socials{padding-bottom:28px}
+}
+@media(min-width:768px) and (max-width:1023px){.cinematic-title{font-size:60px}}
+@media(prefers-reduced-motion:reduce){.cinematic-video{display:none}.cinematic-home{background:radial-gradient(circle at 50% 65%,#222 0%,#050505 60%,#000 100%)}}
 </style>
 </head>
-<body>
+<body class="home-mode">
 
 <!-- AUTH MODAL -->
 <div id="auth-modal" class="modal-overlay">
@@ -1776,10 +2008,15 @@ footer {
 <div id="toast" class="toast"></div>
 
 <!-- ════════════════ NAV ════════════════ -->
-<nav>
-  <div class="nav-logo" onclick="showPage('home')">
-    <img src="logo.png" alt="13X Logo" style="height: 36px; width: auto; object-fit: contain; border-radius: var(--radius);" />
-  </div>
+<nav aria-label="Primary navigation">
+  <div class="home-nav-inner liquid-glass">
+    <div class="nav-logo app-brand" onclick="showPage('home')">
+      <img src="logo.png" alt="13X Logo" style="height: 36px; width: auto; object-fit: contain; border-radius: var(--radius);" />
+    </div>
+    <div class="home-brand" onclick="showPage('home')" aria-label="Asme home">
+      <i data-lucide="globe"></i>
+      <span>Asme</span>
+    </div>
   
   <div class="nav-search-container">
     <input type="text" id="global-search-input" placeholder="Search everywhere... (Ctrl+K)" oninput="handleGlobalSearch(this.value)" onfocus="showSearchDropdown()" onblur="hideSearchDropdown()"/>
@@ -1796,7 +2033,8 @@ footer {
   </div>
   <div class="nav-right">
     <div id="nav-logged-out">
-      <button class="btn-nav-sign" onclick="openAuth('login')">Sign In</button>
+      <button class="home-signup" onclick="openAuth('signup')">Sign Up</button>
+      <button class="btn-nav-sign liquid-glass" onclick="openAuth('login')">Login</button>
     </div>
     <div id="nav-logged-in" style="display:none;align-items:center;gap:8px">
       <span id="nav-user-name" style="font-size:13px;font-weight:500;color:var(--text2)"></span>
@@ -1806,10 +2044,47 @@ footer {
       <button class="btn-nav-sign" onclick="logout()">Sign Out</button>
     </div>
   </div>
+  </div>
 </nav>
 
 <!-- ════════════════ HOME PAGE ════════════════ -->
 <div id="page-home" class="page active">
+
+  <main class="cinematic-home">
+    <video
+      id="cinematic-background-video"
+      class="cinematic-video"
+      muted
+      autoplay
+      playsinline
+      preload="auto"
+      aria-hidden="true"
+    >
+      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_115001_bcdaa3b4-03de-47e7-ad63-ae3e392c32d4.mp4" type="video/mp4" />
+    </video>
+    <div class="cinematic-scrim"></div>
+    <div class="cinematic-vignette"></div>
+
+    <section class="cinematic-content" aria-labelledby="cinematic-title">
+      <h1 id="cinematic-title" class="cinematic-title" style="font-family:'Instrument Serif',serif">Built for the curious</h1>
+      <div class="cinematic-form-wrap">
+        <form class="cinematic-email liquid-glass" onsubmit="startHeroSignup(event)">
+          <input id="hero-email" type="email" placeholder="Enter your email" autocomplete="email" aria-label="Email address" required />
+          <button class="cinematic-submit" type="submit" aria-label="Continue with email">
+            <i data-lucide="arrow-right"></i>
+          </button>
+        </form>
+        <p class="cinematic-subtitle">Growth triggers, management guidance and forward-looking signals — distilled from earnings calls across 350+ Indian companies.</p>
+        <button class="manifesto-button liquid-glass" type="button" onclick="showPage('about')">Read our manifesto</button>
+      </div>
+    </section>
+
+    <footer class="cinematic-socials" aria-label="Social links">
+      <button class="social-button liquid-glass" type="button" aria-label="Instagram"><i data-lucide="instagram"></i></button>
+      <button class="social-button liquid-glass" type="button" aria-label="Twitter"><i data-lucide="twitter"></i></button>
+      <button class="social-button liquid-glass" type="button" aria-label="Website"><i data-lucide="globe"></i></button>
+    </footer>
+  </main>
 
   <!-- HERO -->
   <div class="hero">
@@ -3879,6 +4154,12 @@ function showPage(id) {
   document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
   const page = document.getElementById('page-'+id);
   if (page) page.classList.add('active');
+  document.body.classList.toggle('home-mode', id === 'home');
+  const heroVideo = document.getElementById('cinematic-background-video');
+  if (heroVideo) {
+    if (id === 'home') heroVideo.play().catch(() => {});
+    else heroVideo.pause();
+  }
   const nb = document.getElementById('nav-'+id);
   if (nb) nb.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
@@ -4528,6 +4809,68 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
     </div>
   `;
 }
+
+function startHeroSignup(event) {
+  event.preventDefault();
+  const heroEmail = document.getElementById('hero-email');
+  const email = heroEmail ? heroEmail.value.trim() : '';
+  openAuth('signup');
+  const authEmail = document.getElementById('auth-email');
+  if (authEmail) authEmail.value = email;
+}
+
+(function initCinematicHero() {
+  const video = document.getElementById('cinematic-background-video');
+  if (!video) return;
+
+  let animationFrameId = null;
+  let fadingOut = false;
+
+  function fadeVideoTo(targetOpacity, duration) {
+    if (animationFrameId !== null) cancelAnimationFrame(animationFrameId);
+
+    const startOpacity = Number.parseFloat(getComputedStyle(video).opacity) || 0;
+    const startedAt = performance.now();
+
+    function animate(now) {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      video.style.opacity = String(startOpacity + (targetOpacity - startOpacity) * progress);
+      if (progress < 1) animationFrameId = requestAnimationFrame(animate);
+      else animationFrameId = null;
+    }
+
+    animationFrameId = requestAnimationFrame(animate);
+  }
+
+  function fadeIn() {
+    fadingOut = false;
+    fadeVideoTo(1, 500);
+  }
+
+  video.addEventListener('loadeddata', fadeIn, { once: true });
+  video.addEventListener('timeupdate', () => {
+    if (!Number.isFinite(video.duration)) return;
+    const remaining = video.duration - video.currentTime;
+    if (remaining <= 0.55 && remaining > 0 && !fadingOut) {
+      fadingOut = true;
+      fadeVideoTo(0, 500);
+    }
+  });
+  video.addEventListener('ended', () => {
+    if (animationFrameId !== null) cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+    video.style.opacity = '0';
+    setTimeout(() => {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+      fadeIn();
+    }, 100);
+  });
+
+  if (video.readyState >= 2) fadeIn();
+  video.play().catch(() => {});
+  if (window.lucide) window.lucide.createIcons();
+})();
 </script>
 </body>
 </html>
