@@ -1407,6 +1407,41 @@ tr:hover td { background: rgba(82,102,235,0.04) !important; }
   box-shadow: 0 8px 24px rgba(0,0,0,0.25) !important;
 }
 
+
+/* ══════════ FORCE DARK BACKGROUNDS ══════════ */
+.tab-panel {
+  background: #1e1e2a !important;
+}
+.page-wrap {
+  background: #1e1e2a !important;
+  min-height: 100vh;
+}
+#main-content {
+  background: #1e1e2a !important;
+}
+
+/* Force ALL inline-style cards inside panels to show correctly */
+.tab-panel > div,
+.tab-panel [style*="background:#272735"],
+.tab-panel [style*="background: #272735"] {
+  isolation: isolate;
+}
+
+/* Ensure no parent transparency bleeds through */
+.premium-perf-card,
+.premium-co-overview {
+  background: #272735 !important;
+  isolation: isolate;
+}
+
+/* Any raw div inside tab-panel that has a style with #272735 */
+#panel-concall div[style],
+#panel-overview div[style],
+#panel-triggers div[style],
+#panel-signals div[style] {
+  isolation: isolate;
+}
+
 </style>
 </head>
 <body>
@@ -2510,10 +2545,10 @@ function renderPage(co, triggers, signals, snapshot, inWatch, annualReport, conc
       </button>
     </div>
 
-    <div id="panel-overview" class="tab-panel">${buildOverview(co, triggers, signals, snapshot)}</div>
-    <div id="panel-triggers" class="tab-panel" style="display:none">${buildTriggers(triggers)}</div>
-    <div id="panel-signals"  class="tab-panel" style="display:none">${buildSignals(signals)}</div>
-    <div id="panel-concall"  class="tab-panel" style="display:none">${buildConcall(snapshot, co, triggers, signals, annualReport)}</div>
+    <div id="panel-overview" class="tab-panel" style="background:#1e1e2a;">${buildOverview(co, triggers, signals, snapshot)}</div>
+    <div id="panel-triggers" class="tab-panel" style="display:none;background:#1e1e2a;">${buildTriggers(triggers)}</div>
+    <div id="panel-signals"  class="tab-panel" style="display:none;background:#1e1e2a;">${buildSignals(signals)}</div>
+    <div id="panel-concall"  class="tab-panel" style="display:none;background:#1e1e2a;">${buildConcall(snapshot, co, triggers, signals, annualReport)}</div>
   `;
 }
 
