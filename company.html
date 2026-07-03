@@ -897,7 +897,7 @@ nav{
 .key-quotes-wrap{}
 .quote-row{
   display:flex;gap:14px;
-  padding:14px 0;border-bottom:1px solid rgba(112,112,125,0.1);
+  padding:14px 0;border-bottom:1px solid rgba(112,112,125,0.12);
 }
 .quote-row:last-child{border-bottom:none;padding-bottom:0}
 .quote-accent{
@@ -2127,21 +2127,21 @@ function buildConcall(snapshot, co, triggers, signals, annualReport){
   if (concallInsight?.guidance_revenue_target || concallInsight?.guidance_margin_target) {
     guidanceHTML = `
       ${concallInsight.guidance_revenue_target ? `
-      <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; border-bottom:1px solid rgba(112,112,125,0.1);">
-        <span style="font-size:13px; font-weight:600; color:var(--color-lead); letter-spacing:0.3px;">Revenue Target</span>
-        <span style="font-size:13px; font-weight:700; color:var(--color-mercury-blue)">${esc(concallInsight.guidance_revenue_target)}</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; border-bottom:1px solid rgba(112,112,125,0.12);">
+        <span style="font-size:13px; font-weight:600; color:#70707d; letter-spacing:0.3px;">Revenue Target</span>
+        <span style="font-size:13px; font-weight:700; color:#5266eb">${esc(concallInsight.guidance_revenue_target)}</span>
       </div>` : ''}
       ${concallInsight.guidance_margin_target ? `
-      <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; border-bottom:1px solid rgba(112,112,125,0.1);">
-        <span style="font-size:13px; font-weight:600; color:var(--color-lead); letter-spacing:0.3px;">Margin Target</span>
-        <span style="font-size:13px; font-weight:700; color:var(--color-mercury-blue)">${esc(concallInsight.guidance_margin_target)}</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; border-bottom:1px solid rgba(112,112,125,0.12);">
+        <span style="font-size:13px; font-weight:600; color:#70707d; letter-spacing:0.3px;">Margin Target</span>
+        <span style="font-size:13px; font-weight:700; color:#5266eb">${esc(concallInsight.guidance_margin_target)}</span>
       </div>` : ''}
     `;
   } else if (snapshot?.guidance_summary) {
     guidanceHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; border-bottom:1px solid rgba(112,112,125,0.1);">
-        <span style="font-size:13px; font-weight:600; color:var(--color-lead); letter-spacing:0.3px;">Revenue Growth Target</span>
-        <span style="font-size:13px; font-weight:700; color:var(--color-mercury-blue)">${esc(snapshot.guidance_summary.split('.')[0])}</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; border-bottom:1px solid rgba(112,112,125,0.12);">
+        <span style="font-size:13px; font-weight:600; color:#70707d; letter-spacing:0.3px;">Revenue Growth Target</span>
+        <span style="font-size:13px; font-weight:700; color:#5266eb">${esc(snapshot.guidance_summary.split('.')[0])}</span>
       </div>
     `;
   }
@@ -2190,29 +2190,29 @@ function buildConcall(snapshot, co, triggers, signals, annualReport){
     </div>
 
     <!-- Full Year Performance (same kind as Key Outlook & Performance) -->
-    <div class="premium-perf-card" style="background:var(--color-graphite); border:1px solid rgba(112,112,125,0.15); border-radius:12px; overflow:hidden; margin-bottom:20px;">
-      <div style="padding:13px 20px; background:rgba(82,102,235,0.08); border-bottom:1px solid rgba(82,102,235,0.12);">
-        <span style="font-size:10px; font-weight:700; color:var(--color-mercury-blue); text-transform:uppercase; letter-spacing:0.9px;">Full Year Performance</span>
+    <div class="premium-perf-card" style="background:#272735; border:1px solid rgba(112,112,125,0.18); border-radius:12px; overflow:hidden; margin-bottom:20px;">
+      <div style="padding:13px 20px; background:rgba(82,102,235,0.10); border-bottom:1px solid rgba(82,102,235,0.18);">
+        <span style="font-size:10px; font-weight:700; color:#5266eb; text-transform:uppercase; letter-spacing:0.9px;">Full Year Performance</span>
       </div>
       <div>
         ${fullYearBullets ? fullYearBullets.map(b => `
-          <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid rgba(112,112,125,0.1);">
-            <div style="width:22px; height:22px; border-radius:50%; background:rgba(82,102,235,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
-              <span style="color:var(--color-mercury-blue); font-weight:700; font-size:10px;">✓</span>
+          <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid rgba(112,112,125,0.12);">
+            <div style="width:22px; height:22px; border-radius:50%; background:rgba(82,102,235,0.18); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+              <span style="color:#5266eb; font-weight:700; font-size:10px;">✓</span>
             </div>
-            <span style="font-size:12px; color:var(--color-silver); line-height:1.65;">${esc(b)}</span>
+            <span style="font-size:12px; color:#c3c3cc; line-height:1.65;">${esc(b)}</span>
           </div>
         `).join('') : (signals || []).length > 0 ? (signals || []).map(s => `
-          <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid rgba(112,112,125,0.1);">
-            <div style="width:22px; height:22px; border-radius:50%; background:rgba(82,102,235,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
-              <span style="color:var(--color-mercury-blue); font-weight:700; font-size:10px;">✓</span>
+          <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid rgba(112,112,125,0.12);">
+            <div style="width:22px; height:22px; border-radius:50%; background:rgba(82,102,235,0.18); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+              <span style="color:#5266eb; font-weight:700; font-size:10px;">✓</span>
             </div>
-            <span style="font-size:12px; color:var(--color-silver); line-height:1.65;">
+            <span style="font-size:12px; color:#c3c3cc; line-height:1.65;">
               <strong>[${esc(s.signal_type || 'guidance')}]</strong> ${esc(s.content)} <em>(${esc(s.source || 'Concall')})</em>
             </span>
           </div>
         `).join('') : `
-          <div style="padding:16px 20px; font-size:12px; color:var(--color-lead); text-align:center;">
+          <div style="padding:16px 20px; font-size:12px; color:#70707d; text-align:center;">
             No full year performance signals extracted for this quarter.
           </div>
         `}
@@ -2220,26 +2220,26 @@ function buildConcall(snapshot, co, triggers, signals, annualReport){
     </div>
     
     <!-- Key Outlook & Performance -->
-    <div style="background:var(--color-graphite); border:1px solid rgba(112,112,125,0.15); border-radius:12px; overflow:hidden; margin-bottom:20px;">
-      <div style="padding:13px 20px; background:rgba(82,102,235,0.08); border-bottom:1px solid rgba(82,102,235,0.12);">
-        <span style="font-size:10px; font-weight:700; color:var(--color-mercury-blue); text-transform:uppercase; letter-spacing:0.9px;">Key Outlook & Performance</span>
+    <div style="background:#272735; border:1px solid rgba(112,112,125,0.18); border-radius:12px; overflow:hidden; margin-bottom:20px;">
+      <div style="padding:13px 20px; background:rgba(82,102,235,0.10); border-bottom:1px solid rgba(82,102,235,0.18);">
+        <span style="font-size:10px; font-weight:700; color:#5266eb; text-transform:uppercase; letter-spacing:0.9px;">Key Outlook & Performance</span>
       </div>
       <div>
         ${highlights.map(h => `
-          <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid rgba(112,112,125,0.1);">
-            <div style="width:22px; height:22px; border-radius:50%; background:rgba(82,102,235,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
-              <span style="color:var(--color-mercury-blue); font-weight:700; font-size:10px;">✓</span>
+          <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid rgba(112,112,125,0.12);">
+            <div style="width:22px; height:22px; border-radius:50%; background:rgba(82,102,235,0.18); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+              <span style="color:#5266eb; font-weight:700; font-size:10px;">✓</span>
             </div>
-            <span style="font-size:12px; color:var(--color-silver); line-height:1.65;">${esc(h)}</span>
+            <span style="font-size:12px; color:#c3c3cc; line-height:1.65;">${esc(h)}</span>
           </div>
         `).join('')}
       </div>
     </div>
     
     ${guidanceHTML ? `
-    <div style="background:var(--color-graphite); border:1.5px solid rgba(82,102,235,0.25); border-radius:12px; overflow:hidden; margin-bottom:20px;">
-      <div style="padding:13px 20px; background:rgba(82,102,235,0.08); border-bottom:1px solid rgba(82,102,235,0.12);">
-        <span style="font-size:10px; font-weight:700; color:var(--color-mercury-blue); text-transform:uppercase; letter-spacing:0.9px;">FY27 Guidance Highlights</span>
+    <div style="background:#272735; border:1.5px solid rgba(82,102,235,0.28); border-radius:12px; overflow:hidden; margin-bottom:20px;">
+      <div style="padding:13px 20px; background:rgba(82,102,235,0.10); border-bottom:1px solid rgba(82,102,235,0.18);">
+        <span style="font-size:10px; font-weight:700; color:#5266eb; text-transform:uppercase; letter-spacing:0.9px;">FY27 Guidance Highlights</span>
       </div>
       <div>
         ${guidanceHTML}
@@ -2247,33 +2247,33 @@ function buildConcall(snapshot, co, triggers, signals, annualReport){
     </div>` : ''}
 
     ${growthDriverBullets ? `
-    <div style="background:var(--color-graphite); border:1px solid rgba(112,112,125,0.15); border-radius:12px; overflow:hidden; margin-bottom:20px;">
-      <div style="padding:13px 20px; background:rgba(82,102,235,0.08); border-bottom:1px solid rgba(82,102,235,0.12);">
-        <span style="font-size:10px; font-weight:700; color:var(--color-mercury-blue); text-transform:uppercase; letter-spacing:0.9px;">Key Growth Drivers</span>
+    <div style="background:#272735; border:1px solid rgba(112,112,125,0.18); border-radius:12px; overflow:hidden; margin-bottom:20px;">
+      <div style="padding:13px 20px; background:rgba(82,102,235,0.10); border-bottom:1px solid rgba(82,102,235,0.18);">
+        <span style="font-size:10px; font-weight:700; color:#5266eb; text-transform:uppercase; letter-spacing:0.9px;">Key Growth Drivers</span>
       </div>
       <div>
         ${growthDriverBullets.map((b, i) => `
-          <div style="display:flex; gap:12px; align-items:flex-start; padding:12px 20px; border-bottom:1px solid rgba(112,112,125,0.1);">
-            <div style="width:8px; height:8px; border-radius:50%; background:var(--color-mercury-blue); flex-shrink:0; margin-top:4px;"></div>
+          <div style="display:flex; gap:12px; align-items:flex-start; padding:12px 20px; border-bottom:1px solid rgba(112,112,125,0.12);">
+            <div style="width:8px; height:8px; border-radius:50%; background:#5266eb; flex-shrink:0; margin-top:4px;"></div>
             <div>
-              <div style="font-weight:600; font-size:11px; color:var(--color-lead); margin-bottom:2px;">DRIVER ${i+1}</div>
-              <span style="font-size:12px; color:var(--color-silver); line-height:1.65;">${esc(b)}</span>
+              <div style="font-weight:600; font-size:11px; color:#70707d; margin-bottom:2px;">DRIVER ${i+1}</div>
+              <span style="font-size:12px; color:#c3c3cc; line-height:1.65;">${esc(b)}</span>
             </div>
           </div>
         `).join('')}
       </div>
     </div>` : triggers.length > 0 ? `
-    <div style="background:var(--color-graphite); border:1px solid rgba(112,112,125,0.15); border-radius:12px; overflow:hidden; margin-bottom:20px;">
-      <div style="padding:13px 20px; background:rgba(82,102,235,0.08); border-bottom:1px solid rgba(82,102,235,0.12);">
-        <span style="font-size:10px; font-weight:700; color:var(--color-mercury-blue); text-transform:uppercase; letter-spacing:0.9px;">Key Growth Drivers</span>
+    <div style="background:#272735; border:1px solid rgba(112,112,125,0.18); border-radius:12px; overflow:hidden; margin-bottom:20px;">
+      <div style="padding:13px 20px; background:rgba(82,102,235,0.10); border-bottom:1px solid rgba(82,102,235,0.18);">
+        <span style="font-size:10px; font-weight:700; color:#5266eb; text-transform:uppercase; letter-spacing:0.9px;">Key Growth Drivers</span>
       </div>
       <div>
         ${triggers.slice(0, 3).map((t, i) => `
-          <div style="display:flex; gap:12px; align-items:flex-start; padding:12px 20px; border-bottom:1px solid rgba(112,112,125,0.1);">
-            <div style="width:8px; height:8px; border-radius:50%; background:var(--color-mercury-blue); flex-shrink:0; margin-top:4px;"></div>
+          <div style="display:flex; gap:12px; align-items:flex-start; padding:12px 20px; border-bottom:1px solid rgba(112,112,125,0.12);">
+            <div style="width:8px; height:8px; border-radius:50%; background:#5266eb; flex-shrink:0; margin-top:4px;"></div>
             <div>
-              <div style="font-weight:600; font-size:11px; color:var(--color-lead); margin-bottom:2px;">DRIVER ${i+1}</div>
-              <span style="font-size:12px; color:var(--color-silver); line-height:1.65;">${esc(t.trigger_text)}</span>
+              <div style="font-weight:600; font-size:11px; color:#70707d; margin-bottom:2px;">DRIVER ${i+1}</div>
+              <span style="font-size:12px; color:#c3c3cc; line-height:1.65;">${esc(t.trigger_text)}</span>
             </div>
           </div>
         `).join('')}
@@ -2282,21 +2282,21 @@ function buildConcall(snapshot, co, triggers, signals, annualReport){
 
     <!-- Risks & Flags -->
     ${riskBullets ? `
-    <div style="background:var(--color-graphite); border:1px solid rgba(112,112,125,0.15); border-radius:12px; overflow:hidden; margin-bottom:20px;">
-      <div style="padding:13px 20px; background:rgba(224,92,110,0.08); border-bottom:1px solid rgba(224,92,110,0.15);">
-        <span style="font-size:10px; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:0.9px;">Risks & Flags</span>
+    <div style="background:#272735; border:1px solid rgba(112,112,125,0.18); border-radius:12px; overflow:hidden; margin-bottom:20px;">
+      <div style="padding:13px 20px; background:rgba(224,92,110,0.10); border-bottom:1px solid rgba(224,92,110,0.18);">
+        <span style="font-size:10px; font-weight:700; color:#e05c6e; text-transform:uppercase; letter-spacing:0.9px;">Risks & Flags</span>
       </div>
       <div>
         ${riskBullets.map(r => `
-          <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid rgba(112,112,125,0.1);">
-            <div style="width:8px; height:8px; border-radius:50%; background:var(--red); flex-shrink:0; margin-top:5px;"></div>
-            <span style="font-size:12px; color:var(--color-silver); line-height:1.65;">${esc(r)}</span>
+          <div style="display:flex; gap:12px; align-items:flex-start; padding:11px 20px; border-bottom:1px solid rgba(112,112,125,0.12);">
+            <div style="width:8px; height:8px; border-radius:50%; background:#e05c6e; flex-shrink:0; margin-top:5px;"></div>
+            <span style="font-size:12px; color:#c3c3cc; line-height:1.65;">${esc(r)}</span>
           </div>
         `).join('')}
         ${(concallInsight?.has_audit_qualification || concallInsight?.has_regulatory_action) ? `
           <div style="display:flex; gap:8px; padding:11px 20px; flex-wrap:wrap;">
-            ${concallInsight.has_audit_qualification ? `<span style="font-size:10px; font-weight:600; background:rgba(224,92,110,0.12); color:var(--red); padding:3px 10px; border-radius:20px;">Audit Qualification</span>` : ''}
-            ${concallInsight.has_regulatory_action ? `<span style="font-size:10px; font-weight:600; background:rgba(224,92,110,0.12); color:var(--red); padding:3px 10px; border-radius:20px;">Regulatory Action</span>` : ''}
+            ${concallInsight.has_audit_qualification ? `<span style="font-size:10px; font-weight:600; background:rgba(224,92,110,0.18); color:#e05c6e; padding:3px 10px; border-radius:20px;">Audit Qualification</span>` : ''}
+            ${concallInsight.has_regulatory_action ? `<span style="font-size:10px; font-weight:600; background:rgba(224,92,110,0.18); color:#e05c6e; padding:3px 10px; border-radius:20px;">Regulatory Action</span>` : ''}
           </div>
         ` : ''}
       </div>
