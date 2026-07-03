@@ -203,7 +203,7 @@ nav{
   display:flex;align-items:center;gap:8px;
 }
 .co-ticker-val{
-  background:var(--bg);border:1px solid var(--border);
+  background:var(--color-graphite);border:1px solid rgba(112,112,125,0.15);
   border-radius:4px;padding:2px 8px;
 }
 .co-pills{display:flex;flex-wrap:wrap;gap:6px}
@@ -211,8 +211,8 @@ nav{
   display:inline-flex;align-items:center;
   font-size:11px;font-weight:500;
   padding:3px 10px;border-radius:20px;
-  border:1px solid var(--border);
-  background:var(--bg);color:var(--color-silver);
+  border:1px solid rgba(112,112,125,0.15);
+  background:var(--color-graphite);color:var(--color-silver);
 }
 .pill.stage-early_growth{background:var(--green-pale);color:var(--green);border-color:transparent}
 .pill.stage-acceleration{background:var(--blue-bg);color:var(--blue);border-color:transparent}
@@ -398,7 +398,7 @@ nav{
 }
 .search-item .name {
   font-weight: 600;
-  color: var(--text);
+  color: var(--color-starlight);
 }
 .search-item .sub {
   font-size: 11px;
@@ -442,7 +442,7 @@ nav{
 }
 .thesis-text {
   font-size: 15px;
-  color: var(--text);
+  color: var(--color-starlight);
   line-height: 1.7;
   font-weight: 500;
 }
@@ -515,7 +515,7 @@ nav{
 }
 .driver-text, .risk-text {
   font-size: 13px;
-  color: var(--text);
+  color: var(--color-starlight);
   line-height: 1.5;
 }
 .risk-icon {
@@ -689,7 +689,7 @@ nav{
 }
 .timeline-text {
   font-size: 13px;
-  color: var(--text);
+  color: var(--color-starlight);
   line-height: 1.6;
 }
 .timeline-quote {
@@ -722,7 +722,7 @@ nav{
 .tab-btn.active{color:var(--color-mercury-blue);border-bottom-color:var(--color-mercury-blue)}
 .tab-count{
   font-size:10px;color:var(--color-lead);
-  background:var(--bg);border:1px solid var(--border);
+  background:var(--color-graphite);border:1px solid rgba(112,112,125,0.15);
   padding:1px 6px;border-radius:10px;
   margin-left:5px;
   font-family:'JetBrains Mono',monospace;
@@ -752,7 +752,7 @@ nav{
   font-size:11px;
 }
 .overview-text{
-  font-size:14px;color:var(--text);line-height:1.7;
+  font-size:14px;color:var(--color-silver);line-height:1.7;
 }
 .overview-cta-row{
   display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;
@@ -793,10 +793,10 @@ nav{
 .q-chip{
   font-family:'JetBrains Mono',monospace;
   font-size:10px;color:var(--color-lead);
-  background:var(--bg);border:1px solid var(--border);
+  background:var(--color-graphite);border:1px solid rgba(112,112,125,0.15);
   border-radius:4px;padding:2px 7px;
 }
-.trigger-body{font-size:14px;color:var(--text);line-height:1.7}
+.trigger-body{font-size:14px;color:var(--color-silver);line-height:1.7}
 .trigger-quote{
   margin-top:12px;padding:12px 16px;
   background:rgba(82,102,235,0.06);border-radius:var(--radius-lg);
@@ -812,7 +812,7 @@ nav{
 }
 .triggers-count{
   font-size:12px;color:var(--color-lead);
-  background:var(--bg);border:1px solid var(--border);
+  background:var(--color-graphite);border:1px solid rgba(112,112,125,0.15);
   border-radius:10px;padding:2px 10px;
   font-family:'JetBrains Mono',monospace;
 }
@@ -846,7 +846,7 @@ nav{
 }
 .conf-dot.on{color:var(--green)}
 .conf-dot.off{color:var(--border2)}
-.signal-body{font-size:14px;color:var(--text);line-height:1.7}
+.signal-body{font-size:14px;color:var(--color-silver);line-height:1.7}
 .signal-source{
   font-size:11px;color:var(--color-lead);
   margin-top:8px;padding-top:8px;
@@ -892,12 +892,12 @@ nav{
   text-transform:uppercase;color:var(--color-lead);
   margin-bottom:13px;display:flex;align-items:center;gap:7px;
 }
-.cb-body{font-size:14px;color:var(--text);line-height:1.75}
+.cb-body{font-size:14px;color:var(--color-starlight);line-height:1.75}
 
 .key-quotes-wrap{}
 .quote-row{
   display:flex;gap:14px;
-  padding:14px 0;border-bottom:1px solid var(--border);
+  padding:14px 0;border-bottom:1px solid rgba(112,112,125,0.1);
 }
 .quote-row:last-child{border-bottom:none;padding-bottom:0}
 .quote-accent{
@@ -1421,7 +1421,7 @@ tr:hover td { background: rgba(82,102,235,0.04) !important; }
   <div class="nav-breadcrumb" id="nav-breadcrumb">
     <span>Home</span><span class="sep">/</span>
     <span>Screener</span><span class="sep">/</span>
-    <span id="breadcrumb-name" style="color:var(--text);font-weight:500">Loading...</span>
+    <span id="breadcrumb-name" style="color:var(--color-starlight);font-weight:500">Loading...</span>
   </div>
   <div class="nav-search-container">
     <input type="text" id="global-search-input" oninput="handleGlobalSearch(this.value)" onfocus="showSearchDropdown()" onblur="hideSearchDropdown()" placeholder="Search everywhere... (Ctrl+K)" autocomplete="off"/>
@@ -1933,7 +1933,7 @@ function buildTriggers(triggers){
 
   let html = `
     <div class="triggers-section-header" style="margin-bottom: 20px">
-      <span style="font-size:15px;font-weight:700;color:var(--text)">Catalyst Timeline</span>
+      <span style="font-size:15px;font-weight:700;color:var(--color-starlight)">Catalyst Timeline</span>
       <span class="triggers-count">${triggers.length} total</span>
     </div>
     <div class="timeline-container">`;
@@ -1973,35 +1973,16 @@ function buildTriggers(triggers){
 // ══════════════════════════════════════════════
 // BUILD: CONCALL TAB
 // ══════════════════════════════════════════════
-const CONCALL_SECTORS_META = {
-  'IT Services': { accent: '#2563EB', light: '#DBEAFE', desc: 'Transitioning from legacy maintenance to AI-first transformation and cloud migration.' },
-  'Aerospace & Defence': { accent: '#7C3AED', light: '#F3E8FF', desc: 'Sustained growth driven by Atmanirbhar Bharat imports substitution and rising exports.' },
-  'Renewable Energy': { accent: '#059669', light: '#D1FAE5', desc: 'Utility-scale hybrid solar and wind installations supported by sovereign green funding.' },
-  'Auto Ancillaries': { accent: '#4F46E5', light: '#E0E7FF', desc: 'Ramping up EV component capacity and lightweight assemblies for domestic majors.' },
-  'Specialty Chemicals': { accent: '#DB2777', light: '#FCE7F3', desc: 'China+1 export lanes opening up with domestic product approvals and capacity expansions.' },
-  'Banking – Private': { accent: '#D97706', light: '#FEF3C7', desc: 'Credit growth recovery coupled with NIM normalization and rising digital penetration.' }
-};
-
+// ── Mercury dark theme: all sector colors locked to design tokens ──
+const CONCALL_SECTORS_META = {};
 function getSectorMeta(name) {
-  if (!name) return { accent: '#2563EB', light: '#DBEAFE' };
-  const normalized = Object.keys(CONCALL_SECTORS_META).find(k => name.toLowerCase().includes(k.toLowerCase()) || k.toLowerCase().includes(name.toLowerCase()));
-  if (normalized) return CONCALL_SECTORS_META[normalized];
-
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  const colors = [
-    { accent: '#2563EB', light: '#DBEAFE' },
-    { accent: '#059669', light: '#D1FAE5' },
-    { accent: '#7C3AED', light: '#F3E8FF' },
-    { accent: '#D97706', light: '#FEF3C7' },
-    { accent: '#4F46E5', light: '#E0E7FF' },
-    { accent: '#DB2777', light: '#FCE7F3' }
-  ];
-  const meta = colors[Math.abs(hash) % colors.length];
+  const desc = name
+    ? 'Covering forward guidance signals, management guidance revisions, and core tailwinds in the ' + name + ' sector.'
+    : 'Covering forward guidance and management signals.';
   return {
-    accent: meta.accent,
-    light: meta.light,
-    desc: 'Covering forward guidance signals, management guidance revisions, and core tailwinds in the ' + name + ' sector.'
+    accent: 'var(--color-mercury-blue)',
+    light:  'rgba(82,102,235,0.15)',
+    desc:   desc
   };
 }
 
@@ -2351,7 +2332,7 @@ function buildSignals(signals){
 
   return `
     <div class="triggers-section-header" style="margin-bottom: 20px">
-      <span style="font-size:15px;font-weight:700;color:var(--text)">Management Signals</span>
+      <span style="font-size:15px;font-weight:700;color:var(--color-starlight)">Management Signals</span>
       <span class="triggers-count">${signals.length} total</span>
     </div>
     <div class="signals-list">
