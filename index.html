@@ -4434,7 +4434,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
         </div>
 
         <!-- Full Year Performance (same kind as Key Outlook & Performance) -->
-        <div class="premium-perf-card" style="background:rgba(255, 255, 255, 0.7); border:1px solid rgba(112,112,125,0.15); border-radius:14px; overflow:hidden;">
+        <div class="premium-perf-card" style="background:var(--color-graphite); border:1px solid rgba(112,112,125,0.15); border-radius:14px; overflow:hidden;">
           <div style="padding:13px 20px; background:${sMeta.accent}09; border-bottom:1px solid ${sMeta.accent}1C;">
             <span style="font-size:var(--text-caption); font-weight:var(--font-weight-w530); color:${sMeta.accent}; text-transform:uppercase; letter-spacing:0.9px;">Full Year Performance</span>
           </div>
@@ -4463,7 +4463,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
           </div>
         </div>
         
-        <div style="background:rgba(255, 255, 255, 0.7); border:1px solid rgba(112,112,125,0.15); border-radius:14px; overflow:hidden;">
+        <div class="premium-perf-card" style="background:var(--color-graphite); border:1px solid rgba(112,112,125,0.15); border-radius:14px; overflow:hidden;">
           <div style="padding:13px 20px; background:${sMeta.accent}09; border-bottom:1px solid ${sMeta.accent}1C;">
             <span style="font-size:var(--text-caption); font-weight:var(--font-weight-w530); color:${sMeta.accent}; text-transform:uppercase; letter-spacing:0.9px;">Key Outlook & Performance</span>
           </div>
@@ -4480,7 +4480,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
         </div>
         
         ${guidanceHTML ? `
-        <div style="background:rgba(255, 255, 255, 0.7); border:1.5px solid ${sMeta.accent}30; border-radius:14px; overflow:hidden;">
+        <div class="premium-perf-card" style="background:var(--color-graphite); border:1.5px solid ${sMeta.accent}30; border-radius:14px; overflow:hidden;">
           <div style="padding:13px 20px; background:${sMeta.accent}0C; border-bottom:1px solid ${sMeta.accent}22;">
             <span style="font-size:var(--text-caption); font-weight:var(--font-weight-w530); color:${sMeta.accent}; text-transform:uppercase; letter-spacing:0.9px;">FY27 Guidance Highlights</span>
           </div>
@@ -4490,7 +4490,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
         </div>` : ''}
 
         ${growthDriverBullets ? `
-        <div style="background:rgba(255, 255, 255, 0.7); border:1px solid rgba(112,112,125,0.15); border-radius:14px; overflow:hidden;">
+        <div class="premium-perf-card" style="background:var(--color-graphite); border:1px solid rgba(112,112,125,0.15); border-radius:14px; overflow:hidden;">
           <div style="padding:13px 20px; background:rgba(0,0,0,0.01); border-bottom:1px solid var(--border);">
             <span style="font-size:var(--text-caption); font-weight:var(--font-weight-w530); color:var(--color-lead); text-transform:uppercase; letter-spacing:0.9px;">Key Growth Drivers</span>
           </div>
@@ -4506,7 +4506,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
             `).join('')}
           </div>
         </div>` : triggers.length > 0 ? `
-        <div style="background:rgba(255, 255, 255, 0.7); border:1px solid rgba(112,112,125,0.15); border-radius:14px; overflow:hidden;">
+        <div class="premium-perf-card" style="background:var(--color-graphite); border:1px solid rgba(112,112,125,0.15); border-radius:14px; overflow:hidden;">
           <div style="padding:13px 20px; background:rgba(0,0,0,0.01); border-bottom:1px solid var(--border);">
             <span style="font-size:var(--text-caption); font-weight:var(--font-weight-w530); color:var(--color-lead); text-transform:uppercase; letter-spacing:0.9px;">Key Growth Drivers</span>
           </div>
@@ -4525,7 +4525,7 @@ function buildPremiumConcallLayout(co, snapshot, triggers, sMeta, selectedSector
 
         <!-- Risks & Flags -->
         ${riskBullets ? `
-        <div style="background:rgba(255, 255, 255, 0.7); border:1px solid rgba(112,112,125,0.15); border-radius:14px; overflow:hidden;">
+        <div class="premium-perf-card" style="background:var(--color-graphite); border:1px solid rgba(112,112,125,0.15); border-radius:14px; overflow:hidden;">
           <div style="padding:13px 20px; background:rgba(220,38,38,0.05); border-bottom:1px solid rgba(220,38,38,0.12);">
             <span style="font-size:var(--text-caption); font-weight:var(--font-weight-w530); color:#dc2626; text-transform:uppercase; letter-spacing:0.9px;">Risks & Flags</span>
           </div>
